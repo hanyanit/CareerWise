@@ -1,8 +1,5 @@
 package za.ac.cput.domain;
-/**
- * Author: Inga Mbobo, 230711723
- * Date: March 2026
- */
+
 import java.io.File;
 import java.util.List;
 import java.util.Objects;
@@ -14,10 +11,6 @@ public class JobSeeker extends User {
     private File resume;
     private List<Skill> skills;
     private List<Education> education;
-
-//    public JobSeeker(Builder builder) {
-//        super(builder);
-//    }
 
     private JobSeeker(JobSeekerBuilder builder) {
         super(builder.userBuilder);
@@ -96,28 +89,28 @@ public class JobSeeker extends User {
         }
 
         public JobSeekerBuilder firstName(String firstName) {
-            this.userBuilder.firstName(firstName);
-            return this;
+            this.userBuilder.firstName(firstName);  // Just set the value
+            return this;  // Return JobSeekerBuilder
         }
 
         public JobSeekerBuilder lastName(String lastName) {
-            this.userBuilder.lastName(lastName);
-            return this;
+            this.userBuilder.lastName(lastName);  // Just set the value
+            return this;  // Return JobSeekerBuilder
         }
 
         public JobSeekerBuilder profilePicture(String profilePicture) {
-            this.userBuilder.profilePicture(profilePicture);
-            return this;
+            this.userBuilder.profilePicture(profilePicture);  // Just set the value
+            return this;  // Return JobSeekerBuilder
         }
 
         public JobSeekerBuilder phoneNumber(String phoneNumber) {
-            this.userBuilder.phoneNumber(phoneNumber);
-            return this;
+            this.userBuilder.phoneNumber(phoneNumber);  // Just set the value
+            return this;  // Return JobSeekerBuilder
         }
 
         public JobSeekerBuilder location(String location) {
-            this.userBuilder.location(location);
-            return this;
+            this.userBuilder.location(location);  // Just set the value
+            return this;  // Return JobSeekerBuilder
         }
 
         public JobSeekerBuilder headline(String headline) {
@@ -145,18 +138,24 @@ public class JobSeeker extends User {
             return this;
         }
 
-        public JobSeeker.JobSeekerBuilder copy(JobSeeker jobSeeker) {
-//            this.userBuilder =userBuilder;
-            this.headline = jobSeeker.headline;
-            this.summary = jobSeeker.summary;
-            this.resume = jobSeeker.resume;
-            this.skills = jobSeeker.skills;
-            this.education = jobSeeker.education;
+        public JobSeekerBuilder copy(JobSeeker jobSeeker) {
+            if (jobSeeker != null) {
+                this.headline = jobSeeker.getHeadline();
+                this.summary = jobSeeker.getSummary();
+                this.resume = jobSeeker.getResume();
+                this.skills = jobSeeker.getSkills();
+                this.education = jobSeeker.getEducation();
+
+                this.userBuilder.firstName(jobSeeker.getFirstName())
+                        .lastName(jobSeeker.getLastName())
+                        .phoneNumber(jobSeeker.getPhoneNumber())
+                        .profilePicture(jobSeeker.getProfilePicture())
+                        .location(jobSeeker.getLocation());
+            }
             return this;
         }
 
         public JobSeeker build() {
-            userBuilder.build();
             return new JobSeeker(this);
         }
     }

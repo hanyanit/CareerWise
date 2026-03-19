@@ -11,7 +11,37 @@ public class User {
     private String phoneNumber;
     private String location;
 
+    public String getUserId() {
+        return userId;
+    }
 
+    public String getEmail() {
+        return email;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public String getProfilePicture() {
+        return profilePicture;
+    }
+
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public String getLocation() {
+        return location;
+    }
 
     protected User(Builder builder) {
         this.userId = builder.userId;
