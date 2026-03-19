@@ -1,7 +1,8 @@
-package Domain;
+package za.ac.cput.domain;
 
 import java.io.File;
 import java.util.List;
+
 
 public class JobSeeker {
     private String headline;
@@ -9,7 +10,7 @@ public class JobSeeker {
     private File resume;
     private List<Skill> skills;
     private List<Education> education;
-//    private List<Experience> experience;
+//   private List<Experience> experience;
 //    private List<Certification> certifications;
 //    private List<Language> languages;
 //    private JobPreferences jobPreferences;
