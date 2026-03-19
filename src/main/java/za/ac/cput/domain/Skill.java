@@ -1,5 +1,8 @@
 package za.ac.cput.domain;
-
+/**
+ * Author: Inga Mbobo, 230711723
+ * Date: March 2026
+ */
 import java.util.Objects;
 
 public class Skill {

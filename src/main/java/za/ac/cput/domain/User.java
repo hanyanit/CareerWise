@@ -13,7 +13,7 @@ public class User {
 
 
 
-    private User(Builder builder) {
+    protected User(Builder builder) {
         this.userId = builder.userId;
         this.email = builder.email;
         this.password = builder.password;
