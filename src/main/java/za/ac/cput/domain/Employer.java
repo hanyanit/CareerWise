@@ -1,4 +1,4 @@
-package Domain;
+package za.ac.cput.domain;
 
 /**
  * Employer.java
@@ -13,6 +13,7 @@ public class Employer {
     private String industry;
     private String companyLogo;
     private String companyDescription;
+    //private String companyHeadquarters;
 
 
     private Employer(Builder builder) {
