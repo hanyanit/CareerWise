@@ -1,4 +1,4 @@
-package Domain;
+package za.ac.cput.domain;
 
 public class User {
 
@@ -10,6 +10,7 @@ public class User {
     private String profilePicture;
     private String phoneNumber;
     private String location;
+    //private
 
 
     private User(Builder builder) {
