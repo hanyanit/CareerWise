@@ -1,6 +1,7 @@
-package factory;
+package za.ac.cput.factory;
 
 import Domain.Company;
+
 import java.util.UUID;
 
 /**

@@ -1,7 +1,6 @@
-package factory;
+package za.ac.cput.factory;
 
 import Domain.Employer;
-import java.util.UUID;
 
 /**
  * Author: Andile Pamela Masina, 221568816

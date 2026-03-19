@@ -10,7 +10,7 @@ public class User {
     private String profilePicture;
     private String phoneNumber;
     private String location;
-    //private
+
 
 
     private User(Builder builder) {
