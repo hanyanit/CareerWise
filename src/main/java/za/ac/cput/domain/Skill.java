@@ -1,4 +1,4 @@
-package Domain;
+package za.ac.cput.domain;
 
 import java.util.Objects;
 
