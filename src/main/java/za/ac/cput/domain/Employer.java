@@ -3,7 +3,7 @@ package za.ac.cput.domain;
 /**
  * Employer.java
  * Author: Andile Pamela Masina, 221568816
- * Date: 17 March 2026
+ * Date: 17 March 2026s
  */
 
 public class Employer {
@@ -13,7 +13,7 @@ public class Employer {
     private String industry;
     private String companyLogo;
     private String companyDescription;
-    //private String companyHeadquarters;
+    private String companyHeadquarters;
 
 
     private Employer(Builder builder) {
@@ -23,6 +23,7 @@ public class Employer {
         this.industry = builder.industry;
         this.companyLogo = builder.companyLogo;
         this.companyDescription = builder.companyDescription;
+        this.companyHeadquarters = builder.companyHeadquarters;
     }
 
 
@@ -44,6 +45,9 @@ public class Employer {
     public String getCompanyDescription() {
         return companyDescription;
     }
+    public String getCompanyHeadquarters() {
+        return companyHeadquarters;
+    }
 
     @Override
     public String toString() {
@@ -59,6 +63,7 @@ public class Employer {
         private String industry;
         private String companyLogo;
         private String companyDescription;
+        private String companyHeadquarters;
 
         public Builder setCompanyName(String companyName) {
             this.companyName = companyName;
@@ -90,6 +95,11 @@ public class Employer {
             return this;
         }
 
+        public Builder setCompanyHeadquarters(String companyHeadquarters) {
+            this.companyHeadquarters = companyHeadquarters;
+            return this;
+        }
+
         public Builder copy(Employer employer) {
             this.companyName = employer.companyName;
             this.companyWebsite = employer.companyWebsite;
@@ -97,6 +107,7 @@ public class Employer {
             this.industry = employer.industry;
             this.companyLogo = employer.companyLogo;
             this.companyDescription = employer.companyDescription;
+            this.companyHeadquarters = employer.companyHeadquarters;
             return this;
         }
 
