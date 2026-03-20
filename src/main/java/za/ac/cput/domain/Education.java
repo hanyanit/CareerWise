@@ -16,7 +16,7 @@ public class Education {
     public Education() {
     }
 
-    private Education(Builder builder) {
+    public Education(Builder builder) {
         this.educationId = builder.educationId;
         this.institution = builder.institution;
         this.degree = builder.degree;
@@ -54,7 +54,7 @@ public class Education {
     }
 
 
-    private static  class Builder {
+    public static class Builder {
         private String educationId;
         private String institution;
         private String degree;
@@ -96,7 +96,7 @@ public class Education {
             return this;
         }
 
-        public Builder setCurrent(boolean current) {
+        public Builder setIsCurrent(boolean current) {
             isCurrent = current;
             return this;
         }
