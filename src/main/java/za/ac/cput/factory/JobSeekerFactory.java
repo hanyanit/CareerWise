@@ -1,5 +1,9 @@
 package za.ac.cput.factory;
 
+/**
+ * Author: Inga Mbobo, 230711723
+ * Date: March 2026
+ */
 import za.ac.cput.domain.JobSeeker;
 import za.ac.cput.domain.Skill;
 import za.ac.cput.domain.Education;
@@ -9,10 +13,7 @@ import java.io.File;
 import java.util.List;
 import java.util.UUID;
 
-/**
- * Author: Inga Mbobo, 230711723
- * Date: March 2026
- */
+
 public class JobSeekerFactory {
 
     public static JobSeeker createJobSeeker(String email, String password,String firstName, String lastName,String headline, String summary,File resume, List<Skill> skills,List<Education> education) {

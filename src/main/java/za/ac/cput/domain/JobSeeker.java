@@ -1,5 +1,10 @@
 package za.ac.cput.domain;
 
+/**
+ * Author: Inga Mbobo, 230711723
+ * Date: March 2026
+ */
+
 import java.io.File;
 import java.util.List;
 import java.util.Objects;
@@ -89,28 +94,28 @@ public class JobSeeker extends User {
         }
 
         public JobSeekerBuilder firstName(String firstName) {
-            this.userBuilder.firstName(firstName);  // Just set the value
-            return this;  // Return JobSeekerBuilder
+            this.userBuilder .firstName(firstName);
+            return this;
         }
 
         public JobSeekerBuilder lastName(String lastName) {
-            this.userBuilder.lastName(lastName);  // Just set the value
-            return this;  // Return JobSeekerBuilder
+            this.userBuilder.lastName(lastName);
+            return this;
         }
 
         public JobSeekerBuilder profilePicture(String profilePicture) {
-            this.userBuilder.profilePicture(profilePicture);  // Just set the value
-            return this;  // Return JobSeekerBuilder
+            this.userBuilder.profilePicture(profilePicture);
+            return this;
         }
 
         public JobSeekerBuilder phoneNumber(String phoneNumber) {
-            this.userBuilder.phoneNumber(phoneNumber);  // Just set the value
-            return this;  // Return JobSeekerBuilder
+            this.userBuilder.phoneNumber(phoneNumber);
+            return this;
         }
 
         public JobSeekerBuilder location(String location) {
-            this.userBuilder.location(location);  // Just set the value
-            return this;  // Return JobSeekerBuilder
+            this.userBuilder.location(location);
+            return this;
         }
 
         public JobSeekerBuilder headline(String headline) {
@@ -139,7 +144,7 @@ public class JobSeeker extends User {
         }
 
         public JobSeekerBuilder copy(JobSeeker jobSeeker) {
-            if (jobSeeker != null) {
+
                 this.headline = jobSeeker.getHeadline();
                 this.summary = jobSeeker.getSummary();
                 this.resume = jobSeeker.getResume();
@@ -151,7 +156,7 @@ public class JobSeeker extends User {
                         .phoneNumber(jobSeeker.getPhoneNumber())
                         .profilePicture(jobSeeker.getProfilePicture())
                         .location(jobSeeker.getLocation());
-            }
+
             return this;
         }
 
