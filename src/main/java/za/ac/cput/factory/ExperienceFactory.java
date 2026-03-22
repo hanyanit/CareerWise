@@ -8,7 +8,7 @@ import java.util.Date;
 public class ExperienceFactory {
     public static Experience createExperience(String experienceID, String jobTitle, String company, String location, Date startDate, Date endDate, String description){
 
-        if (Helper.isNullOrEmpty(experienceID) || Helper.isNullOrEmpty(jobTitle)) {
+        if (Helper.isNullOrEmpty(experienceID) || Helper.isNullOrEmpty(jobTitle)  || Helper.isNullOrEmpty(company) || Helper.isNullOrEmpty(location) || Helper.isNullOrEmpty(description)) {
             return null;
         }
 
