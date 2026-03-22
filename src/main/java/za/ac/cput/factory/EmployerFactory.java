@@ -1,6 +1,6 @@
 package za.ac.cput.factory;
 
-import Domain.Employer;
+import za.ac.cput.domain.Employer;
 
 /**
  * Author: Andile Pamela Masina, 221568816
@@ -8,7 +8,7 @@ import Domain.Employer;
  */
 public class EmployerFactory {
 
-    public static Employer buildEmployer(String companyName, String industry, String companySize) {
+    public static Employer buildEmployer(String companyName, String industry, String companySize, String companyHeadquarters) {
         if (companyName == null || companyName.isEmpty() || industry == null || industry.isEmpty()) {
             return null;
         }
@@ -17,6 +17,7 @@ public class EmployerFactory {
                 .setCompanyName(companyName)
                 .setIndustry(industry)
                 .setCompanySize(companySize)
+                .setCompanyHeadquarters(companyHeadquarters)
                 .build();
     }
 }

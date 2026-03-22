@@ -1,7 +1,10 @@
 package za.ac.cput.domain;
 
 import java.util.Objects;
-
+/**
+ * Author: Inga Mbobo, 230711723
+ * Date: March 2026
+ */
 public class Skill {
     private String skillId;
     private String name;
