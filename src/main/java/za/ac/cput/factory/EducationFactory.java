@@ -7,7 +7,7 @@ import java.util.Date;
 
 public class EducationFactory {
     public static Education createEducation(String educationId, String institution, String degree, String fieldOfStudy,
-                                            Date startDate, Date endDate, boolean isCurrent, String description){
+                                            Date startDate, Date endDate, String description){
         if (Helper.isNullOrEmpty(educationId)){
             return null;
         }
@@ -19,7 +19,6 @@ public class EducationFactory {
                 .setFieldOfStudy(fieldOfStudy)
                 .setStartDate(startDate)
                 .setEndDate(endDate)
-                .setIsCurrent(isCurrent)
                 .setDescription(description)
                 .build();
 
