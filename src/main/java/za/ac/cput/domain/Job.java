@@ -1,6 +1,6 @@
 package za.ac.cput.domain;
 
-import java.util.Date;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Objects;
 
@@ -15,7 +15,7 @@ public class Job {
     private final Boolean      remoteOption;
     private final String       salaryRange;
     private final String       employmentType;
-    private final Date         deadlineDate;
+    private final LocalDate         deadlineDate;
     private final String       status;
 
     private Job(Builder builder) {
@@ -41,7 +41,7 @@ public class Job {
     public Boolean getRemoteOption() { return remoteOption; }
     public String getSalaryRange() { return salaryRange; }
     public String getEmploymentType() { return employmentType; }
-    public Date getDeadlineDate() { return deadlineDate; }
+    public LocalDate getDeadlineDate() { return deadlineDate; }
     public String getStatus() { return status; }
 
     @Override
@@ -84,7 +84,7 @@ public class Job {
         private Boolean remoteOption;
         private String salaryRange;
         private String employmentType;
-        private Date deadlineDate;
+        private LocalDate deadlineDate;
         private String status;
 
         public Builder setJobId(String jobId){
@@ -124,7 +124,7 @@ public class Job {
             this.employmentType = employmentType;
             return this;
         }
-        public Builder setDeadlineDate(Date deadlineDate){
+        public Builder setDeadlineDate(LocalDate deadlineDate){
             this.deadlineDate = deadlineDate;
             return this;
         }
