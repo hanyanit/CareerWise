@@ -22,7 +22,7 @@ public class SkillFactory {
 //            return null;
 //        } same as the code below
 
-        if(Helper.isValidNumber(yearsOfExperience)) {
+        if(!Helper.isValidNumber(yearsOfExperience)) {
             return null;
         }
 

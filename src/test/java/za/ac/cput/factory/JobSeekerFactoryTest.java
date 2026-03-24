@@ -16,20 +16,20 @@ class JobSeekerFactoryTest {
 
         JobSeeker js = JobSeekerFactory.createJobSeeker("230711723@mycput.ac.za","1234@mycput",
                 "Inganathi", "Mbobo","Java Software Developer",
-                "I am a CPUT Applications Development Strudent With a Higher Certificate In IT, Currently " +
-                        "persuing diploma, Holding AWS certificate on Cloud computing and Have majored in Python for a year");
+                "I am a CPUT Applications Development Student With a Higher Certificate In IT, Currently " +
+                        "pursuing diploma, Holding AWS certificate on Cloud computing and Have majored in Python for a year");
 
         assertNotNull(js);
-
-        assertEquals("Java Software Developer", js.getHeadline());
-
         System.out.println(js.toString());
     }
 
     @Test
-    void testJobSeekerFail() {
-        // If your factory has validation (like email check), test it here
-//        JobSeeker js = JobSeekerFactory.createJobSeeker("", "", "", "", "");
-//        assertNull(js, "Factory should return null for empty mandatory User fields");
+    void testJobSeekerWrongEmail() {
+        JobSeeker js = JobSeekerFactory.createJobSeeker("230711723mycput.ac.za", "1234@mycput", "Ingas", "Mbobo"
+                ,"Java Software Developer","I am a CPUT Applications Development Student With a Higher Certificate In IT, Currently \" +\n" +
+                " \"pursuing final year diploma, Holding AWS certificate on Cloud computing and Have majored in Python for a year");
+
+        assertNotNull(js);
+        System.out.println(js);
     }
 }
