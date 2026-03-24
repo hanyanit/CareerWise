@@ -1,5 +1,6 @@
 package za.ac.cput.factory;
 
+
 import za.ac.cput.domain.Skill;
 import za.ac.cput.util.Helper;
 
@@ -13,7 +14,7 @@ public class SkillFactory {
 
     public static Skill createSkill(String name, String category, float yearsOfExperience) {
 
-        if (Helper.isNullOrEmpty(name)) {
+        if (Helper.isNullOrEmpty(name) || Helper.isNullOrEmpty(category)) {
             return null;
         }
 
