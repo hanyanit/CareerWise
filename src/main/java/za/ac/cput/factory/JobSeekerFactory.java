@@ -5,20 +5,16 @@ package za.ac.cput.factory;
  * Date: March 2026
  */
 import za.ac.cput.domain.JobSeeker;
-import za.ac.cput.domain.Skill;
-import za.ac.cput.domain.Education;
 import za.ac.cput.util.Helper;
 
-import java.io.File;
-import java.util.List;
 import java.util.UUID;
 
 
 public class JobSeekerFactory {
 
-    public static JobSeeker createJobSeeker(String email, String password,String firstName, String lastName,String headline, String summary,File resume, List<Skill> skills,List<Education> education) {
+    public static JobSeeker createJobSeeker(String email, String password, String firstName, String lastName,String headline, String summary) {
 
-        if (Helper.isNullOrEmpty(email) || Helper.isNullOrEmpty(password)) {
+        if (Helper.isNullOrEmpty(email) || Helper.isNullOrEmpty(password)|| Helper.isNullOrEmpty(firstName) || Helper.isNullOrEmpty(headline)|| Helper.isNullOrEmpty(summary)) {
             return null;
         }
 
@@ -33,9 +29,9 @@ public class JobSeekerFactory {
                 .lastName(lastName)
                 .headline(headline)
                 .summary(summary)
-                .resume(resume)
-                .skills(skills)
-                .education(education)
+//                .resume(resume)
+//                .skills(skills)
+//                .education(education)
                 .build();
     }
 }

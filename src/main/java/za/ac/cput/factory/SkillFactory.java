@@ -14,7 +14,7 @@ public class SkillFactory {
 
     public static Skill createSkill(String name, String category, float yearsOfExperience) {
 
-        if (Helper.isNullOrEmpty(name)) {
+        if (Helper.isNullOrEmpty(name) || Helper.isNullOrEmpty(category)) {
             return null;
         }
 
@@ -22,7 +22,7 @@ public class SkillFactory {
 //            return null;
 //        } same as the code below
 
-        if(!Helper.isValidNumber(yearsOfExperience)) {
+        if(Helper.isValidNumber(yearsOfExperience)) {
             return null;
         }
 
