@@ -3,11 +3,12 @@ package za.ac.cput.factory;
 import za.ac.cput.domain.Education;
 import za.ac.cput.util.Helper;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 public class EducationFactory {
     public static Education createEducation(String educationId, String institution, String degree, String fieldOfStudy,
-                                            Date startDate, Date endDate, String description){
+                                            LocalDate startDate, LocalDate endDate, String description){
         if (Helper.isNullOrEmpty(educationId)){
             return null;
         }

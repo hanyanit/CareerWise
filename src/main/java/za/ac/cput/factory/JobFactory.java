@@ -3,13 +3,13 @@ package za.ac.cput.factory;
 import za.ac.cput.domain.Job;
 import za.ac.cput.util.Helper;
 
-import java.util.Date;
+import java.time.LocalDate;
 import java.util.List;
 
 public class JobFactory {
 
-    public static Job createJob(String jobId, String title, String description,List<String> requirements, List<String> responsibilities, String location,
-                                Boolean remoteOption, String salaryRange, String employmentType, Date deadlineDate, String status){
+    public static Job createJob(String jobId, String title, String description, List<String> requirements, List<String> responsibilities, String location,
+                                Boolean remoteOption, String salaryRange, String employmentType, LocalDate deadlineDate, String status){
 
         if (Helper.isNullOrEmpty(jobId) || Helper.isNullOrEmpty(title)) {
             return null;

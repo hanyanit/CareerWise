@@ -6,12 +6,12 @@ public class Helper {
 
     public static boolean isNullOrEmpty(String str) {
         if(str == null || str.isEmpty()){
-            return false;   //the logic here between true and false is confusing
+            return true;   //the logic here between true and false is confusing
                                 // but if not false it's true and the return below is false
                                 //otherwise the other way around
                                 // will check that during testing
         }
-        return true;
+        return false;
     }
 
     public static boolean isValidEmail(String email){
