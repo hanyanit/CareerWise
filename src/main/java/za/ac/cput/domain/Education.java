@@ -1,7 +1,6 @@
 package za.ac.cput.domain;
 
-import java.util.Date;
-import java.util.List;
+import java.time.LocalDate;
 import java.util.Objects;
 
 public class Education {
@@ -10,8 +9,8 @@ public class Education {
     private final String institution;
     private final String degree;
     private final String fieldOfStudy;
-    private final Date startDate;
-    private final Date endDate;
+    private final LocalDate startDate;
+    private final LocalDate endDate;
     private final String description;
 
     private Education(Builder builder) {
@@ -28,8 +27,8 @@ public class Education {
     public String getInstitution() { return institution; }
     public String getDegree() { return degree; }
     public String getFieldOfStudy() { return fieldOfStudy; }
-    public Date   getStartDate() { return startDate; }
-    public Date   getEndDate() { return endDate; }
+    public LocalDate   getStartDate() { return startDate; }
+    public LocalDate   getEndDate() { return endDate; }
     public String getDescription() { return description; }
 
     // ── equals / hashCode / toString ─────────────────────────────────────────
@@ -65,8 +64,8 @@ public class Education {
         private String institution;
         private String degree;
         private String fieldOfStudy;
-        private Date   startDate;
-        private Date   endDate;
+        private LocalDate startDate;
+        private LocalDate endDate;
         private String description;
 
         public Builder setEducationId(String educationId) {
@@ -85,11 +84,11 @@ public class Education {
             this.fieldOfStudy = fieldOfStudy;
             return this;
         }
-        public Builder setStartDate(Date startDate) {
+        public Builder setStartDate(LocalDate startDate) {
             this.startDate = startDate;
             return this;
         }
-        public Builder setEndDate(Date endDate) {
+        public Builder setEndDate(LocalDate endDate) {
             this.endDate = endDate;
             return this;
         }
