@@ -1,5 +1,7 @@
 package za.ac.cput.domain;
 
+import java.util.Objects;
+
 /**
  * Employer.java
  * Author: Andile Pamela Masina, 221568816
@@ -55,6 +57,23 @@ public class Employer {
                 ", industry='" + industry ;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (o == null || getClass() != o.getClass()) return false;
+        Employer employer = (Employer) o;
+        return Objects.equals(companyName, employer.companyName) &&
+                Objects.equals(companyWebsite, employer.companyWebsite) &&
+                Objects.equals(companySize, employer.companySize) &&
+                Objects.equals(industry, employer.industry) &&
+                Objects.equals(companyLogo, employer.companyLogo) &&
+                Objects.equals(companyDescription, employer.companyDescription) &&
+                Objects.equals(companyHeadquarters, employer.companyHeadquarters);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(companyName, companyWebsite, companySize, industry, companyLogo, companyDescription, companyHeadquarters);
+    }
 
     public static class Builder {
         private String companyName;
