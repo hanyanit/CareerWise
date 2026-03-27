@@ -6,6 +6,11 @@ import za.ac.cput.util.Helper;
 import java.time.LocalDate;
 import java.util.List;
 
+/**
+ * Author: Phumlani Mdlalo, 241093813
+ * Date: March 2026
+ */
+
 public class JobFactory {
 
     public static Job createJob(String jobId, String title, String description, List<String> requirements, List<String> responsibilities, String location,

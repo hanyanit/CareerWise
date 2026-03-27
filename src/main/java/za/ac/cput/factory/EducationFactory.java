@@ -6,6 +6,11 @@ import za.ac.cput.util.Helper;
 import java.time.LocalDate;
 import java.util.Date;
 
+/**
+ * Author: Phumlani Mdlalo, 241093813
+ * Date: March 2026
+ */
+
 public class EducationFactory {
     public static Education createEducation(String educationId, String institution, String degree, String fieldOfStudy,
                                             LocalDate startDate, LocalDate endDate, String description){
