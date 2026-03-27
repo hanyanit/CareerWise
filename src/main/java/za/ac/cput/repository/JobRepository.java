@@ -5,6 +5,11 @@ import za.ac.cput.domain.Job;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Author: Phumlani Mdlalo, 241093813
+ * Date: March 2026
+ */
+
 public class JobRepository implements IJobRepository {
 
     private static IJobRepository repository = null;

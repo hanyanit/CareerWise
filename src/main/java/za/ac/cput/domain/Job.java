@@ -4,6 +4,10 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.Objects;
 
+/**
+ * Author: Phumlani Mdlalo, 241093813
+ * Date: March 2026
+ */
 public class Job {
 
     private final String       jobId;

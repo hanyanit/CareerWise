@@ -3,6 +3,11 @@ package za.ac.cput.domain;
 import java.time.LocalDate;
 import java.util.Objects;
 
+/**
+ * Author: Phumlani Mdlalo, 241093813
+ * Date: March 2026
+ */
+
 public class Education {
 
     private final String educationId;
