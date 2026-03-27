@@ -43,6 +43,9 @@ public class User {
         return location;
     }
 
+    protected User() {
+    }
+
     protected User(Builder builder) {
         this.userId = builder.userId;
         this.email = builder.email;
