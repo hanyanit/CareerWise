@@ -9,7 +9,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * EmployerRepositoryTest.java
- * Author: Andile Pamela Masina (221568816)
+ * Author: Andile Pamela Masina, 221568816
  * Date: 27 March 2026
  */
 
