@@ -5,10 +5,10 @@ import java.util.Objects;
 /**
  * Employer.java
  * Author: Andile Pamela Masina, 221568816
- * Date: 17 March 2026s
+ * Date: 17 March 2026
  */
 
-public class Employer {
+public class Employer extends User {
     private String companyName;
     private String companyWebsite;
     private String companySize;
@@ -28,37 +28,27 @@ public class Employer {
         this.companyHeadquarters = builder.companyHeadquarters;
     }
 
-
-    public String getCompanyName() {
-        return companyName;
-    }
-    public String getCompanyWebsite() {
-        return companyWebsite;
-    }
-    public String getCompanySize() {
-        return companySize;
-    }
-    public String getIndustry() {
-        return industry;
-    }
-    public String getCompanyLogo() {
-        return companyLogo;
-    }
-    public String getCompanyDescription() {
-        return companyDescription;
-    }
-    public String getCompanyHeadquarters() {
-        return companyHeadquarters;
-    }
+    // Getters
+    public String getCompanyName() { return companyName; }
+    public String getCompanyWebsite() { return companyWebsite; }
+    public String getCompanySize() { return companySize; }
+    public String getIndustry() { return industry; }
+    public String getCompanyLogo() { return companyLogo; }
+    public String getCompanyDescription() { return companyDescription; }
+    public String getCompanyHeadquarters() { return companyHeadquarters; }
 
     @Override
     public String toString() {
-        return "companyName='" + companyName + '\'' +
-                ", industry='" + industry ;
+        return "Employer{" +
+                "companyName='" + companyName + '\'' +
+                ", industry='" + industry + '\'' +
+                ", headquarters='" + companyHeadquarters + '\'' +
+                '}';
     }
 
     @Override
     public boolean equals(Object o) {
+        if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Employer employer = (Employer) o;
         return Objects.equals(companyName, employer.companyName) &&
@@ -75,6 +65,7 @@ public class Employer {
         return Objects.hash(companyName, companyWebsite, companySize, industry, companyLogo, companyDescription, companyHeadquarters);
     }
 
+    // 3. Builder Class
     public static class Builder {
         private String companyName;
         private String companyWebsite;
