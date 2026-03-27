@@ -19,6 +19,7 @@ public class Employer extends User {
 
 
     private Employer(Builder builder) {
+        super();
         this.companyName = builder.companyName;
         this.companyWebsite = builder.companyWebsite;
         this.companySize = builder.companySize;
