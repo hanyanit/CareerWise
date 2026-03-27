@@ -7,7 +7,10 @@ import za.ac.cput.domain.User;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
-
+/**
+ * Employer.java
+ * Author: Hanyani Masinge, 222693452
+ */
 class UserRepositoryTest {
 
     private UserRepository repository;
