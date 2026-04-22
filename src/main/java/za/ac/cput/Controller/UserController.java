@@ -16,9 +16,16 @@ public class UserController {
     private UserService userService;
 
     @PostMapping("/signUp")
-    public User createUser(@RequestBody User user){
+    public User createUser(@RequestBody User user) throws Exception {
         return userService.signUp(user);
     }
+
+    @PostMapping("/login")
+    public User login(@RequestBody String email, String password) throws Exception {
+        return userService.login(email,password);
+    }
+
+
 
 
 }
