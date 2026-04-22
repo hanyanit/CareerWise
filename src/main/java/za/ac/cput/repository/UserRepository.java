@@ -6,7 +6,13 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+/**
+ * Employer.java
+ * Author:Hanyani Masinge, 222693452
+ * Date: 17 March 2026
+ */
 
+@Deprecated
 public class UserRepository implements IUserRepository{
     private static UserRepository repository = null;
     private Map<String, User> User;

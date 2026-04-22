@@ -19,7 +19,8 @@ public class Employer extends User {
 
 
     private Employer(Builder builder) {
-        super();
+
+
         this.companyName = builder.companyName;
         this.companyWebsite = builder.companyWebsite;
         this.companySize = builder.companySize;
@@ -29,7 +30,7 @@ public class Employer extends User {
         this.companyHeadquarters = builder.companyHeadquarters;
     }
 
-
+    // Getters
     public String getCompanyName() { return companyName; }
     public String getCompanyWebsite() { return companyWebsite; }
     public String getCompanySize() { return companySize; }
@@ -66,8 +67,10 @@ public class Employer extends User {
         return Objects.hash(companyName, companyWebsite, companySize, industry, companyLogo, companyDescription, companyHeadquarters);
     }
 
-
+    // 3. Builder Class
     public static class Builder {
+        public User.Builder userId;
+        public Object email;
         private String companyName;
         private String companyWebsite;
         private String companySize;

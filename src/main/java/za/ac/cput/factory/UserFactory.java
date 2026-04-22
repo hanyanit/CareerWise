@@ -1,6 +1,11 @@
 package za.ac.cput.factory;
 
 import za.ac.cput.domain.User;
+/**
+ * Employer.java
+ * Author: Hanyani Masinge, 222693452
+ */
+
 
 public class UserFactory {
 
@@ -22,11 +27,11 @@ public class UserFactory {
 
 
         return new User.Builder(userId, email, password)
-                .firstName(firstName)
-                .lastName(lastName)
-                .profilePicture(profilePicture)
-                .phoneNumber(phoneNumber)
-                .location(location)
+                .setFirstName(firstName)
+                .setLastName(lastName)
+                .setProfilePicture(profilePicture)
+                .setPhoneNumber(phoneNumber)
+                .setLocation(location)
                 .build();
     }
 }

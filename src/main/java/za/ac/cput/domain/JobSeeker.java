@@ -17,8 +17,8 @@ public class JobSeeker extends User {
     private List<Skill> skills;
     private List<Education> education;
 
-    private JobSeeker(Builder builder) {
-        super(builder);
+    private JobSeeker(JobSeekerBuilder builder) {
+        super(builder.userBuilder);
         this.headline = builder.headline;
         this.summary = builder.summary;
         this.resume = builder.resume;
@@ -79,89 +79,83 @@ public class JobSeeker extends User {
                 "} " + super.toString();
     }
 
-    public static class Builder extends User.Builder {
+    public static class JobSeekerBuilder {
+
+        private final User.Builder userBuilder;
+
         private String headline;
         private String summary;
         private File resume;
         private List<Skill> skills;
         private List<Education> education;
 
-        public Builder(String userId, String email, String password) {
-            super(userId, email, password);
+        public JobSeekerBuilder(String userId, String email, String password) {
+            this.userBuilder = new User.Builder(userId, email, password);
         }
 
-        // JobSeeker specific methods
-        public Builder setHeadline(String headline) {
+        public JobSeekerBuilder firstName(String firstName) {
+            this.userBuilder .setFirstName(firstName);
+            return this;
+        }
+
+        public JobSeekerBuilder lastName(String lastName) {
+            this.userBuilder.setLastName(lastName);
+            return this;
+        }
+
+        public JobSeekerBuilder profilePicture(String profilePicture) {
+            this.userBuilder.setProfilePicture(profilePicture);
+            return this;
+        }
+
+        public JobSeekerBuilder phoneNumber(String phoneNumber) {
+            this.userBuilder.setPhoneNumber(phoneNumber);
+            return this;
+        }
+
+        public JobSeekerBuilder location(String location) {
+            this.userBuilder.setLocation(location);
+            return this;
+        }
+
+        public JobSeekerBuilder headline(String headline) {
             this.headline = headline;
             return this;
         }
 
-        public Builder setSummary(String summary) {
+        public JobSeekerBuilder summary(String summary) {
             this.summary = summary;
             return this;
         }
 
-        public Builder setResume(File resume) {
+        public JobSeekerBuilder resume(File resume) {
             this.resume = resume;
             return this;
         }
 
-        public Builder setSkills(List<Skill> skills) {
+        public JobSeekerBuilder skills(List<Skill> skills) {
             this.skills = skills;
             return this;
         }
 
-        public Builder setEducation(List<Education> education) {
+        public JobSeekerBuilder education(List<Education> education) {
             this.education = education;
             return this;
         }
 
-        // Override User.Builder methods to return JobSeeker.Builder
-        @Override
-        public Builder firstName(String firstName) {
-            super.firstName(firstName);
-            return this;
-        }
+        public JobSeekerBuilder copy(JobSeeker jobSeeker) {
 
-        @Override
-        public Builder lastName(String lastName) {
-            super.lastName(lastName);
-            return this;
-        }
+                this.headline = jobSeeker.getHeadline();
+                this.summary = jobSeeker.getSummary();
+                this.resume = jobSeeker.getResume();
+                this.skills = jobSeeker.getSkills();
+                this.education = jobSeeker.getEducation();
 
-        @Override
-        public Builder profilePicture(String profilePicture) {
-            super.profilePicture(profilePicture);
-            return this;
-        }
-
-        @Override
-        public Builder phoneNumber(String phoneNumber) {
-            super.phoneNumber(phoneNumber);
-            return this;
-        }
-
-        @Override
-        public Builder location(String location) {
-            super.location(location);
-            return this;
-        }
-
-        public Builder copy(JobSeeker jobSeeker) {
-
-
-            this.firstName(jobSeeker.getFirstName())
-                    .lastName(jobSeeker.getLastName())
-                    .profilePicture(jobSeeker.getProfilePicture())
-                    .phoneNumber(jobSeeker.getPhoneNumber())
-                    .location(jobSeeker.getLocation());
-
-
-            this.headline = jobSeeker.getHeadline();
-            this.summary = jobSeeker.getSummary();
-            this.resume = jobSeeker.getResume();
-            this.skills = jobSeeker.getSkills();
-            this.education = jobSeeker.getEducation();
+                this.userBuilder.setFirstName(jobSeeker.getFirstName())
+                        .setLastName(jobSeeker.getLastName())
+                        .setPhoneNumber(jobSeeker.getPhoneNumber())
+                        .setProfilePicture(jobSeeker.getProfilePicture())
+                        .setLocation(jobSeeker.getLocation());
 
             return this;
         }

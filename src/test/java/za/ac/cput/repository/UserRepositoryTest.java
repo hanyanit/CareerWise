@@ -21,9 +21,9 @@ class UserRepositoryTest {
         repository = UserRepository.getRepository();
 
         user = new User.Builder("9204165076082", "jabu@mail.com", "Jabulani25")
-                .firstName("Jabulani")
-                .lastName("Twala")
-                .location("Pretoria")
+                .setFirstName("Jabulani")
+                .setLastName("Twala")
+                .setLocation("Pretoria")
                 .build();
 
         repository.create(user);
@@ -32,8 +32,8 @@ class UserRepositoryTest {
     @Test
     void create() {
         User newUser = new User.Builder("9603226709083", "Mike22@mail.com", "5678")
-                .firstName("Mike")
-                .lastName("Van Nieker")
+                .setFirstName("Mike")
+                .setLastName("Van Nieker")
                 .build();
 
         User created = repository.create(newUser);
@@ -53,9 +53,9 @@ class UserRepositoryTest {
     @Test
     void update() {
         User updatedUser = new User.Builder("9204165076082", "test@mail.com", "1234")
-                .firstName("UpdatedName")
-                .lastName("Twala")
-                .location("Pretoria")
+                .setFirstName("UpdatedName")
+                .setLastName("Twala")
+                .setLocation("Pretoria")
                 .build();
 
         User result = repository.update(updatedUser);

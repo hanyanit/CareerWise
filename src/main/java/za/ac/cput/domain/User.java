@@ -1,6 +1,19 @@
+
 package za.ac.cput.domain;
 
-public class User{
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+
+/**
+ * User.java
+ * Author: Hanyani Masinge, 222693452
+ */
+@Entity
+public class User {
+
+   @Id @GeneratedValue
+    private int id;
 
     private String userId;
     private String email;
@@ -43,9 +56,6 @@ public class User{
         return location;
     }
 
-    protected User() {
-    }
-
     protected User(Builder builder) {
         this.userId = builder.userId;
         this.email = builder.email;
@@ -74,27 +84,37 @@ public class User{
             this.password = password;
         }
 
-        public Builder firstName(String firstName) {
+        public Builder setUserId(String userId) {
+            this.userId = userId;
+            return this;
+        }
+
+        public Builder setEmail(String email) {
+            this.email = email;
+            return this;
+        }
+
+        public Builder setFirstName(String firstName) {
             this.firstName = firstName;
             return this;
         }
 
-        public Builder lastName(String lastName) {
+        public Builder setLastName(String lastName) {
             this.lastName = lastName;
             return this;
         }
 
-        public Builder profilePicture(String profilePicture) {
+        public Builder setProfilePicture(String profilePicture) {
             this.profilePicture = profilePicture;
             return this;
         }
 
-        public Builder phoneNumber(String phoneNumber) {
+        public Builder setPhoneNumber(String phoneNumber) {
             this.phoneNumber = phoneNumber;
             return this;
         }
 
-        public Builder location(String location) {
+        public Builder setLocation(String location) {
             this.location = location;
             return this;
         }
