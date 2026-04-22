@@ -1,9 +1,9 @@
 
 package za.ac.cput.domain;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.Id;
 
 /**
  * User.java
@@ -12,7 +12,8 @@ import javax.persistence.Id;
 @Entity
 public class User {
 
-   @Id @GeneratedValue
+   @Id
+   @GeneratedValue
     private int id;
 
     private String userId;
