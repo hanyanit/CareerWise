@@ -1,6 +1,7 @@
-package za.ac.cput.repository;
+package za.ac.cput.repository.impl;
 
 import za.ac.cput.domain.JobSeeker;
+import za.ac.cput.repository.IJobSeekerRepository;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -8,18 +9,18 @@ import java.util.List;
  * Author: Inga Mbobo, 230711723
  * Date: March 2026
  */
-public class JobSeekerRepository implements IJobSeekerRepository {
+public class IJobSeekerRepositoryImpl implements IJobSeekerRepository {
 
     private static IJobSeekerRepository repository = null;
     private List<JobSeeker> jobSeekerList;
 
-    private JobSeekerRepository() {
+    private IJobSeekerRepositoryImpl() {
         jobSeekerList = new ArrayList<>();
     }
 
     public static IJobSeekerRepository getRepository() {
         if (repository == null) {
-            repository = new JobSeekerRepository();
+            repository = new IJobSeekerRepositoryImpl();
         }
         return repository;
     }

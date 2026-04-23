@@ -3,6 +3,7 @@ package za.ac.cput.repository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import za.ac.cput.domain.Job;
+import za.ac.cput.repository.impl.JobRepository;
 
 import java.util.List;
 

@@ -1,6 +1,7 @@
-package za.ac.cput.repository;
+package za.ac.cput.repository.impl;
 
 import za.ac.cput.domain.Experience;
+import za.ac.cput.repository.IExperienceRepository;
 
 import java.util.ArrayList;
 import java.util.List;

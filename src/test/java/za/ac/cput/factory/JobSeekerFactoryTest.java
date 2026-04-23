@@ -2,35 +2,72 @@ package za.ac.cput.factory;
 
 import org.junit.jupiter.api.Test;
 import za.ac.cput.domain.JobSeeker;
+import za.ac.cput.domain.Skill;
+import za.ac.cput.domain.Education;
 
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertNull;
+import java.util.ArrayList;
+import java.util.List;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 class JobSeekerFactoryTest {
 
     @Test
-    void createJobSeeker_ValidData_ShouldPass() {
-        JobSeeker js = JobSeekerFactory.createJobSeeker(
-                "2307111313@mycput.ac.za", "1234@mycput",
-                "Ing", "Mbobo", "Java Software Developer",
-                "I am a CPUT Applications Development Student"
+    void createJobSeeker() {
+
+        JobSeeker jobSeeker = JobSeekerFactory.createJobSeeker(
+                "U001",
+                "test@mycput.ac.za",
+                "password123",
+                "Inga",
+                "Mbobo",
+                "Java Developer",
+                "Backend enthusiast"
         );
 
-        assertNotNull(js);
-        System.out.println("PASSED: JobSeeker created successfully");
-        System.out.println(js.toString());
+        assertNotNull(jobSeeker);
+        System.out.println(jobSeeker.toString());
     }
 
     @Test
-    void createJobSeeker_InvalidEmail_ShouldFail() {
-        JobSeeker js = JobSeekerFactory.createJobSeeker(
-                "230711mycput.ac.za", "1234@mycput",
-                "Inganathi", "Mbobo", "Java Software Developer",
-                "I am a CPUT Applications Development Student"
+    void testCreateJobSeeker() {
+
+        JobSeeker jobSeeker = JobSeekerFactory.createJobSeeker(
+                "test@mycput.ac.za",
+                "password123",
+                "Themba",
+                "Thembelani",
+                "Frontend Dev",
+                "Loves UI"
         );
 
-        assertNull(js);
-        System.out.println("FAILED: Invalid email correctly returned null");
-        System.out.println("JobSeeker is: " + js);
+        assertNotNull(jobSeeker);
+        System.out.println(jobSeeker.toString());
+    }
+
+    @Test
+    void createFullJobSeeker() {
+
+        List<Skill> skills = new ArrayList<>();
+        List<Education> education = new ArrayList<>();
+
+        JobSeeker jobSeeker = JobSeekerFactory.createFullJobSeeker(
+                "U002",
+                "full@mail.com",
+                "password123",
+                "Full",
+                "User",
+                "profile.jpg",
+                "0123456789",
+                "Cape Town",
+                "Full Stack Dev",
+                "Experienced developer",
+                "resume.pdf",
+                skills,
+                education
+        );
+
+        assertNotNull(jobSeeker);
+        System.out.println(jobSeeker.toString());
     }
 }

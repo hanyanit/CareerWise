@@ -1,11 +1,5 @@
 package za.ac.cput.domain;
 
-/**
- * Author: Inga Mbobo, 230711723
- * Date: March 2026
- */
-
-import java.io.File;
 import java.util.List;
 import java.util.Objects;
 
@@ -13,79 +7,64 @@ public class JobSeeker extends User {
 
     private String headline;
     private String summary;
-    private File resume;
+    private String resumePath;
     private List<Skill> skills;
     private List<Education> education;
+
+    protected JobSeeker() {
+        super();
+    }
 
     private JobSeeker(JobSeekerBuilder builder) {
         super(builder.userBuilder);
         this.headline = builder.headline;
         this.summary = builder.summary;
-        this.resume = builder.resume;
+        this.resumePath = builder.resumePath;
         this.skills = builder.skills;
         this.education = builder.education;
     }
 
-    public String getHeadline() {
-        return headline;
-    }
+    // Getters
+    public String getHeadline() { return headline; }
+    public String getSummary() { return summary; }
+    public String getResumePath() { return resumePath; }
+    public List<Skill> getSkills() { return skills; }
+    public List<Education> getEducation() { return education; }
 
-    public String getSummary() {
-        return summary;
-    }
-
-    public File getResume() {
-        return resume;
-    }
-
-    public List<Skill> getSkills() {
-        return skills;
-    }
-
-    public List<Education> getEducation() {
-        return education;
-    }
-
+    // Equals & HashCode (based on unique userId)
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (!(o instanceof JobSeeker)) return false;
         if (!super.equals(o)) return false;
         JobSeeker that = (JobSeeker) o;
-        return Objects.equals(headline, that.headline) &&
-                Objects.equals(summary, that.summary) &&
-                Objects.equals(resume, that.resume) &&
-                Objects.equals(skills, that.skills) &&
-                Objects.equals(education, that.education);
+        return Objects.equals(getUserId(), that.getUserId());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(
-                super.hashCode(),
-                headline, summary,
-                resume, skills, education
-        );
+        return Objects.hash(getUserId());
     }
-
+    
     @Override
     public String toString() {
         return "JobSeeker{" +
-                "headline='" + headline + '\'' +
+                "userId='" + getUserId() + '\'' +
+                ", name='" + getFirstName() + " " + getLastName() + '\'' +
+                ", headline='" + headline + '\'' +
                 ", summary='" + summary + '\'' +
-                ", resume=" + resume +
-                ", skills=" + skills +
-                ", education=" + education +
+                ", resumePath='" + resumePath + '\'' +
                 "} " + super.toString();
     }
 
+    // Builder design pattern
     public static class JobSeekerBuilder {
 
         private final User.Builder userBuilder;
 
         private String headline;
         private String summary;
-        private File resume;
+        private String resumePath;
         private List<Skill> skills;
         private List<Education> education;
 
@@ -93,31 +72,33 @@ public class JobSeeker extends User {
             this.userBuilder = new User.Builder(userId, email, password);
         }
 
+        // User fields
         public JobSeekerBuilder firstName(String firstName) {
-            this.userBuilder .setFirstName(firstName);
+            userBuilder.setFirstName(firstName);
             return this;
         }
 
         public JobSeekerBuilder lastName(String lastName) {
-            this.userBuilder.setLastName(lastName);
+            userBuilder.setLastName(lastName);
             return this;
         }
 
         public JobSeekerBuilder profilePicture(String profilePicture) {
-            this.userBuilder.setProfilePicture(profilePicture);
+            userBuilder.setProfilePicture(profilePicture);
             return this;
         }
 
         public JobSeekerBuilder phoneNumber(String phoneNumber) {
-            this.userBuilder.setPhoneNumber(phoneNumber);
+            userBuilder.setPhoneNumber(phoneNumber);
             return this;
         }
 
         public JobSeekerBuilder location(String location) {
-            this.userBuilder.setLocation(location);
+            userBuilder.setLocation(location);
             return this;
         }
 
+        // JobSeeker fields
         public JobSeekerBuilder headline(String headline) {
             this.headline = headline;
             return this;
@@ -128,8 +109,8 @@ public class JobSeeker extends User {
             return this;
         }
 
-        public JobSeekerBuilder resume(File resume) {
-            this.resume = resume;
+        public JobSeekerBuilder resumePath(String resumePath) {
+            this.resumePath = resumePath;
             return this;
         }
 
@@ -140,23 +121,6 @@ public class JobSeeker extends User {
 
         public JobSeekerBuilder education(List<Education> education) {
             this.education = education;
-            return this;
-        }
-
-        public JobSeekerBuilder copy(JobSeeker jobSeeker) {
-
-                this.headline = jobSeeker.getHeadline();
-                this.summary = jobSeeker.getSummary();
-                this.resume = jobSeeker.getResume();
-                this.skills = jobSeeker.getSkills();
-                this.education = jobSeeker.getEducation();
-
-                this.userBuilder.setFirstName(jobSeeker.getFirstName())
-                        .setLastName(jobSeeker.getLastName())
-                        .setPhoneNumber(jobSeeker.getPhoneNumber())
-                        .setProfilePicture(jobSeeker.getProfilePicture())
-                        .setLocation(jobSeeker.getLocation());
-
             return this;
         }
 
