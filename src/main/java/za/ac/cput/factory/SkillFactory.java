@@ -18,21 +18,17 @@ public class SkillFactory {
             return null;
         }
 
-//        if (yearsOfExperience < 0) {
-//            return null;
-//        } same as the code below
-
-        if(!Helper.isValidNumber(yearsOfExperience)) {
+        if (yearsOfExperience < 0) {
             return null;
         }
 
-       String skillId = UUID.randomUUID().toString();
+        String skillId = UUID.randomUUID().toString();
 
         return new Skill.Builder()
-                .skillId(skillId)
-                .skillName(name)
-                .skillCategory(category)
-                .yearsOfExperience(yearsOfExperience)
+                .setSkillId(skillId)
+                .setName(name)
+                .setCategory(category)
+                .setYearsOfExperience(yearsOfExperience)
                 .build();
     }
 }

@@ -1,15 +1,19 @@
 package za.ac.cput.domain;
 
-import java.util.List;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Table;
+
 import java.util.Objects;
 
+@Entity
+@Table(name = "job_seeker")
 public class JobSeeker extends User {
 
     private String headline;
     private String summary;
     private String resumePath;
-    private List<Skill> skills;
-    private List<Education> education;
+    private String skills;
+    private String education;
 
     protected JobSeeker() {
         super();
@@ -25,12 +29,25 @@ public class JobSeeker extends User {
     }
 
 
-    public String getHeadline() { return headline; }
-    public String getSummary() { return summary; }
-    public String getResumePath() { return resumePath; }
-    public List<Skill> getSkills() { return skills; }
-    public List<Education> getEducation() { return education; }
+    public String getHeadline() {
+        return headline;
+    }
 
+    public String getSummary() {
+        return summary;
+    }
+
+    public String getResumePath() {
+        return resumePath;
+    }
+
+    public String getSkills() {
+        return skills;
+    }
+
+    public String getEducation() {
+        return education;
+    }
 
     @Override
     public boolean equals(Object o) {
@@ -65,8 +82,8 @@ public class JobSeeker extends User {
         private String headline;
         private String summary;
         private String resumePath;
-        private List<Skill> skills;
-        private List<Education> education;
+        private String skills;
+        private String education;
 
         public JobSeekerBuilder(String userId, String email, String password) {
             this.userBuilder = new User.Builder(userId, email, password);
@@ -114,12 +131,12 @@ public class JobSeeker extends User {
             return this;
         }
 
-        public JobSeekerBuilder skills(List<Skill> skills) {
+        public JobSeekerBuilder skills(String skills) {
             this.skills = skills;
             return this;
         }
 
-        public JobSeekerBuilder education(List<Education> education) {
+        public JobSeekerBuilder education(String education) {
             this.education = education;
             return this;
         }
