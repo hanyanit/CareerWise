@@ -11,6 +11,4 @@ public interface IService <T, ID>{
 //    findById()
 //    findAll()
 //    deleteById()
-
-    //we shoild delete this class it forces us to unnecesarry abstraction
 }

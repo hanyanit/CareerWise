@@ -15,7 +15,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class SkillRepositoryImplTest {
 
-    private ISkillRepository repository;
+    private SkillRepository repository;
     private Skill skill1;
     private Skill skill2;
 

@@ -11,10 +11,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
-public class JobSeekerServiceImpl implements  IJobSeekerService{
+public class JobSeekerServiceImpl implements IJobSeekerService {
 
     // Singleton instance
-//    private static IJobSeekerService service = null;
+//    private static JobSeekerService service = null;
 
     // Repository (singleton from your implementation)
 //    private final IJobSeekerRepository repository;
@@ -30,7 +30,7 @@ public class JobSeekerServiceImpl implements  IJobSeekerService{
 //    }
 
     // Singleton getter
-//    public static IJobSeekerService getService() {
+//    public static JobSeekerService getService() {
 //        if (service == null) {
 //            service = new JobSeekerServiceImpl();
 //        }
