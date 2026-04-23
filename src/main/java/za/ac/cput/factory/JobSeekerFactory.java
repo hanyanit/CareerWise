@@ -1,19 +1,12 @@
 package za.ac.cput.factory;
 
-/**
- * Author: Inga Mbobo, 230711723
- * Date: March 2026
- */
-
 import za.ac.cput.domain.JobSeeker;
 import za.ac.cput.util.Helper;
-
-import java.io.File;
-import java.util.List;
-import java.util.UUID;
-
 import za.ac.cput.domain.Skill;
 import za.ac.cput.domain.Education;
+
+import java.util.List;
+import java.util.UUID;
 
 public class JobSeekerFactory {
 
@@ -33,11 +26,11 @@ public class JobSeekerFactory {
             return null;
         }
 
-        return new JobSeeker.Builder(userId, email, password)
+        return new JobSeeker.JobSeekerBuilder(userId, email, password)
                 .firstName(firstName)
                 .lastName(lastName)
-                .setHeadline(headline)
-                .setSummary(summary)
+                .headline(headline)
+                .summary(summary)
                 .build();
     }
 
@@ -59,11 +52,11 @@ public class JobSeekerFactory {
 
         String userId = UUID.randomUUID().toString();
 
-        return new JobSeeker.Builder(userId, email, password)
+        return new JobSeeker.JobSeekerBuilder(userId, email, password)
                 .firstName(firstName)
                 .lastName(lastName)
-                .setHeadline(headline)
-                .setSummary(summary)
+                .headline(headline)
+                .summary(summary)
                 .build();
     }
 
@@ -71,50 +64,47 @@ public class JobSeekerFactory {
                                                 String firstName, String lastName,
                                                 String profilePicture, String phoneNumber, String location,
                                                 String headline, String summary,
-                                                File resume, List<Skill> skills, List<Education> education) {
+                                                String resumePath, List<Skill> skills, List<Education> education) {
 
-        if (Helper.isNullOrEmpty(userId) || Helper.isNullOrEmpty(email) || Helper.isNullOrEmpty(password)) {
+        if (Helper.isNullOrEmpty(userId) || Helper.isNullOrEmpty(email) || Helper.isNullOrEmpty(password) ||
+                !Helper.isValidEmail(email) || Helper.isNullOrEmpty(headline) || Helper.isNullOrEmpty(summary)) {
             return null;
         }
 
-        if (!Helper.isValidEmail(email)) {
-            return null;
-        }
 
-        if (Helper.isNullOrEmpty(headline) || Helper.isNullOrEmpty(summary)) {
-            return null;
-        }
 
-        JobSeeker.Builder builder = new JobSeeker.Builder(userId, email, password)
-                .firstName(firstName)
-                .lastName(lastName)
-                .setHeadline(headline)
-                .setSummary(summary);
+        JobSeeker.JobSeekerBuilder builder =
+                new JobSeeker.JobSeekerBuilder(userId, email, password)
+                        .firstName(firstName)
+                        .lastName(lastName)
+                        .headline(headline)
+                        .summary(summary);
 
-        // Add optional fields
-        if (!Helper.isNullOrEmpty(profilePicture)) {
-            builder.profilePicture(profilePicture);
-        }
 
-        if (!Helper.isNullOrEmpty(phoneNumber)) {
-            builder.phoneNumber(phoneNumber);
-        }
+//        if (!Helper.isNullOrEmpty(profilePicture)) {
+//            builder.profilePicture(profilePicture);
+//        }
+//
+//        if (!Helper.isNullOrEmpty(phoneNumber)) {
+//            builder.phoneNumber(phoneNumber);
+//        }
+//
+//        if (!Helper.isNullOrEmpty(location)) {
+//            builder.location(location);
+//        }
+//
+//        if (!Helper.isNullOrEmpty(resumePath)) {
+//            builder.resumePath(resumePath);
+//        }
+//
+//        if (skills != null && !skills.isEmpty()) {
+//            builder.skills(skills);
+//        }
+//
+//        if (education != null && !education.isEmpty()) {
+//            builder.education(education);
+//        }
 
-        if (!Helper.isNullOrEmpty(location)) {
-            builder.location(location);
-        }
-
-        if (resume != null) {
-            builder.setResume(resume);
-        }
-
-        if (skills != null && !skills.isEmpty()) {
-            builder.setSkills(skills);
-        }
-
-        if (education != null && !education.isEmpty()) {
-            builder.setEducation(education);
-        }
 
         return builder.build();
     }

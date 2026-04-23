@@ -3,6 +3,7 @@ package za.ac.cput.repository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import za.ac.cput.domain.Skill;
+import za.ac.cput.repository.impl.SkillRepositoryImpl;
 /**
  * Employer.java
  * Author: Hanyani Masinge, 222693452
@@ -12,7 +13,7 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class SkillRepositoryTest {
+class SkillRepositoryImplTest {
 
     private ISkillRepository repository;
     private Skill skill1;
@@ -20,7 +21,7 @@ class SkillRepositoryTest {
 
     @BeforeEach
     void setUp() {
-        repository = SkillRepository.getRepository();
+        repository = SkillRepositoryImpl.getRepository();
 
         // Clear repository before each test (important because of Singleton)
         repository.getAll().clear();

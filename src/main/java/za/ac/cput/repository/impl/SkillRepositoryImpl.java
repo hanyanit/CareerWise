@@ -1,6 +1,7 @@
-package za.ac.cput.repository;
+package za.ac.cput.repository.impl;
 
 import za.ac.cput.domain.Skill;
+import za.ac.cput.repository.ISkillRepository;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -8,18 +9,18 @@ import java.util.List;
  * Author: Inga Mbobo, 230711723
  * Date: March 2026
  */
-public class SkillRepository implements ISkillRepository {
+public class SkillRepositoryImpl implements ISkillRepository {
 
     private static ISkillRepository repository = null;
     private List<Skill> skillsList;
 
-    private SkillRepository() {
+    private SkillRepositoryImpl() {
         skillsList = new ArrayList<>();
     }
 
     public static ISkillRepository getRepository() {
         if (repository == null) {
-            repository = new SkillRepository();
+            repository = new SkillRepositoryImpl();
         }
         return repository;
     }

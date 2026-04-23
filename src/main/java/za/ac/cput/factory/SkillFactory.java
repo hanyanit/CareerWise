@@ -12,7 +12,7 @@ import java.util.UUID;
  */
 public class SkillFactory {
 
-    public static Skill createSkill(String name, String category, float yearsOfExperience) {
+    public static Skill createSkill(String name, String category, int yearsOfExperience) {
 
         if (Helper.isNullOrEmpty(name) || Helper.isNullOrEmpty(category)) {
             return null;

@@ -4,6 +4,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import za.ac.cput.domain.JobSeeker;
 import za.ac.cput.factory.JobSeekerFactory;
+import za.ac.cput.repository.impl.JobSeekerRepositoryImpl;
 
 import java.util.List;
 
@@ -13,7 +14,7 @@ import static org.junit.jupiter.api.Assertions.*;
  * Author: Inga Mbobo, 230711723
  * Date: March 2026
  */
-class JobSeekerRepositoryTest {
+class JobSeekerRepositoryImplTest {
 
     private IJobSeekerRepository repository;
     private JobSeeker testJobSeeker1;
@@ -21,7 +22,7 @@ class JobSeekerRepositoryTest {
 
     @BeforeEach
     void setUp() {
-        repository = JobSeekerRepository.getRepository();
+        repository = JobSeekerRepositoryImpl.getRepository();
 
         // Clear the repository before each test
         List<JobSeeker> all = repository.getAll();
@@ -50,8 +51,8 @@ class JobSeekerRepositoryTest {
 
     @Test
     void getRepository() {
-        assertNotNull(JobSeekerRepository.getRepository());
-        assertSame(repository, JobSeekerRepository.getRepository());
+        assertNotNull(JobSeekerRepositoryImpl.getRepository());
+        assertSame(repository, JobSeekerRepositoryImpl.getRepository());
     }
 
     @Test
