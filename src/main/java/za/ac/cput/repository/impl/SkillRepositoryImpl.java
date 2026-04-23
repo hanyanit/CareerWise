@@ -9,6 +9,8 @@
 // * Author: Inga Mbobo, 230711723
 // * Date: March 2026
 // */
+//
+//@Deprecated
 //public class SkillRepositoryImpl implements SkillRepository {
 //
 //    private static SkillRepository repository = null;

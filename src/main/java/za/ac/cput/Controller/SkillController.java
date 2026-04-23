@@ -33,7 +33,7 @@ public class SkillController {
         return this.service.update(skill);
     }
 
-    @DeleteMapping("/delete")
+    @DeleteMapping("/delete/{skillId}")
     private boolean delete(@PathVariable String id){
         return this.service.delete(id);
     }
