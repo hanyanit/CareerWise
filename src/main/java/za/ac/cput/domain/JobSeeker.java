@@ -24,14 +24,14 @@ public class JobSeeker extends User {
         this.education = builder.education;
     }
 
-    // Getters
+
     public String getHeadline() { return headline; }
     public String getSummary() { return summary; }
     public String getResumePath() { return resumePath; }
     public List<Skill> getSkills() { return skills; }
     public List<Education> getEducation() { return education; }
 
-    // Equals & HashCode (based on unique userId)
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

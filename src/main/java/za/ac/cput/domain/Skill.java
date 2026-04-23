@@ -9,7 +9,7 @@ public class Skill {
     private String skillId;
     private String name;
     private String category;
-    private float yearsOfExperience;
+    private int yearsOfExperience;
 
     public Skill() {
     }
@@ -33,7 +33,7 @@ public class Skill {
         return category;
     }
 
-    public float getYearsOfExperience() {
+    public int getYearsOfExperience() {
         return yearsOfExperience;
     }
 
@@ -69,7 +69,7 @@ public class Skill {
         private String skillId;
         private String name;
         private String category;
-        private float yearsOfExperience;
+        private int yearsOfExperience;
 
         public Builder skillId(String skillId) {
             this.skillId = skillId;
@@ -85,7 +85,7 @@ public class Skill {
             return this;
         }
 
-        public Builder yearsOfExperience(float yearsOfExperience) {
+        public Builder yearsOfExperience(int yearsOfExperience) {
             this.yearsOfExperience = yearsOfExperience;
             return this;
         }
