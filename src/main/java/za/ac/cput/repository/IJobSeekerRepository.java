@@ -6,8 +6,8 @@
 //
 //import java.util.List;
 //
-////@Deprecated
-//@Repository
+//@Deprecated
+////@Repository
 //public interface IJobSeekerRepository extends JpaRepository<JobSeeker, String> { //extends IRepository<JobSeeker, String>
 //    List<JobSeeker> getAll();
 //}

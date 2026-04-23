@@ -9,6 +9,9 @@
 // * Author: Inga Mbobo, 230711723
 // * Date: March 2026
 // */
+//
+//
+//@Deprecated
 //public class JobSeekerRepositoryImpl implements IJobSeekerRepository {
 //
 //    private static IJobSeekerRepository repository = null;
