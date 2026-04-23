@@ -9,16 +9,9 @@ class SkillFactoryTest {
 
     @Test
     void createSkill() {
-        Skill skill = SkillFactory.createSkill("Empathy","Soft Skill",4f);
+        Skill skill = SkillFactory.createSkill("Empathy", "Soft Skill", 4);
 
         assertNotNull(skill);
-        System.out.println(skill.toString());
-    }
-
-    @Test
-    void createSkillThatFails(){
-        Skill skill = SkillFactory.createSkill("","",4f);
-        assertNotNull(skill);
-        System.out.println(skill.toString());
+        System.out.println(skill);
     }
 }

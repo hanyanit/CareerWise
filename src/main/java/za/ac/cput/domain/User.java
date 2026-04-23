@@ -4,12 +4,14 @@ package za.ac.cput.domain;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 
 /**
  * User.java
  * Author: Hanyani Masinge, 222693452
  */
 @Entity
+@Table(name = "users")
 public class User {
 
    @Id

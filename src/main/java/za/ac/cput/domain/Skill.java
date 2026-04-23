@@ -1,17 +1,22 @@
 package za.ac.cput.domain;
 
+import jakarta.persistence.*;
 import java.util.Objects;
+
 /**
  * Author: Inga Mbobo, 230711723
  * Date: March 2026
  */
+@Entity
+@Table(name = "skill")
 public class Skill {
-    private String skillId;
+    @Id
+    protected String skillId;
     private String name;
     private String category;
     private int yearsOfExperience;
 
-    public Skill() {
+    protected Skill() {
     }
 
     private Skill(Builder builder){
@@ -66,26 +71,27 @@ public class Skill {
     }
 
     public static class Builder {
-        private String skillId;
+        protected String skillId;
         private String name;
         private String category;
         private int yearsOfExperience;
 
-        public Builder skillId(String skillId) {
+        public Builder setSkillId(String skillId) {
             this.skillId = skillId;
             return this;
         }
-        public Builder skillName(String skillName) {
-            this.name = skillName;
+
+        public Builder setName(String name) {
+            this.name = name;
             return this;
         }
 
-        public Builder skillCategory(String skillCategory) {
-            this.category = skillCategory;
-            return this;
+        public Builder setCategory(String category) {
+            this.category = category;
+            return  this;
         }
 
-        public Builder yearsOfExperience(int yearsOfExperience) {
+        public Builder setYearsOfExperience(int yearsOfExperience) {
             this.yearsOfExperience = yearsOfExperience;
             return this;
         }
@@ -102,5 +108,4 @@ public class Skill {
             return new Skill(this);
         }
     }
-
 }

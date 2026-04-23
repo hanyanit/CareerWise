@@ -40,6 +40,6 @@ public class SkillServiceImp implements ISkillService {
 
     @Override
     public List<Skill> getAll() {
-        return skillRepository.getAll();
+        return skillRepository.findAll();
     }
 }

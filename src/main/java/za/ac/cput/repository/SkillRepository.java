@@ -11,5 +11,5 @@ import java.util.List;
  */
 @Repository
 public interface SkillRepository extends JpaRepository<Skill, String> { //IRepository
-    List<Skill> getAll();
+//    List<Skill> getAll();
 }
