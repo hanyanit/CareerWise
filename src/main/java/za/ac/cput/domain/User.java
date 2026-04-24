@@ -1,10 +1,7 @@
 
 package za.ac.cput.domain;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 
 /**
  * User.java
@@ -15,8 +12,8 @@ import jakarta.persistence.Table;
 public class User {
 
    @Id
-   @GeneratedValue
-    private int id;
+   @GeneratedValue(strategy = GenerationType.IDENTITY)
+   private int id;
 
     private String userId;
     private String email;
@@ -27,6 +24,22 @@ public class User {
     private String phoneNumber;
     private String location;
 
+//    public User(int id) {
+//        this.id = id;
+//    }
+
+    protected User() {}
+
+    protected User(Builder builder) {
+        this.userId = builder.userId;
+        this.email = builder.email;
+        this.password = builder.password;
+        this.firstName = builder.firstName;
+        this.lastName = builder.lastName;
+        this.profilePicture = builder.profilePicture;
+        this.phoneNumber = builder.phoneNumber;
+        this.location = builder.location;
+    }
     public String getUserId() {
         return userId;
     }
@@ -59,30 +72,18 @@ public class User {
         return location;
     }
 
-    protected User() {
-    }
 
-    protected User(Builder builder) {
-        this.userId = builder.userId;
-        this.email = builder.email;
-        this.password = builder.password;
-        this.firstName = builder.firstName;
-        this.lastName = builder.lastName;
-        this.profilePicture = builder.profilePicture;
-        this.phoneNumber = builder.phoneNumber;
-        this.location = builder.location;
-    }
 
 
     public static class Builder {
-        private String userId;
-        private String email;
-        private String password;
-        private String firstName;
-        private String lastName;
-        private String profilePicture;
-        private String phoneNumber;
-        private String location;
+        protected String userId;
+        protected String email;
+        protected String password;
+        protected String firstName;
+        protected String lastName;
+        protected String profilePicture;
+        protected String phoneNumber;
+        protected String location;
 
         public Builder(String userId, String email, String password) {
             this.userId = userId;
