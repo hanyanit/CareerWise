@@ -1,6 +1,7 @@
 package za.ac.cput.Service.impl;
 
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RestController;
 import za.ac.cput.Service.ISkillService;
 import za.ac.cput.domain.Skill;
 import za.ac.cput.repository.SkillRepository;

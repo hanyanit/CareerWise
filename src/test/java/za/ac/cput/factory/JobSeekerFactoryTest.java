@@ -8,6 +8,7 @@ import za.ac.cput.domain.Education;
 import java.util.ArrayList;
 import java.util.List;
 
+import static org.hibernate.validator.internal.util.Contracts.assertNotNull;
 import static org.junit.jupiter.api.Assertions.*;
 
 class JobSeekerFactoryTest {
