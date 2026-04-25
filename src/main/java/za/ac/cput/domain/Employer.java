@@ -1,5 +1,8 @@
 package za.ac.cput.domain;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+
 import java.util.Objects;
 
 /**
@@ -8,8 +11,11 @@ import java.util.Objects;
  * Date: 17 March 2026
  */
 
-public class Employer extends User {
+@Entity
+public abstract class Employer extends User {
+    @Id
     private String companyName;
+
     private String companyWebsite;
     private String companySize;
     private String industry;
@@ -30,7 +36,11 @@ public class Employer extends User {
         this.companyHeadquarters = builder.companyHeadquarters;
     }
 
-    // Getters
+    protected Employer() {
+
+    }
+
+
     public String getCompanyName() { return companyName; }
     public String getCompanyWebsite() { return companyWebsite; }
     public String getCompanySize() { return companySize; }
@@ -67,7 +77,7 @@ public class Employer extends User {
         return Objects.hash(companyName, companyWebsite, companySize, industry, companyLogo, companyDescription, companyHeadquarters);
     }
 
-    // 3. Builder Class
+
     public static class Builder extends User.Builder{
 
         public User.Builder userId;

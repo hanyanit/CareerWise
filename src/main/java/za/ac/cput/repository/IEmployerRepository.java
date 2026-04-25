@@ -1,5 +1,7 @@
 package za.ac.cput.repository;
 
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 import za.ac.cput.domain.Employer;
 import java.util.List;
 
@@ -9,6 +11,7 @@ import java.util.List;
  * Date: 24 March 2026
  */
 
-public interface IEmployerRepository extends IRepository<Employer, String> {
-    List<Employer> getAll();
+@Repository
+public interface IEmployerRepository extends JpaRepository<Employer, String> {
+
 }
