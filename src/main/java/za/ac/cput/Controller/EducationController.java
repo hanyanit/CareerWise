@@ -1,5 +1,6 @@
 package za.ac.cput.Controller;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import za.ac.cput.Service.IEducationService;
 import za.ac.cput.domain.Education;
@@ -12,6 +13,7 @@ public class EducationController {
 
     private IEducationService educationServiceRepo;
 
+    @Autowired
     public EducationController(IEducationService educationServiceRepo) {
         this.educationServiceRepo = educationServiceRepo;
     }

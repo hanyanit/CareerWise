@@ -1,6 +1,8 @@
 package za.ac.cput.Controller;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import za.ac.cput.Service.IEducationService;
 import za.ac.cput.Service.IJobService;
 import za.ac.cput.domain.Job;
 
@@ -11,6 +13,11 @@ import java.util.List;
 public class JobController {
 
     private IJobService jobServiceRepo;
+
+    @Autowired
+    public JobController(IJobService jobServiceRepo) {
+        this.jobServiceRepo = jobServiceRepo;
+    }
 
     @PostMapping("/create")
     public Job create(@RequestBody Job job){
