@@ -1,5 +1,10 @@
 package za.ac.cput.domain;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
+
 import java.time.LocalDate;
 import java.util.Objects;
 
@@ -8,15 +13,22 @@ import java.util.Objects;
  * Date: March 2026
  */
 
+
+@Entity
+@Table(name = "Education")
 public class Education {
 
-    private final String educationId;
-    private final String institution;
-    private final String degree;
-    private final String fieldOfStudy;
-    private final LocalDate startDate;
-    private final LocalDate endDate;
-    private final String description;
+    @Id
+    @GeneratedValue
+    private int id;
+
+    private String educationId;
+    private String institution;
+    private String degree;
+    private String fieldOfStudy;
+    private LocalDate startDate;
+    private LocalDate endDate;
+    private String description;
 
     private Education(Builder builder) {
         this.educationId = builder.educationId;
@@ -28,6 +40,9 @@ public class Education {
         this.description = builder.description;
     }
 
+    protected Education(){
+
+    }
     public String getEducationId() {return educationId; }
     public String getInstitution() { return institution; }
     public String getDegree() { return degree; }

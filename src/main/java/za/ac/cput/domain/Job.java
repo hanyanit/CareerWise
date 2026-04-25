@@ -1,5 +1,10 @@
 package za.ac.cput.domain;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
+
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Objects;
@@ -8,19 +13,29 @@ import java.util.Objects;
  * Author: Phumlani Mdlalo, 241093813
  * Date: March 2026
  */
+
+@Entity
+@Table(name = "Job")
 public class Job {
 
-    private final String       jobId;
-    private final String       title;
-    private final String       description;
-    private final List<String> requirements;
-    private final List<String> responsibilities;
-    private final String       location;
-    private final Boolean      remoteOption;
-    private final String       salaryRange;
-    private final String       employmentType;
-    private final LocalDate         deadlineDate;
-    private final String       status;
+    @Id
+    @GeneratedValue
+    private int id;
+
+    private String jobId;
+    private String title;
+    private String description;
+    private List<String> requirements;
+    private List<String> responsibilities;
+    private String location;
+    private Boolean remoteOption;
+    private String salaryRange;
+    private String employmentType;
+    private LocalDate deadlineDate;
+    private String status;
+
+    protected Job() {
+    }
 
     private Job(Builder builder) {
         this.jobId = builder.jobId;
