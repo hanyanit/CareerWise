@@ -18,9 +18,9 @@ public class Employer extends User {
     private String companyHeadquarters;
 
 
-    private Employer(Builder builder) {
+    public Employer(Builder builder) {
 
-
+        super(builder);
         this.companyName = builder.companyName;
         this.companyWebsite = builder.companyWebsite;
         this.companySize = builder.companySize;
@@ -68,7 +68,8 @@ public class Employer extends User {
     }
 
     // 3. Builder Class
-    public static class Builder {
+    public static class Builder extends User.Builder{
+
         public User.Builder userId;
         public Object email;
         private String companyName;
@@ -78,6 +79,10 @@ public class Employer extends User {
         private String companyLogo;
         private String companyDescription;
         private String companyHeadquarters;
+
+        public Builder() {
+            super(null, null, null);
+        }
 
         public Builder setCompanyName(String companyName) {
             this.companyName = companyName;

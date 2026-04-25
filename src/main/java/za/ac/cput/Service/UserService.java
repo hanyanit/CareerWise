@@ -1,5 +1,6 @@
 package za.ac.cput.Service;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestBody;
 import za.ac.cput.domain.User;
@@ -7,8 +8,12 @@ import za.ac.cput.repository.UserRepo;
 
 @Service
 public class UserService {
+    @Autowired
+   private  UserRepo userRepo;
 
-    UserRepo userRepo;
+    public UserService(UserRepo userRepo) {
+        this.userRepo = userRepo;
+    }
 
     public User signUp  ( User user)throws Exception{
 
