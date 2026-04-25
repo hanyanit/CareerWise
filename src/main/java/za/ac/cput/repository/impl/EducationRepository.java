@@ -1,6 +1,7 @@
-package za.ac.cput.repository;
+package za.ac.cput.repository.impl;
 
 import za.ac.cput.domain.Education;
+import za.ac.cput.repository.IEducationRepository;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -9,7 +10,7 @@ import java.util.List;
  * Author: Phumlani Mdlalo, 241093813
  * Date: March 2026
  */
-
+@Deprecated
 public class EducationRepository implements IEducationRepository {
 
     private static IEducationRepository repository = null;

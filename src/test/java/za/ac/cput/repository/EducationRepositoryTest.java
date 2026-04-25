@@ -3,6 +3,7 @@ package za.ac.cput.repository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import za.ac.cput.domain.Education;
+import za.ac.cput.repository.impl.EducationRepository;
 
 import static org.junit.jupiter.api.Assertions.*;
 

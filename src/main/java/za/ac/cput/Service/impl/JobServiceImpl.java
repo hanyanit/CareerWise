@@ -1,72 +1,47 @@
-package za.ac.cput.repository.impl;
+package za.ac.cput.Service.impl;
 
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Service;
+import za.ac.cput.Service.IJobService;
 import za.ac.cput.domain.Job;
 import za.ac.cput.repository.IJobRepository;
 
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Author: Phumlani Mdlalo, 241093813
- * Date: March 2026
- */
-@Deprecated
-public class JobRepository implements IJobRepository {
+@Service
+public class JobServiceImpl implements IJobService {
 
-    private static IJobRepository repository = null;
+    private final IJobRepository repository;
     private List<Job> jobList;
 
-    private JobRepository() {
-        jobList = new ArrayList<>();
-    }
-
-    public static IJobRepository getRepository() {
-        if (repository == null) {
-            repository = new JobRepository();
-        }
-        return repository;
+    public JobServiceImpl(@Qualifier("IJobRepository") IJobRepository repository) {
+        this.repository = repository;
     }
 
     @Override
     public Job create(Job job) {
-        boolean success = jobList.add(job);
-        if (success) return job;
-        return null;
+        return repository.save(job);
     }
 
     @Override
-    public Job read(String jobId) {
-        for (Job job : jobList) {
-            if (job.getJobId().equals(jobId)) {
-                return job;
-            }
-        }
-        return null;
+    public Job read(String id) { return repository.findById(id).orElse(null);
     }
 
     @Override
     public Job update(Job job) {
-        String id = job.getJobId();
-        Job oldJob = read(id);
-        if (oldJob == null) return null;
-
-        boolean success = jobList.remove(oldJob);
-        if (!success) return null;
-
-        if (jobList.add(job)) return job;
-        return null;
+        return repository.save(job);
     }
 
     @Override
-    public boolean delete(String jobId) {
-        Job toDelete = read(jobId);
-        if (toDelete == null) return false;
-        return jobList.remove(toDelete);
+    public boolean delete(String id) {
+        repository.deleteById(id);
+        return true;
     }
 
     @Override
     public List<Job> getAll() {
-        return new ArrayList<>(jobList);
+        return repository.findAll();
     }
 
     @Override
