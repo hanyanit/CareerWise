@@ -20,47 +20,47 @@ public class JobController {
     }
 
     @PostMapping("/create")
-    public Job create(@RequestBody Job job){
+    public Job create(@RequestBody Job job) {
         return this.jobServiceRepo.create(job);
     }
 
     @GetMapping("/read")
-    public Job read(String id){
+    public Job read(@RequestParam String id) {
         return this.jobServiceRepo.read(id);
     }
 
     @PutMapping("/update")
-    public Job update(Job job){
+    public Job update(@RequestBody Job job) {
         return this.jobServiceRepo.update(job);
     }
 
-    @DeleteMapping("/delete{jobId}")
-    public boolean delete(String id){
+    @DeleteMapping("/delete/{jobId}")
+    public boolean delete(@PathVariable("jobId") String id) {
         return this.jobServiceRepo.delete(id);
     }
 
     @GetMapping("/getAll")
-    public List<Job> getAll(){
+    public List<Job> getAll() {
         return this.jobServiceRepo.getAll();
     }
 
     @GetMapping("/findOpenPositions")
-    public List<Job> findOpenPositions(){
+    public List<Job> findOpenPositions() {
         return this.jobServiceRepo.findOpenPositions();
     }
 
     @GetMapping("/findJobsByLocation")
-    public List<Job> findJobsByLocation(String location){
+    public List<Job> findJobsByLocation(@RequestParam String location) {
         return this.jobServiceRepo.findJobsByLocation(location);
     }
 
     @GetMapping("/findJobsByEmploymentType")
-    public List<Job> findJobsByEmploymentType(String employmentType){
+    public List<Job> findJobsByEmploymentType(@RequestParam String employmentType) {
         return this.jobServiceRepo.findJobsByEmploymentType(employmentType);
     }
 
     @GetMapping("/findJobsByRemoteOption")
-    public List<Job> findJobsByRemoteOption(Boolean remoteOption) {
+    public List<Job> findJobsByRemoteOption(@RequestParam Boolean remoteOption) {
         return this.jobServiceRepo.findJobsByRemoteOption(remoteOption);
     }
 }

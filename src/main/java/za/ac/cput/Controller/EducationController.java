@@ -19,38 +19,37 @@ public class EducationController {
     }
 
     @PostMapping("/create")
-    public Education create(@RequestBody Education education){
+    public Education create(@RequestBody Education education) {
         return this.educationServiceRepo.create(education);
     }
 
     @GetMapping("/read")
-    public Education read(String id){
+    public Education read(@RequestParam String id) {
         return this.educationServiceRepo.read(id);
     }
 
     @PutMapping("/update")
-public Education update(@RequestBody Education education){
+    public Education update(@RequestBody Education education) {
         return this.educationServiceRepo.update(education);
     }
 
-    @DeleteMapping("/delete{userId}")
-    public boolean delete(String id){
+    @DeleteMapping("/delete/{userId}")
+    public boolean delete(@PathVariable("userId") String id) {
         return this.educationServiceRepo.delete(id);
     }
 
     @GetMapping("/getAll")
-    public List<Education> getAll(Education education){
+    public List<Education> getAll() {
         return this.educationServiceRepo.getAll();
     }
 
-    @GetMapping("/findByInstitution{institution}")
-    public List<Education> findByInstitution(String institution){
+    @GetMapping("/findByInstitution")
+    public List<Education> findByInstitution(@RequestParam String institution) {
         return this.educationServiceRepo.findByInstitution(institution);
     }
 
-    @GetMapping("/findByDegree{degree}")
-    public List<Education> findByDegree(String degree){
-        return this.educationServiceRepo.findByInstitution(degree);
+    @GetMapping("/findByDegree")
+    public List<Education> findByDegree(@RequestParam String degree) {
+        return this.educationServiceRepo.findByDegree(degree);
     }
-
 }
