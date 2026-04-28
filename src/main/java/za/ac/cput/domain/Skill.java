@@ -8,9 +8,10 @@ import java.util.Objects;
  * Date: March 2026
  */
 @Entity
-@Table(name = "skill")
+//@Table(name = "skill")
 public class Skill {
-    @Id
+
+    @Id @GeneratedValue(strategy = GenerationType.UUID)
     protected String skillId;
     private String name;
     private String category;
