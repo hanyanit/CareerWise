@@ -11,35 +11,35 @@ import java.util.List;
 @RequestMapping("/skill")
 public class SkillController {
 
-    private ISkillService service;
+    private final ISkillService service;
 
     @Autowired
     public SkillController(ISkillService service) {
         this.service = service;
     }
 
-    @PostMapping("/create")
-    private Skill create(@RequestBody Skill skill){
+    @PutMapping("/create")
+    private Skill createSkill(@RequestBody Skill skill){
         return this.service.create(skill);
     }
 
     @GetMapping("/read/{skillId}")
-    private Skill read(@PathVariable String id){
-        return this.service.read(id);
+    private Skill readSkill(@PathVariable String skillId){
+        return this.service.read(skillId);
     }
 
-    @PutMapping("/update")
-    private Skill update(Skill skill){
+    @PostMapping("/update")
+    private Skill updateSkill(Skill skill){
         return this.service.update(skill);
     }
 
     @DeleteMapping("/delete/{skillId}")
-    private boolean delete(@PathVariable String id){
-        return this.service.delete(id);
+    private boolean deleteSkill(@PathVariable String skillId){
+        return this.service.delete(skillId);
     }
 
-    @GetMapping("getAll")
-    private List<Skill> getAll(){
+    @GetMapping("/getAll")
+    private List<Skill> getAllSkills(){
         return this.service.getAll();
     }
 }

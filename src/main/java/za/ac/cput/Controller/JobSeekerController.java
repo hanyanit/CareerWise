@@ -18,28 +18,28 @@ public class JobSeekerController {
         this.jobSeekerServiceRepo = jobSeekerServiceRepo;
     }
 
-    @PostMapping("/create")
-    public JobSeeker create(@RequestBody JobSeeker jobSeeker) {
+    @PutMapping("/create")
+    public JobSeeker createJobSeeker(@RequestBody JobSeeker jobSeeker) {
         return this.jobSeekerServiceRepo.create(jobSeeker);
     }
 
-//    @GetMapping("/read/{userId}")
-//    public JobSeeker read(PathVariable String id){
-//        return this.jobSeekerServiceRepo.read(id);
-//    }
+    @GetMapping("/read/{userId}")
+    public JobSeeker readJobSeeker(@PathVariable String userId){
+        return this.jobSeekerServiceRepo.read(userId);
+    }
 
-    @PutMapping("/update")
-    public JobSeeker update(@RequestBody JobSeeker jobSeeker){
+    @PostMapping("/update")
+    public JobSeeker updateJobSeeker(@RequestBody JobSeeker jobSeeker){
         return this.jobSeekerServiceRepo.update(jobSeeker);
     }
 
-//    @DeleteMapping("/delete/{userId}")
-//    public boolean delete(@PathVariable String userId){
-//        return this.jobSeekerServiceRepo.delete(id);
-//    }
+    @DeleteMapping("/delete/{userId}")
+    public boolean delete(@PathVariable String userId){
+        return this.jobSeekerServiceRepo.delete(userId);
+    }
 
     @GetMapping("/getAll")
-    public List<JobSeeker> getAll(){
+    public List<JobSeeker> getAllJobSeekers(){
         return this.jobSeekerServiceRepo.getAll();
     }
 
