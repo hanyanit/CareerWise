@@ -12,7 +12,7 @@ import java.util.Objects;
  */
 
 @Entity
-public abstract class Employer extends User {
+public class Employer extends User {
     @Id
     private String companyName;
 
