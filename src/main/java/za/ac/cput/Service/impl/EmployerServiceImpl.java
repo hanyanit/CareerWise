@@ -1,15 +1,21 @@
 package za.ac.cput.Service.impl;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import za.ac.cput.Service.IEmployerService;
 import za.ac.cput.domain.Employer;
 import za.ac.cput.repository.IEmployerRepository;
 
 import java.util.List;
 
+@Service
 public class EmployerServiceImpl implements IEmployerService {
 
-    public static IEmployerRepository employerRepository;
 
+
+    public final IEmployerRepository employerRepository;
+
+    @Autowired
     public EmployerServiceImpl(IEmployerRepository employerRepository) {
         this.employerRepository = employerRepository;
     }
@@ -21,8 +27,8 @@ public class EmployerServiceImpl implements IEmployerService {
     }
 
     @Override
-    public Employer read(String s) {
-        return this.employerRepository.getById(s);
+    public Employer read(Integer integer) {
+        return this.employerRepository.findById(integer).orElse(null);
     }
 
     @Override
@@ -31,10 +37,11 @@ public class EmployerServiceImpl implements IEmployerService {
     }
 
     @Override
-    public boolean delete(String s) {
-       this.employerRepository.deleteById(s);
+    public boolean delete(Integer integer) {
+        this.employerRepository.deleteById(integer);
         return true;
     }
+
 
     @Override
     public List<Employer> findAll() {

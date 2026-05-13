@@ -4,7 +4,7 @@ import za.ac.cput.domain.Employer;
 
 import java.util.List;
 
-public interface IEmployerService extends IService<Employer, String> {
+public interface IEmployerService extends IService<Employer, Integer> {
     List<Employer> findAll();
     List<Employer> findByName(String name);
 }

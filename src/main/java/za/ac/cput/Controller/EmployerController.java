@@ -10,36 +10,37 @@ import java.util.List;
 @RequestMapping("/employer")
 public class EmployerController {
 
-    @Autowired
-    private EmployerServiceImpl service;
 
-    public EmployerController(EmployerServiceImpl service) {
-        this.service = service;
+    private EmployerServiceImpl employerService;
+
+    @Autowired
+    public EmployerController(EmployerServiceImpl employerService) {
+        this.employerService = employerService;
     }
 
     @PostMapping("/create")
     public Employer createEmployer(@RequestBody Employer employer){
-        return service.create(employer);
+        return employerService.create(employer);
     }
 
    @GetMapping("/read/{companyName}")
     public Employer readEmployer(@PathVariable String  companyName) {
-        return service.read(companyName);
+        return employerService.read(companyName);
     }
 
     @GetMapping("/getAll")
     public List<Employer> readEmployer(){
-        return service.findAll();
+        return employerService.findAll();
     }
 
     @PutMapping("/update")
     public Employer updateEmployer(@RequestBody Employer employer){
-        return service.update(employer);
+        return employerService.update(employer);
     }
 
     @DeleteMapping("/delete/{companyName}")
     public boolean deleteEmployer(@PathVariable String companyName) {
-        return service.delete(companyName);
+        return employerService.delete(companyName);
     }
 
 

@@ -8,6 +8,7 @@ import jakarta.persistence.*;
  * Author: Hanyani Masinge, 222693452
  */
 @Entity
+@Inheritance(strategy = InheritanceType.JOINED)
 @Table(name = "users")
 public class User {
 
@@ -85,10 +86,8 @@ public class User {
         protected String phoneNumber;
         protected String location;
 
-        public Builder(String userId, String email, String password) {
-            this.userId = userId;
-            this.email = email;
-            this.password = password;
+        public Builder() {
+
         }
 
         public Builder setUserId(String userId) {
@@ -98,6 +97,11 @@ public class User {
 
         public Builder setEmail(String email) {
             this.email = email;
+            return this;
+        }
+
+        public Builder setPassword(String password){
+            this.password = password;
             return this;
         }
 

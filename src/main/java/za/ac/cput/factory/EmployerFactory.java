@@ -10,7 +10,7 @@ import za.ac.cput.util.Helper;
  */
 public class EmployerFactory {
 
-    public static Employer buildEmployer(String companyName, String industry, String companySize, String companyHeadquarters) {
+    public static Employer createEmployer(String companyName, String industry, String companySize, String companyHeadquarters) {
 
         if (Helper.isNullOrEmpty(companyName) || Helper.isNullOrEmpty(industry) || Helper.isNullOrEmpty(companyHeadquarters)) {
             return null;
