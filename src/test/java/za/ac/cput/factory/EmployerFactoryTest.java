@@ -13,7 +13,7 @@ class EmployerFactoryTest {
 
     @Test
     void buildEmployer_Success() {
-        Employer employer = EmployerFactory.buildEmployer(
+        Employer employer = EmployerFactory.createEmployer(
                 "Capitec",
                 "Accounting",
                 "1000 - 5000",
@@ -26,8 +26,8 @@ class EmployerFactoryTest {
     }
 
     @Test
-    void buildEmployer_WithNull_ReturnsNull() {
-        Employer employer = EmployerFactory.buildEmployer(
+    void buildEmployer_WithEmptyCompanyName_ReturnsNull() {
+        Employer employer = EmployerFactory.createEmployer(
                 "",
                 "Retail",
                 "1-10",

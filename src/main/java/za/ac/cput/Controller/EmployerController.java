@@ -24,8 +24,8 @@ public class EmployerController {
     }
 
    @GetMapping("/read/{companyName}")
-    public Employer readEmployer(@PathVariable String  companyName) {
-        return employerService.read(companyName);
+    public Employer readEmployer(@PathVariable int   id) {
+        return employerService.read(id);
     }
 
     @GetMapping("/getAll")
@@ -39,8 +39,8 @@ public class EmployerController {
     }
 
     @DeleteMapping("/delete/{companyName}")
-    public boolean deleteEmployer(@PathVariable String companyName) {
-        return employerService.delete(companyName);
+    public boolean deleteEmployer(@PathVariable int id) {
+        return employerService.delete(id);
     }
 
 

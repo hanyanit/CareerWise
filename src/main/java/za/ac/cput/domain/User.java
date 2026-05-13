@@ -41,6 +41,10 @@ public class User {
         this.phoneNumber = builder.phoneNumber;
         this.location = builder.location;
     }
+
+    public int getId(){
+        return id;
+    }
     public String getUserId() {
         return userId;
     }
@@ -77,6 +81,7 @@ public class User {
 
 
     public static class Builder {
+        protected int id;
         protected String userId;
         protected String email;
         protected String password;
@@ -90,6 +95,10 @@ public class User {
 
         }
 
+        public Builder setId(int id){
+            this.id = id;
+            return this;
+        }
         public Builder setUserId(String userId) {
             this.userId = userId;
             return this;
