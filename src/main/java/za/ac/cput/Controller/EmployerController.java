@@ -1,47 +1,47 @@
-//package za.ac.cput.Controller;
-//
-//import org.springframework.beans.factory.annotation.Autowired;
-//import org.springframework.web.bind.annotation.*;
-//import za.ac.cput.Service.IEmployerService;
-//import za.ac.cput.domain.Employer;
-//import za.ac.cput.Service.impl.EmployerServiceImpl;
-//import java.util.List;
-//
-//@RestController
-//@RequestMapping("/employer")
-//public class EmployerController {
-//
-//    private IEmployerService employerServiceRepo;
-//
-//    @Autowired
-//    public EmployerController(IEmployerService iEmployerService) {
-//        this.service = service;
-//    }
-//
-//    @PostMapping("/create")
-//    public Employer createEmployer(@RequestBody Employer employer){
-//        return service.create(employer);
-//    }
-//
-//   @GetMapping("/read/{companyName}")
-//    public Employer readEmployer(@PathVariable String  companyName) {
-//        return service.read(companyName);
-//    }
-//
-//    @GetMapping("/getAll")
-//    public List<Employer> readEmployer(){
-//        return service.findAll();
-//    }
-//
-//    @PutMapping("/update")
-//    public Employer updateEmployer(@RequestBody Employer employer){
-//        return service.update(employer);
-//    }
-//
-//    @DeleteMapping("/delete/{companyName}")
-//    public boolean deleteEmployer(@PathVariable String companyName) {
-//        return service.delete(companyName);
-//    }
-//
-//
-//}
+package za.ac.cput.Controller;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
+import za.ac.cput.domain.Employer;
+import za.ac.cput.Service.impl.EmployerServiceImpl;
+import java.util.List;
+
+@RestController
+@RequestMapping("/employer")
+public class EmployerController {
+
+
+    private EmployerServiceImpl employerService;
+
+    @Autowired
+    public EmployerController(EmployerServiceImpl employerService) {
+        this.employerService = employerService;
+    }
+
+    @PostMapping("/create")
+    public Employer createEmployer(@RequestBody Employer employer){
+        return employerService.create(employer);
+    }
+
+   @GetMapping("/read/{companyName}")
+    public Employer readEmployer(@PathVariable int   id) {
+        return employerService.read(id);
+    }
+
+    @GetMapping("/getAll")
+    public List<Employer> readEmployer(){
+        return employerService.findAll();
+    }
+
+    @PutMapping("/update")
+    public Employer updateEmployer(@RequestBody Employer employer){
+        return employerService.update(employer);
+    }
+
+    @DeleteMapping("/delete/{companyName}")
+    public boolean deleteEmployer(@PathVariable int id) {
+        return employerService.delete(id);
+    }
+
+
+}

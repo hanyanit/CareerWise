@@ -12,6 +12,6 @@ import java.util.List;
  */
 
 @Repository
-public interface IEmployerRepository extends JpaRepository<Employer, String> {
+public interface IEmployerRepository extends JpaRepository<Employer, Integer> {
 
 }

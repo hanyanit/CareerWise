@@ -13,7 +13,7 @@ import java.util.Objects;
 
 @Entity
 public class Employer extends User {
-    @Id
+
     private String companyName;
 
     private String companyWebsite;
@@ -22,6 +22,7 @@ public class Employer extends User {
     private String companyLogo;
     private String companyDescription;
     private String companyHeadquarters;
+
 
 
     public Employer(Builder builder) {
@@ -80,8 +81,6 @@ public class Employer extends User {
 
     public static class Builder extends User.Builder{
 
-        public User.Builder userId;
-        public Object email;
         private String companyName;
         private String companyWebsite;
         private String companySize;
@@ -91,7 +90,7 @@ public class Employer extends User {
         private String companyHeadquarters;
 
         public Builder() {
-            super(null, null, null);
+
         }
 
         public Builder setCompanyName(String companyName) {
