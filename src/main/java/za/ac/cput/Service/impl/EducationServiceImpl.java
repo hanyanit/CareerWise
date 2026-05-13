@@ -35,8 +35,9 @@ public class EducationServiceImpl implements IEducationService {
     }
 
     @Override
-    public Education delete(String id) {
-       return repository.deleteById(id);
+    public boolean delete(String id) {
+        repository.deleteById(id);
+        return true;
     }
 
     @Override
