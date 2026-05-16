@@ -44,7 +44,7 @@ public class JobSeekerServiceImpl implements IJobSeekerService {
 
     @Override
     public JobSeeker read(String id) {
-        return repository.findById(id).orElse(null);
+        return repository.findByUserId(id);
     }
 
     @Override

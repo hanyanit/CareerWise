@@ -18,7 +18,7 @@ public class JobSeekerController {
         this.jobSeekerServiceRepo = jobSeekerServiceRepo;
     }
 
-    @PutMapping("/create")
+    @PostMapping("/create")
     public JobSeeker createJobSeeker(@RequestBody JobSeeker jobSeeker) {
         return this.jobSeekerServiceRepo.create(jobSeeker);
     }
@@ -28,7 +28,7 @@ public class JobSeekerController {
         return this.jobSeekerServiceRepo.read(userId);
     }
 
-    @PostMapping("/update")
+    @PutMapping("/update")
     public JobSeeker updateJobSeeker(@RequestBody JobSeeker jobSeeker){
         return this.jobSeekerServiceRepo.update(jobSeeker);
     }

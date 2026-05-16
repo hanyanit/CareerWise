@@ -6,4 +6,5 @@ import za.ac.cput.domain.JobSeeker;
 
 @Repository
 public interface JobSeekerRepository extends JpaRepository<JobSeeker, String> {
+    JobSeeker findByUserId(String userId);
 }
