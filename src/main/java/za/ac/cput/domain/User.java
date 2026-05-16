@@ -1,4 +1,3 @@
-
 package za.ac.cput.domain;
 
 import jakarta.persistence.*;
@@ -13,10 +12,8 @@ import jakarta.persistence.*;
 public class User {
 
     @Id
-   @GeneratedValue(strategy = GenerationType.IDENTITY)
-   private int id;
-
     private String userId;
+
     private String email;
     private String password;
     private String firstName;
@@ -24,10 +21,6 @@ public class User {
     private String profilePicture;
     private String phoneNumber;
     private String location;
-
-//    public User(int id) {
-//        this.id = id;
-//    }
 
     protected User() {}
 
@@ -42,9 +35,6 @@ public class User {
         this.location = builder.location;
     }
 
-    public int getId(){
-        return id;
-    }
     public String getUserId() {
         return userId;
     }
@@ -77,11 +67,30 @@ public class User {
         return location;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof User)) return false;
+        User user = (User) o;
+        return userId != null && userId.equals(user.userId);
+    }
 
+    @Override
+    public int hashCode() {
+        return userId != null ? userId.hashCode() : 0;
+    }
 
+    @Override
+    public String toString() {
+        return "User{" +
+                "userId='" + userId + '\'' +
+                ", email='" + email + '\'' +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                '}';
+    }
 
     public static class Builder {
-        protected int id;
         protected String userId;
         protected String email;
         protected String password;
@@ -92,13 +101,8 @@ public class User {
         protected String location;
 
         public Builder() {
-
         }
 
-        public Builder setId(int id){
-            this.id = id;
-            return this;
-        }
         public Builder setUserId(String userId) {
             this.userId = userId;
             return this;
@@ -109,7 +113,7 @@ public class User {
             return this;
         }
 
-        public Builder setPassword(String password){
+        public Builder setPassword(String password) {
             this.password = password;
             return this;
         }

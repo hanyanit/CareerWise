@@ -10,6 +10,9 @@ import java.util.Objects;
 //@Table(name = "job_seeker")
 public class JobSeeker extends User {
 
+    @Id
+    private String userId;
+
     private String headline;
     private String summary;
     private String resumePath;
