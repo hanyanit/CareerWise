@@ -63,7 +63,7 @@ public class JobSeeker extends User {
     public int hashCode() {
         return Objects.hash(getUserId());
     }
-    
+
     @Override
     public String toString() {
         return "JobSeeker{" +
@@ -76,7 +76,7 @@ public class JobSeeker extends User {
     }
 
     // Builder design pattern
-    public static class JobSeekerBuilder {
+    public static class JobSeekerBuilder extends User.Builder {
 
         private final User.Builder userBuilder;
 
@@ -87,7 +87,11 @@ public class JobSeeker extends User {
         private String education;
 
         public JobSeekerBuilder(String userId, String email, String password) {
-            this.userBuilder = new User.Builder(userId, email, password);
+            this.userBuilder = new User.Builder()
+                    .setUserId(userId)
+                    .setEmail(email)
+                    .setPassword(password);
+
         }
 
         // User fields
