@@ -7,8 +7,9 @@ import za.ac.cput.domain.User;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
+
 /**
- * Employer.java
+ * UserRepositoryTest.java
  * Author: Hanyani Masinge, 222693452
  */
 class UserRepositoryTest {
@@ -20,7 +21,8 @@ class UserRepositoryTest {
     void setUp() {
         repository = UserRepository.getRepository();
 
-        user = new User.Builder("9204165076082", "jabu@mail.com", "Jabulani25")
+        user = new User.Builder()
+                .setUserId("9204165076082")
                 .setFirstName("Jabulani")
                 .setLastName("Twala")
                 .setLocation("Pretoria")
@@ -31,7 +33,8 @@ class UserRepositoryTest {
 
     @Test
     void create() {
-        User newUser = new User.Builder("9603226709083", "Mike22@mail.com", "5678")
+        User newUser = new User.Builder()
+                .setUserId("9603226709083")
                 .setFirstName("Mike")
                 .setLastName("Van Nieker")
                 .build();
@@ -52,7 +55,8 @@ class UserRepositoryTest {
 
     @Test
     void update() {
-        User updatedUser = new User.Builder("9204165076082", "test@mail.com", "1234")
+        User updatedUser = new User.Builder()
+                .setUserId("9204165076082")
                 .setFirstName("UpdatedName")
                 .setLastName("Twala")
                 .setLocation("Pretoria")
@@ -66,6 +70,14 @@ class UserRepositoryTest {
 
     @Test
     void delete() {
+        User tempUser = new User.Builder()
+                .setUserId("9603226709083")
+                .setFirstName("Temp")
+                .setLastName("User")
+                .build();
+
+        repository.create(tempUser);
+
         boolean deleted = repository.delete("9603226709083");
 
         assertTrue(deleted);
