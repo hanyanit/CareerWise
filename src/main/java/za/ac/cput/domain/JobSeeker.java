@@ -7,7 +7,7 @@ import jakarta.persistence.Table;
 import java.util.Objects;
 
 @Entity
-//@Table(name = "job_seeker")
+@Table(name = "job_seeker")
 public class JobSeeker extends User {
 
 //    @Id
