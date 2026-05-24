@@ -11,36 +11,36 @@ import java.util.List;
 @RequestMapping("/jobseeker")
 public class JobSeekerController {
 
-    private IJobSeekerService jobSeekerServiceRepo;
+    private final IJobSeekerService service;
 
     @Autowired
-    public JobSeekerController(IJobSeekerService jobSeekerServiceRepo) {
-        this.jobSeekerServiceRepo = jobSeekerServiceRepo;
+    public JobSeekerController(IJobSeekerService service) {
+        this.service = service;
     }
 
     @PostMapping("/create")
-    public JobSeeker createJobSeeker(@RequestBody JobSeeker jobSeeker) {
-        return this.jobSeekerServiceRepo.create(jobSeeker);
+    public JobSeeker create(@RequestBody JobSeeker jobSeeker) {
+        return this.service.create(jobSeeker);
     }
 
     @GetMapping("/read/{userId}")
-    public JobSeeker readJobSeeker(@PathVariable String userId){
-        return this.jobSeekerServiceRepo.read(userId);
+    public JobSeeker read(@PathVariable String userId) {
+        return this.service.read(userId);
     }
 
     @PutMapping("/update")
-    public JobSeeker updateJobSeeker(@RequestBody JobSeeker jobSeeker){
-        return this.jobSeekerServiceRepo.update(jobSeeker);
+    public JobSeeker update(@RequestBody JobSeeker jobSeeker) {
+        return this.service.update(jobSeeker);
     }
 
     @DeleteMapping("/delete/{userId}")
-    public boolean delete(@PathVariable String userId){
-        return this.jobSeekerServiceRepo.delete(userId);
+    public boolean delete(@PathVariable String userId) {
+        return this.service.delete(userId);
     }
 
     @GetMapping("/getAll")
-    public List<JobSeeker> getAllJobSeekers(){
-        return this.jobSeekerServiceRepo.getAll();
+    public List<JobSeeker> getAll() {
+        return this.service.getAll();
     }
 
 
