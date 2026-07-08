@@ -10,7 +10,6 @@ import java.util.List;
 @RestController
 @RequestMapping("/skill")
 public class SkillController {
-
     private final ISkillService service;
 
     @Autowired
@@ -18,28 +17,28 @@ public class SkillController {
         this.service = service;
     }
 
-    @PutMapping("/create")
-    private Skill createSkill(@RequestBody Skill skill){
+    @PostMapping("/create")
+    private Skill create(@RequestBody Skill skill) {
         return this.service.create(skill);
     }
 
     @GetMapping("/read/{skillId}")
-    private Skill readSkill(@PathVariable String skillId){
+    private Skill read(@PathVariable String skillId) {
         return this.service.read(skillId);
     }
 
-    @PostMapping("/update")
-    private Skill updateSkill(Skill skill){
+    @PutMapping("/update")
+    private Skill update(Skill skill) {
         return this.service.update(skill);
     }
 
     @DeleteMapping("/delete/{skillId}")
-    private boolean deleteSkill(@PathVariable String skillId){
+    private boolean delete(@PathVariable String skillId) {
         return this.service.delete(skillId);
     }
 
     @GetMapping("/getAll")
-    private List<Skill> getAllSkills(){
+    private List<Skill> getAll() {
         return this.service.getAll();
     }
 }

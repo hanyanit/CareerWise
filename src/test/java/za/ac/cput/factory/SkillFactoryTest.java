@@ -9,7 +9,7 @@ class SkillFactoryTest {
 
     @Test
     void createSkill() {
-        Skill skill = SkillFactory.createSkill("Empathy", "Soft Skill", 4);
+        Skill skill = SkillFactory.createSkill("Python", "Technical Skill", 4);
 
         assertNotNull(skill);
         System.out.println(skill);

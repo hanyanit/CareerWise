@@ -7,11 +7,11 @@ import jakarta.persistence.Table;
 import java.util.Objects;
 
 @Entity
-//@Table(name = "job_seeker")
+@Table(name = "job_seeker")
 public class JobSeeker extends User {
 
-    @Id
-    private String userId;
+//    @Id
+//    private String userId;
 
     private String headline;
     private String summary;

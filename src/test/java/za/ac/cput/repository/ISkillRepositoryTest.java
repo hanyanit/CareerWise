@@ -11,10 +11,10 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 
 //@DataJpaTest
-class SkillRepositoryTest {
+class ISkillRepositoryTest {
 
     @Autowired
-    private SkillRepository repository;
+    private ISkillRepository repository;
 
     private Skill skill1;
     private Skill skill2;
