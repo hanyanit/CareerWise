@@ -18,27 +18,27 @@ public class SkillController {
     }
 
     @PostMapping("/create")
-    private Skill create(@RequestBody Skill skill) {
+    public Skill create(@RequestBody Skill skill) {
         return this.service.create(skill);
     }
 
     @GetMapping("/read/{skillId}")
-    private Skill read(@PathVariable String skillId) {
+    public Skill read(@PathVariable String skillId) {
         return this.service.read(skillId);
     }
 
     @PutMapping("/update")
-    private Skill update(Skill skill) {
+    public Skill update(@RequestBody Skill skill) {
         return this.service.update(skill);
     }
 
     @DeleteMapping("/delete/{skillId}")
-    private boolean delete(@PathVariable String skillId) {
+    public boolean delete(@PathVariable String skillId) {
         return this.service.delete(skillId);
     }
 
     @GetMapping("/getAll")
-    private List<Skill> getAll() {
+    public List<Skill> getAll() {
         return this.service.getAll();
     }
 }

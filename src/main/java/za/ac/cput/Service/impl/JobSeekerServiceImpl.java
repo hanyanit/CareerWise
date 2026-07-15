@@ -3,9 +3,7 @@ package za.ac.cput.Service.impl;
 import org.springframework.stereotype.Service;
 import za.ac.cput.Service.IJobSeekerService;
 import za.ac.cput.domain.JobSeeker;
-//import za.ac.cput.repository.IJobSeekerRepository;
-import za.ac.cput.repository.JobSeekerRepository;
-//import za.ac.cput.repository.impl.JobSeekerRepositoryImpl;
+import za.ac.cput.repository.IJobSeekerRepository;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,29 +11,11 @@ import java.util.List;
 @Service
 public class JobSeekerServiceImpl implements IJobSeekerService {
 
-    // Singleton instance
-//    private static JobSeekerService service = null;
+        private final IJobSeekerRepository repository;
 
-    // Repository (singleton from your implementation)
-//    private final IJobSeekerRepository repository;
-
-        private final JobSeekerRepository repository;
-
-    public JobSeekerServiceImpl(JobSeekerRepository repository) {
+    public JobSeekerServiceImpl(IJobSeekerRepository repository) {
         this.repository = repository;
     }
-    // Private constructor
-//    private JobSeekerServiceImpl() {
-//        this.repository = JobSeekerRepositoryImpl.getRepository();
-//    }
-
-    // Singleton getter
-//    public static JobSeekerService getService() {
-//        if (service == null) {
-//            service = new JobSeekerServiceImpl();
-//        }
-//        return service;
-//    }
 
     @Override
     public JobSeeker create(JobSeeker jobSeeker) {
