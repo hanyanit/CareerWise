@@ -24,7 +24,7 @@ public class SkillServiceImp implements ISkillService {
 
     @Override
     public Skill read(String skillId) {
-        return this.ISkillRepository.getById(skillId);
+        return this.ISkillRepository.findById(skillId).orElse(null);
     }
 
     @Override
