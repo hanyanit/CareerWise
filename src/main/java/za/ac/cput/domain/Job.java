@@ -1,9 +1,6 @@
 package za.ac.cput.domain;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -19,13 +16,23 @@ import java.util.Objects;
 public class Job {
 
     @Id
-    @GeneratedValue
-    private int id;
-
     private String jobId;
     private String title;
     private String description;
+    @ElementCollection(fetch = FetchType.EAGER)
+    @CollectionTable(
+            name = "job_requirements",
+            joinColumns = @JoinColumn(name = "job_id")
+    )
+    @Column(name = "requirement")
     private List<String> requirements;
+
+    @ElementCollection(fetch = FetchType.EAGER)
+    @CollectionTable(
+            name = "job_responsibilities",
+            joinColumns = @JoinColumn(name = "job_id")
+    )
+    @Column(name = "responsibility")
     private List<String> responsibilities;
     private String location;
     private Boolean remoteOption;

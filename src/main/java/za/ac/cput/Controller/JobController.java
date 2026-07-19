@@ -24,8 +24,8 @@ public class JobController {
         return this.jobServiceRepo.create(job);
     }
 
-    @GetMapping("/read")
-    public Job read(@RequestParam String id) {
+    @GetMapping("/read/{jobId}")
+    public Job read(@PathVariable("jobId") String id) {
         return this.jobServiceRepo.read(id);
     }
 
@@ -49,18 +49,18 @@ public class JobController {
         return this.jobServiceRepo.findOpenPositions();
     }
 
-    @GetMapping("/findJobsByLocation")
-    public List<Job> findJobsByLocation(@RequestParam String location) {
+    @GetMapping("/findJobsByLocation/{location}")
+    public List<Job> findJobsByLocation(@PathVariable("location") String location) {
         return this.jobServiceRepo.findJobsByLocation(location);
     }
 
-    @GetMapping("/findJobsByEmploymentType")
-    public List<Job> findJobsByEmploymentType(@RequestParam String employmentType) {
+    @GetMapping("/findJobsByEmploymentType/{employmentType}")
+    public List<Job> findJobsByEmploymentType(@PathVariable("employmentType") String employmentType) {
         return this.jobServiceRepo.findJobsByEmploymentType(employmentType);
     }
 
-    @GetMapping("/findJobsByRemoteOption")
-    public List<Job> findJobsByRemoteOption(@RequestParam Boolean remoteOption) {
+    @GetMapping("/findJobsByRemoteOption/{remoteOption}")
+    public List<Job> findJobsByRemoteOption(@PathVariable("remoteOption") Boolean remoteOption) {
         return this.jobServiceRepo.findJobsByRemoteOption(remoteOption);
     }
 }
