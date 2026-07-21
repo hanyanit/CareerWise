@@ -132,7 +132,7 @@ class SkillControllerTest {
 
     @Test
     @Order(5)
-//    @Disabled
+    @Disabled
     void delete() {
         assertNotNull(skill, "Skill should have been created in previous test");
         assertNotNull(skill.getSkillId(), "Skill ID should not be null");

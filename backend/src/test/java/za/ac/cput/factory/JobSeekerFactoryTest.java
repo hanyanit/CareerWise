@@ -2,61 +2,78 @@ package za.ac.cput.factory;
 
 import org.junit.jupiter.api.Test;
 import za.ac.cput.domain.JobSeeker;
-import static org.junit.jupiter.api.Assertions.*; // 👈 This handles ALL assertions safely
+
+import static org.junit.jupiter.api.Assertions.*;
 
 class JobSeekerFactoryTest {
 
     @Test
     void createJobSeeker() {
+
         JobSeeker jobSeeker = JobSeekerFactory.createJobSeeker(
-                "U001",
                 "test@mycput.ac.za",
                 "password123",
                 "Inga",
                 "Mbobo",
+                "profile.jpg",
+                "0123456789",
+                "Cape Town",
                 "Java Developer",
-                "Backend enthusiast"
-        );
-
-        assertNotNull(jobSeeker);
-        assertEquals("U001", jobSeeker.getUserId());
-        System.out.println(jobSeeker);
-    }
-
-    @Test
-    void testCreateJobSeeker() {
-        JobSeeker jobSeeker = JobSeekerFactory.createJobSeeker(
-                "test@mycput.ac.za",
-                "password123",
-                "Themba",
-                "Thembelani",
-                "Frontend Dev",
-                "Loves UI"
+                "Backend enthusiast",
+                "resume.pdf",
+                "Java, Spring Boot",
+                "Diploma in ICT"
         );
 
         assertNotNull(jobSeeker);
         assertNotNull(jobSeeker.getUserId());
+
+        assertEquals("Inga", jobSeeker.getFirstName());
+        assertEquals("Mbobo", jobSeeker.getLastName());
+        assertEquals("Java Developer", jobSeeker.getHeadline());
+
         System.out.println(jobSeeker);
     }
 
     @Test
-    void createFullJobSeeker() {
-        JobSeeker jobSeeker = JobSeekerFactory.createFullJobSeeker(
-                "U002",
-                "full@mail.com",
+    void createJobSeekerInvalidEmail() {
+
+        JobSeeker jobSeeker = JobSeekerFactory.createJobSeeker(
+                "invalidEmail",
                 "password123",
-                "Full",
-                "User",
-                "profile.jpg",
-                "0123456789",
-                "Cape Town",
-                "Full Stack Dev",
-                "Experienced developer",
-                "resume.pdf"
+                "Inga",
+                "Mbobo",
+                null,
+                null,
+                null,
+                "Developer",
+                "Summary",
+                null,
+                null,
+                null
         );
 
-        assertNotNull(jobSeeker);
-        assertEquals("resume.pdf", jobSeeker.getResumePath());
-        System.out.println(jobSeeker);
+        assertNull(jobSeeker);
+    }
+
+    @Test
+    void createJobSeekerMissingHeadline() {
+
+        JobSeeker jobSeeker = JobSeekerFactory.createJobSeeker(
+                "test@gmail.com",
+                "password123",
+                "Inga",
+                "Mbobo",
+                null,
+                null,
+                null,
+                "",
+                "Summary",
+                null,
+                null,
+                null
+        );
+
+        assertNull(jobSeeker);
     }
 }

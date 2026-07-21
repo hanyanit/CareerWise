@@ -1,7 +1,6 @@
 package za.ac.cput.domain;
 
 import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
 import java.util.Objects;
@@ -9,9 +8,6 @@ import java.util.Objects;
 @Entity
 @Table(name = "job_seeker")
 public class JobSeeker extends User {
-
-//    @Id
-//    private String userId;
 
     private String headline;
     private String summary;
@@ -23,15 +19,14 @@ public class JobSeeker extends User {
         super();
     }
 
-    private JobSeeker(JobSeekerBuilder builder) {
-        super(builder.userBuilder);
+    private JobSeeker(Builder builder) {
+        super(builder);
         this.headline = builder.headline;
         this.summary = builder.summary;
         this.resumePath = builder.resumePath;
         this.skills = builder.skills;
         this.education = builder.education;
     }
-
 
     public String getHeadline() {
         return headline;
@@ -56,32 +51,30 @@ public class JobSeeker extends User {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof JobSeeker)) return false;
-        if (!super.equals(o)) return false;
-        JobSeeker that = (JobSeeker) o;
-        return Objects.equals(getUserId(), that.getUserId());
+        if (!(o instanceof JobSeeker that)) return false;
+        return super.equals(o);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getUserId());
+        return Objects.hash(super.hashCode());
     }
 
     @Override
     public String toString() {
         return "JobSeeker{" +
                 "userId='" + getUserId() + '\'' +
-                ", name='" + getFirstName() + " " + getLastName() + '\'' +
+                ", firstName='" + getFirstName() + '\'' +
+                ", lastName='" + getLastName() + '\'' +
                 ", headline='" + headline + '\'' +
                 ", summary='" + summary + '\'' +
                 ", resumePath='" + resumePath + '\'' +
-                "} " + super.toString();
+                ", skills='" + skills + '\'' +
+                ", education='" + education + '\'' +
+                '}';
     }
 
-    // Builder design pattern
-    public static class JobSeekerBuilder extends User.Builder {
-
-        private final User.Builder userBuilder;
+    public static class Builder extends User.Builder<Builder> {
 
         private String headline;
         private String summary;
@@ -89,66 +82,44 @@ public class JobSeeker extends User {
         private String skills;
         private String education;
 
-        public JobSeekerBuilder(String userId, String email, String password) {
-            this.userBuilder = new User.Builder()
-                    .setUserId(userId)
-                    .setEmail(email)
-                    .setPassword(password);
-
-        }
-
-        // User fields
-        public JobSeekerBuilder firstName(String firstName) {
-            userBuilder.setFirstName(firstName);
-            return this;
-        }
-
-        public JobSeekerBuilder lastName(String lastName) {
-            userBuilder.setLastName(lastName);
-            return this;
-        }
-
-        public JobSeekerBuilder profilePicture(String profilePicture) {
-            userBuilder.setProfilePicture(profilePicture);
-            return this;
-        }
-
-        public JobSeekerBuilder phoneNumber(String phoneNumber) {
-            userBuilder.setPhoneNumber(phoneNumber);
-            return this;
-        }
-
-        public JobSeekerBuilder location(String location) {
-            userBuilder.setLocation(location);
-            return this;
-        }
-
-        // JobSeeker fields
-        public JobSeekerBuilder headline(String headline) {
+        public Builder setHeadline(String headline) {
             this.headline = headline;
             return this;
         }
 
-        public JobSeekerBuilder summary(String summary) {
+        public Builder setSummary(String summary) {
             this.summary = summary;
             return this;
         }
 
-        public JobSeekerBuilder resumePath(String resumePath) {
+        public Builder setResumePath(String resumePath) {
             this.resumePath = resumePath;
             return this;
         }
 
-        public JobSeekerBuilder skills(String skills) {
+        public Builder setSkills(String skills) {
             this.skills = skills;
             return this;
         }
 
-        public JobSeekerBuilder education(String education) {
+        public Builder setEducation(String education) {
             this.education = education;
             return this;
         }
 
+        public Builder copy(JobSeeker jobSeeker) {
+            super.copy(jobSeeker);
+
+            this.headline = jobSeeker.getHeadline();
+            this.summary = jobSeeker.getSummary();
+            this.resumePath = jobSeeker.getResumePath();
+            this.skills = jobSeeker.getSkills();
+            this.education = jobSeeker.getEducation();
+
+            return this;
+        }
+
+        @Override
         public JobSeeker build() {
             return new JobSeeker(this);
         }

@@ -23,177 +23,201 @@ class JobSeekerServiceImplTest {
     @Autowired
     private IJobSeekerRepository jobSeekerRepository;
 
-    private static JobSeeker testJobSeeker;
-    private static String testUserId;
 
     @BeforeEach
     void setUp() {
         jobSeekerRepository.deleteAll();
     }
 
+
     @Test
     @Order(1)
     void create() {
-        testJobSeeker = JobSeekerFactory.createFullJobSeeker(
-                "U12345",
-                "inga.dev@gmail.com",
-                "securePassword123",
-                "NameExample",
-                "SurnameExample",
-                "profile_picture.png",
-                "0712345678",
-                "Cape Town",
-                "Java Software Engineer",
-                "Passionate backend developer with 5 years of experience",
-                "resume.pdf"
-        );
 
-        assertNotNull(testJobSeeker);
+        JobSeeker jobSeeker = createTestJobSeeker();
 
-        JobSeeker created = jobSeekerService.create(testJobSeeker);
+        assertNotNull(jobSeeker);
+
+        JobSeeker created = jobSeekerService.create(jobSeeker);
+
         assertNotNull(created);
         assertNotNull(created.getUserId());
 
-        testJobSeeker = created;
-        testUserId = created.getUserId();
+        System.out.println("Created JobSeeker: "
+                + created.getFirstName()
+                + " "
+                + created.getLastName());
 
-        System.out.println("Created JobSeeker: " + created.getFirstName() + " " + created.getLastName());
-        System.out.println("   ID: " + created.getUserId());
+        System.out.println("ID: " + created.getUserId());
     }
+
 
     @Test
     @Order(2)
     void read() {
-        JobSeeker jobSeeker = createTestJobSeeker();
-        JobSeeker saved = jobSeekerService.create(jobSeeker);
-        assertNotNull(saved);
+
+        JobSeeker saved = jobSeekerService.create(createTestJobSeeker());
 
         JobSeeker found = jobSeekerService.read(saved.getUserId());
-        assertNotNull(found);
-        assertNotNull(found.getUserId());
 
-        System.out.println("Read JobSeeker: " + found.getFirstName() + " " + found.getLastName());
+        assertNotNull(found);
+        assertEquals(saved.getUserId(), found.getUserId());
+
+        System.out.println("Read JobSeeker: "
+                + found.getFirstName());
     }
 
 
     @Test
     @Order(3)
     void update() {
-        JobSeeker jobSeeker = createTestJobSeeker();
-        JobSeeker saved = jobSeekerService.create(jobSeeker);
-        assertNotNull(saved);
 
-        JobSeeker updatedJobSeeker = new JobSeeker.JobSeekerBuilder(
-                saved.getUserId(),
-                saved.getEmail(),
-                saved.getPassword()
-        )
-                .firstName("Name Updated")
-                .lastName("Surname Updated")
-                .profilePicture("updated_profile.png")
-                .phoneNumber("0823456789")
-                .location("Johannesburg")
-                .headline("Senior Java Software Engineer")
-                .summary("Updated: Senior backend developer with 7 years of experience")
-                .resumePath("name_resume_updated.pdf")
+        JobSeeker saved = jobSeekerService.create(createTestJobSeeker());
+
+
+        JobSeeker updatedJobSeeker = new JobSeeker.Builder()
+                .copy(saved)
+                .setFirstName("Name Updated")
+                .setLastName("Surname Updated")
+                .setProfilePicture("updated_profile.png")
+                .setPhoneNumber("0823456789")
+                .setLocation("Johannesburg")
+                .setHeadline("Senior Java Software Engineer")
+                .setSummary("Updated summary")
+                .setResumePath("updated_resume.pdf")
                 .build();
 
-        JobSeeker updated = jobSeekerService.update(updatedJobSeeker);
-        assertNotNull(updated);
-        assertNotNull(updated.getUserId());
 
-        System.out.println("Updated JobSeeker: " + updated.getFirstName() + " " + updated.getLastName());
+        JobSeeker updated = jobSeekerService.update(updatedJobSeeker);
+
+        assertNotNull(updated);
+        assertEquals(saved.getUserId(), updated.getUserId());
+
+        System.out.println("Updated JobSeeker: "
+                + updated.getFirstName());
     }
+
 
     @Test
     @Order(4)
     void delete() {
-        JobSeeker jobSeeker = createTestJobSeeker();
-        JobSeeker saved = jobSeekerService.create(jobSeeker);
-        assertNotNull(saved);
 
-        String userId = saved.getUserId();
-        boolean deleted = jobSeekerService.delete(userId);
+        JobSeeker saved = jobSeekerService.create(createTestJobSeeker());
+
+        String id = saved.getUserId();
+
+        boolean deleted = jobSeekerService.delete(id);
+
         assertTrue(deleted);
 
-        JobSeeker found = jobSeekerService.read(userId);
+        JobSeeker found = jobSeekerService.read(id);
+
         assertNull(found);
 
-        System.out.println("Deleted JobSeeker with ID: " + userId);
+        System.out.println("Deleted JobSeeker: " + id);
     }
+
 
     @Test
     @Order(5)
     void getAll() {
-        JobSeeker jobSeeker1 = createTestJobSeeker();
 
-        jobSeekerService.create(jobSeeker1);
+        jobSeekerService.create(createTestJobSeeker());
+        jobSeekerService.create(createTestJobSeeker());
+
 
         List<JobSeeker> jobSeekers = jobSeekerService.getAll();
-        assertNotNull(jobSeekers);
-        assertTrue(jobSeekers.size() >= 2);
 
-        System.out.println("Found " + jobSeekers.size() + " JobSeekers");
+
+        assertNotNull(jobSeekers);
+        assertEquals(2, jobSeekers.size());
+
+
+        System.out.println("Found "
+                + jobSeekers.size()
+                + " JobSeekers");
     }
+
 
     @Test
     @Order(6)
     void getByEmail() {
-        String testEmail = "getbyemail.test@gmail.com";
-        JobSeeker jobSeeker = new JobSeeker.JobSeekerBuilder(
-                "U99999",
-                testEmail,
-                "password123"
-        )
-                .firstName("Email")
-                .lastName("Test")
-                .headline("Test Headline")
-                .summary("Test Summary")
-                .build();
 
-        jobSeekerService.create(jobSeeker);
+        JobSeeker saved = jobSeekerService.create(createTestJobSeeker());
 
-        List<JobSeeker> found = jobSeekerService.getByEmail(testEmail);
+
+        List<JobSeeker> found =
+                jobSeekerService.getByEmail(saved.getEmail());
+
+
         assertNotNull(found);
-        assertTrue(found.size() > 0);
+        assertFalse(found.isEmpty());
 
-        System.out.println("Found " + found.size() + " JobSeeker(s) with email: " + testEmail);
+
+        System.out.println(
+                "Found JobSeeker with email: "
+                        + saved.getEmail()
+        );
     }
+
 
     @Test
     @Order(7)
     void getByEmailNotFound() {
-        List<JobSeeker> found = jobSeekerService.getByEmail("nonexistent@email.com");
+
+        List<JobSeeker> found =
+                jobSeekerService.getByEmail("doesnotexist@gmail.com");
+
+
         assertNotNull(found);
         assertTrue(found.isEmpty());
-        System.out.println("Successfully handled non-existent email search");
     }
+
 
     @Test
     @Order(8)
     void createJobSeekerWithAutoGeneratedId() {
-        JobSeeker jobSeeker = JobSeekerFactory.createJobSeeker(
-                "auto.test@gmail.com",
-                "password123",
-                "Auto",
-                "Generated",
-                "Auto Generated Headline",
-                "This is a test with auto-generated ID"
-        );
+
+
+        JobSeeker jobSeeker =
+                JobSeekerFactory.createJobSeeker(
+                        "auto@gmail.com",
+                        "password123",
+                        "Auto",
+                        "Generated",
+                        "profile.png",
+                        "0711111111",
+                        "Cape Town",
+                        "Software Developer",
+                        "Testing UUID generation",
+                        "resume.pdf",
+                        "Java",
+                        "BSc Computer Science"
+                );
+
 
         assertNotNull(jobSeeker);
         assertNotNull(jobSeeker.getUserId());
 
-        JobSeeker created = jobSeekerService.create(jobSeeker);
+
+        JobSeeker created =
+                jobSeekerService.create(jobSeeker);
+
+
         assertNotNull(created);
         assertNotNull(created.getUserId());
 
-        System.out.println("Created JobSeeker with auto-generated ID: " + created.getUserId());
+
+        System.out.println(
+                "Created JobSeeker ID: "
+                        + created.getUserId()
+        );
     }
 
+
     private JobSeeker createTestJobSeeker() {
-        return JobSeekerFactory.createFullJobSeeker(
-                "U" + System.currentTimeMillis(),
+
+        return JobSeekerFactory.createJobSeeker(
                 "test" + System.currentTimeMillis() + "@gmail.com",
                 "securePassword123",
                 "Test",
@@ -203,7 +227,9 @@ class JobSeekerServiceImplTest {
                 "Cape Town",
                 "Software Engineer",
                 "Test summary for job seeker",
-                "test_resume.pdf"
+                "test_resume.pdf",
+                "Java, Spring Boot",
+                "BSc Computer Science"
         );
     }
 }

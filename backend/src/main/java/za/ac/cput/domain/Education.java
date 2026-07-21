@@ -30,6 +30,9 @@ public class Education {
     private LocalDate endDate;
     private String description;
 
+    protected Education(){
+    }
+
     private Education(Builder builder) {
         this.educationId = builder.educationId;
         this.institution = builder.institution;
@@ -40,9 +43,6 @@ public class Education {
         this.description = builder.description;
     }
 
-    protected Education(){
-
-    }
     public String getEducationId() {return educationId; }
     public String getInstitution() { return institution; }
     public String getDegree() { return degree; }
@@ -51,7 +51,6 @@ public class Education {
     public LocalDate   getEndDate() { return endDate; }
     public String getDescription() { return description; }
 
-    // ── equals / hashCode / toString ─────────────────────────────────────────
 
     @Override
     public boolean equals(Object o) {

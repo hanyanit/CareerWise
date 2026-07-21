@@ -22,7 +22,8 @@ public class User {
     private String phoneNumber;
     private String location;
 
-    protected User() {}
+    protected User() {
+    }
 
     protected User(Builder builder) {
         this.userId = builder.userId;
@@ -70,8 +71,7 @@ public class User {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof User)) return false;
-        User user = (User) o;
+        if (!(o instanceof User user)) return false;
         return userId != null && userId.equals(user.userId);
     }
 
@@ -90,7 +90,8 @@ public class User {
                 '}';
     }
 
-    public static class Builder {
+    public static class Builder<T extends Builder<T>> {
+
         protected String userId;
         protected String email;
         protected String password;
@@ -100,51 +101,67 @@ public class User {
         protected String phoneNumber;
         protected String location;
 
-        public Builder() {
+        @SuppressWarnings("unchecked")
+        protected T self() {
+            return (T) this;
         }
 
-        public Builder setUserId(String userId) {
+        public T setUserId(String userId) {
             this.userId = userId;
-            return this;
+            return self();
         }
 
-        public Builder setEmail(String email) {
+        public T setEmail(String email) {
             this.email = email;
-            return this;
+            return self();
         }
 
-        public Builder setPassword(String password) {
+        public T setPassword(String password) {
             this.password = password;
-            return this;
+            return self();
         }
 
-        public Builder setFirstName(String firstName) {
+        public T setFirstName(String firstName) {
             this.firstName = firstName;
-            return this;
+            return self();
         }
 
-        public Builder setLastName(String lastName) {
+        public T setLastName(String lastName) {
             this.lastName = lastName;
-            return this;
+            return self();
         }
 
-        public Builder setProfilePicture(String profilePicture) {
+        public T setProfilePicture(String profilePicture) {
             this.profilePicture = profilePicture;
-            return this;
+            return self();
         }
 
-        public Builder setPhoneNumber(String phoneNumber) {
+        public T setPhoneNumber(String phoneNumber) {
             this.phoneNumber = phoneNumber;
-            return this;
+            return self();
         }
 
-        public Builder setLocation(String location) {
+        public T setLocation(String location) {
             this.location = location;
-            return this;
+            return self();
+        }
+
+        public T copy(User user) {
+            this.userId = user.getUserId();
+            this.email = user.getEmail();
+            this.password = user.getPassword();
+            this.firstName = user.getFirstName();
+            this.lastName = user.getLastName();
+            this.profilePicture = user.getProfilePicture();
+            this.phoneNumber = user.getPhoneNumber();
+            this.location = user.getLocation();
+
+            return self();
         }
 
         public User build() {
             return new User(this);
         }
     }
+
 }
