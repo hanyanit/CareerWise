@@ -31,6 +31,7 @@ public class JobFactory {
                 .setSalaryRange(salaryRange)
                 .setEmploymentType(employmentType)
                 .setDeadlineDate(deadlineDate)
+                .setStatus(status)
                 .build();
     }
 }
