@@ -1,36 +1,35 @@
 package za.ac.cput.factory;
 
 import za.ac.cput.domain.Job;
+import za.ac.cput.domain.JobStatus;
 import za.ac.cput.util.Helper;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
-
-/**
- * Author: Phumlani Mdlalo, 241093813
- * Date: March 2026
- */
 
 public class JobFactory {
 
-    public static Job createJob(String jobId, String title, String description, List<String> requirements, List<String> responsibilities, String location,
-                                Boolean remoteOption, String salaryRange, String employmentType, LocalDate deadlineDate, String status){
+    public static Job createJob(String title, String description,
+                                List<String> requirements, List<String> responsibilities,
+                                String location, Boolean remoteOption, String salaryRange,
+                                String employmentType, LocalDate deadlineDate) {
 
-        if (Helper.isNullOrEmpty(jobId) || Helper.isNullOrEmpty(title)) {
+        if (Helper.isNullOrEmpty(title)) {
             return null;
         }
 
-        return new Job.Builder()
-                .setJobId(jobId)
-                .setTitle(title)
-                .setDescription(description)
-                .setRequirements(requirements)
-                .setResponsibilities(responsibilities)
-                .setLocation(location)
-                .setRemoteOption(remoteOption)
-                .setSalaryRange(salaryRange)
-                .setEmploymentType(employmentType)
-                .setDeadlineDate(deadlineDate)
+        return Job.builder()
+                .title(title)
+                .description(description)
+                .requirements(requirements != null ? requirements : new ArrayList<>())
+                .responsibilities(responsibilities != null ? responsibilities : new ArrayList<>())
+                .location(location)
+                .remoteOption(remoteOption != null ? remoteOption : false)
+                .salaryRange(salaryRange)
+                .employmentType(employmentType)
+                .deadlineDate(deadlineDate)
+                .status(JobStatus.OPEN)
                 .build();
     }
 }

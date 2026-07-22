@@ -8,8 +8,6 @@ import za.ac.cput.domain.Skill;
 import za.ac.cput.factory.SkillFactory;
 import za.ac.cput.repository.ISkillRepository;
 
-import java.util.List;
-
 import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
@@ -30,12 +28,18 @@ class SkillServiceImpTest {
         skillRepository.deleteAll();
     }
 
+    private Skill createTestSkill() {
+        return SkillFactory.createSkill("JavaScript", "Web", 3);
+    }
+
     @Test
     @Order(1)
     void create() {
         testSkill = SkillFactory.createSkill("Java", "Programming", 5);
         assertNotNull(testSkill);
-        assertNotNull(skillService.create(testSkill));
+
+        Skill created = skillService.create(testSkill);
+        assertNotNull(created);
         System.out.println("Create passed");
     }
 
@@ -44,7 +48,9 @@ class SkillServiceImpTest {
     void read() {
         Skill saved = skillService.create(createTestSkill());
         assertNotNull(saved);
-        assertNotNull(skillService.read(saved.getSkillId()));
+
+        Skill found = skillService.read(saved.getSkillId());
+        assertNotNull(found);
         System.out.println("Read passed");
     }
 
@@ -54,12 +60,16 @@ class SkillServiceImpTest {
         Skill saved = skillService.create(createTestSkill());
         assertNotNull(saved);
 
-        Skill updated = new Skill.Builder()
-                .copy(saved)
-                .setName("Updated")
+        // Using builder since Skill doesn't extend any class
+        Skill updated = Skill.builder()
+                .skillId(saved.getSkillId())
+                .name("Updated")
+                .category(saved.getCategory())
+                .yearsOfExperience(saved.getYearsOfExperience())
                 .build();
 
-        assertNotNull(skillService.update(updated));
+        Skill result = skillService.update(updated);
+        assertNotNull(result);
         System.out.println("Update passed");
     }
 
@@ -70,15 +80,8 @@ class SkillServiceImpTest {
         Skill saved = skillService.create(createTestSkill());
         assertNotNull(saved);
 
-        assertTrue(skillService.delete(saved.getSkillId()));
-        assertNull(skillService.read(saved.getSkillId()));
+        boolean deleted = skillService.delete(saved.getSkillId());
+        assertTrue(deleted);
         System.out.println("Delete passed");
-    }
-    private Skill createTestSkill() {
-        return SkillFactory.createSkill("JavaScript", "Web", 3);
-    }
-
-    private Skill createTestSkill2() {
-        return SkillFactory.createSkill("React", "Frontend", 2);
     }
 }

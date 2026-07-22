@@ -1,156 +1,54 @@
 package za.ac.cput.domain;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
+import lombok.*;
+import lombok.experimental.SuperBuilder;
+import java.util.ArrayList;
+import java.util.List;
 
-import java.util.Objects;
-
+/**
+ * JobSeeker.java - JobSeeker Entity (extends User)
+ * Has OneToMany relationships with Skill, Experience, and Education
+ * Cascade delete enabled for all collections
+ */
 @Entity
-@Table(name = "job_seeker")
+@Table(name = "job_seekers")
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@SuperBuilder  // Changed from @Builder to @SuperBuilder
+@EqualsAndHashCode(callSuper = true, exclude = {"skills", "experiences", "educations"})
+@ToString(callSuper = true, exclude = {"skills", "experiences", "educations"})
 public class JobSeeker extends User {
-
-//    @Id
-//    private String userId;
 
     private String headline;
     private String summary;
     private String resumePath;
-    private String skills;
-    private String education;
 
-    protected JobSeeker() {
-        super();
-    }
+    /**
+     * One JobSeeker : Many Skills
+     * Cascade: Delete all skills if job seeker is deleted
+     * orphanRemoval: Delete skill if removed from list
+     */
+    @OneToMany(mappedBy = "jobSeeker", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    @Builder.Default
+    private List<Skill> skills = new ArrayList<>();
 
-    private JobSeeker(JobSeekerBuilder builder) {
-        super(builder.userBuilder);
-        this.headline = builder.headline;
-        this.summary = builder.summary;
-        this.resumePath = builder.resumePath;
-        this.skills = builder.skills;
-        this.education = builder.education;
-    }
+    /**
+     * One JobSeeker : Many Experiences
+     * Cascade: Delete all experiences if job seeker is deleted
+     * orphanRemoval: Delete experience if removed from list
+     */
+    @OneToMany(mappedBy = "jobSeeker", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    @Builder.Default
+    private List<Experience> experiences = new ArrayList<>();
 
-
-    public String getHeadline() {
-        return headline;
-    }
-
-    public String getSummary() {
-        return summary;
-    }
-
-    public String getResumePath() {
-        return resumePath;
-    }
-
-    public String getSkills() {
-        return skills;
-    }
-
-    public String getEducation() {
-        return education;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof JobSeeker)) return false;
-        if (!super.equals(o)) return false;
-        JobSeeker that = (JobSeeker) o;
-        return Objects.equals(getUserId(), that.getUserId());
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(getUserId());
-    }
-
-    @Override
-    public String toString() {
-        return "JobSeeker{" +
-                "userId='" + getUserId() + '\'' +
-                ", name='" + getFirstName() + " " + getLastName() + '\'' +
-                ", headline='" + headline + '\'' +
-                ", summary='" + summary + '\'' +
-                ", resumePath='" + resumePath + '\'' +
-                "} " + super.toString();
-    }
-
-    // Builder design pattern
-    public static class JobSeekerBuilder extends User.Builder {
-
-        private final User.Builder userBuilder;
-
-        private String headline;
-        private String summary;
-        private String resumePath;
-        private String skills;
-        private String education;
-
-        public JobSeekerBuilder(String userId, String email, String password) {
-            this.userBuilder = new User.Builder()
-                    .setUserId(userId)
-                    .setEmail(email)
-                    .setPassword(password);
-
-        }
-
-        // User fields
-        public JobSeekerBuilder firstName(String firstName) {
-            userBuilder.setFirstName(firstName);
-            return this;
-        }
-
-        public JobSeekerBuilder lastName(String lastName) {
-            userBuilder.setLastName(lastName);
-            return this;
-        }
-
-        public JobSeekerBuilder profilePicture(String profilePicture) {
-            userBuilder.setProfilePicture(profilePicture);
-            return this;
-        }
-
-        public JobSeekerBuilder phoneNumber(String phoneNumber) {
-            userBuilder.setPhoneNumber(phoneNumber);
-            return this;
-        }
-
-        public JobSeekerBuilder location(String location) {
-            userBuilder.setLocation(location);
-            return this;
-        }
-
-        // JobSeeker fields
-        public JobSeekerBuilder headline(String headline) {
-            this.headline = headline;
-            return this;
-        }
-
-        public JobSeekerBuilder summary(String summary) {
-            this.summary = summary;
-            return this;
-        }
-
-        public JobSeekerBuilder resumePath(String resumePath) {
-            this.resumePath = resumePath;
-            return this;
-        }
-
-        public JobSeekerBuilder skills(String skills) {
-            this.skills = skills;
-            return this;
-        }
-
-        public JobSeekerBuilder education(String education) {
-            this.education = education;
-            return this;
-        }
-
-        public JobSeeker build() {
-            return new JobSeeker(this);
-        }
-    }
+    /**
+     * One JobSeeker : Many Educations
+     * Cascade: Delete all educations if job seeker is deleted
+     * orphanRemoval: Delete education if removed from list
+     */
+    @OneToMany(mappedBy = "jobSeeker", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    @Builder.Default
+    private List<Education> educations = new ArrayList<>();
 }

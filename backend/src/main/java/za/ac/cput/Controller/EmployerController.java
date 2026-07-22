@@ -1,17 +1,20 @@
 package za.ac.cput.Controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import za.ac.cput.domain.Employer;
 import za.ac.cput.Service.impl.EmployerServiceImpl;
+
 import java.util.List;
 
 @RestController
-@RequestMapping("/employer")
+@RequestMapping("/api/employers")
+@CrossOrigin(origins = "*")
 public class EmployerController {
 
-
-    private EmployerServiceImpl employerService;
+    private final EmployerServiceImpl employerService;
 
     @Autowired
     public EmployerController(EmployerServiceImpl employerService) {
@@ -19,29 +22,43 @@ public class EmployerController {
     }
 
     @PostMapping("/create")
-    public Employer createEmployer(@RequestBody Employer employer){
-        return employerService.create(employer);
+    public ResponseEntity<Employer> createEmployer(@RequestBody Employer employer) {
+        Employer created = employerService.create(employer);
+        if (created != null) {
+            return ResponseEntity.status(HttpStatus.CREATED).body(created);
+        }
+        return ResponseEntity.badRequest().build();
     }
 
-   @GetMapping("/read/{companyName}")
-    public Employer readEmployer(@PathVariable int   id) {
-        return employerService.read(id);
+    @GetMapping("/read/{id}")
+    public ResponseEntity<Employer> readEmployer(@PathVariable String id) {
+        Employer employer = employerService.read(id);
+        if (employer != null) {
+            return ResponseEntity.ok(employer);
+        }
+        return ResponseEntity.notFound().build();
     }
 
     @GetMapping("/getAll")
-    public List<Employer> readEmployer(){
-        return employerService.findAll();
+    public ResponseEntity<List<Employer>> getAllEmployers() {
+        return ResponseEntity.ok(employerService.findAll());
     }
 
     @PutMapping("/update")
-    public Employer updateEmployer(@RequestBody Employer employer){
-        return employerService.update(employer);
+    public ResponseEntity<Employer> updateEmployer(@RequestBody Employer employer) {
+        Employer updated = employerService.update(employer);
+        if (updated != null) {
+            return ResponseEntity.ok(updated);
+        }
+        return ResponseEntity.notFound().build();
     }
 
-    @DeleteMapping("/delete/{companyName}")
-    public boolean deleteEmployer(@PathVariable int id) {
-        return employerService.delete(id);
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity<Boolean> deleteEmployer(@PathVariable String id) {
+        boolean deleted = employerService.delete(id);
+        if (deleted) {
+            return ResponseEntity.ok(true);
+        }
+        return ResponseEntity.notFound().build();
     }
-
-
 }

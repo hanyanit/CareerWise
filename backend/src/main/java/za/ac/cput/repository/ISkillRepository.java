@@ -6,11 +6,7 @@ import za.ac.cput.domain.Skill;
 
 import java.util.List;
 
-/**
- * Author: Inga Mbobo, 230711723
- * Date: March 2026
- */
 @Repository
-public interface ISkillRepository extends JpaRepository<Skill, String> { //IRepository
-//    List<Skill> getAll(); use findAll() from JpaRepository
+public interface ISkillRepository extends JpaRepository<Skill, String> {
+    List<Skill> findByCategory(String category);
 }

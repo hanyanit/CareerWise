@@ -14,4 +14,12 @@ class SkillFactoryTest {
         assertNotNull(skill);
         System.out.println(skill);
     }
+
+    @Test
+    void createSkillFails() {
+        Skill skill = SkillFactory.createSkill("", "Technical Skill", 4);
+
+        assertNull(skill);
+        System.out.println("Failed as expected");
+    }
 }

@@ -4,29 +4,25 @@ import za.ac.cput.domain.Education;
 import za.ac.cput.util.Helper;
 
 import java.time.LocalDate;
-import java.util.Date;
-
-/**
- * Author: Phumlani Mdlalo, 241093813
- * Date: March 2026
- */
 
 public class EducationFactory {
-    public static Education createEducation(String educationId, String institution, String degree, String fieldOfStudy,
-                                            LocalDate startDate, LocalDate endDate, String description){
-        if (Helper.isNullOrEmpty(educationId)){
+    public static Education createEducation(String educationId, String institution, String degree,
+                                            String fieldOfStudy, LocalDate startDate, LocalDate endDate,
+                                            String description) {
+        if (Helper.isNullOrEmpty(educationId) ||
+                Helper.isNullOrEmpty(institution) ||
+                Helper.isNullOrEmpty(degree)) {
             return null;
         }
 
-        return new Education.Builder()
-                .setEducationId(educationId)
-                .setInstitution(institution)
-                .setDegree(degree)
-                .setFieldOfStudy(fieldOfStudy)
-                .setStartDate(startDate)
-                .setEndDate(endDate)
-                .setDescription(description)
+        return Education.builder()
+                .educationId(educationId)
+                .institution(institution)
+                .degree(degree)
+                .fieldOfStudy(fieldOfStudy)
+                .startDate(startDate)
+                .endDate(endDate)
+                .description(description)
                 .build();
-
     }
 }

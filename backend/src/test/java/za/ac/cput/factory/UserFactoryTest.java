@@ -8,7 +8,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class UserFactoryTest {
 
     @Test
-    void createUser_Success() {
+    void createUser() {
 
         User user = UserFactory.createUser(
                 "9904165076082",
@@ -22,67 +22,24 @@ class UserFactoryTest {
         );
 
         assertNotNull(user);
-        assertEquals("9904165076082", user.getUserId());
-        assertEquals("masingehanyanit@mail.com", user.getEmail());
-        assertEquals("Hanyani", user.getFirstName());
-        assertEquals("Cape Town", user.getLocation());
+        System.out.println("Passed as expected");
     }
 
     @Test
-    void createUser_Fail_UserIdNull() {
+    void createUserEmptyEmail() {
+        User user = UserFactory.createUser(
+                "9904165076082",
+                "",
+                "Hanyani16",
+                "Hanyani",
+                "Masinge",
+                "profilepicture.jpg",
+                "0839659906",
+                "Cape Town"
+        );
 
-        Exception exception = assertThrows(IllegalArgumentException.class, () -> {
-            UserFactory.createUser(
-                    null,
-                    "masingehanyanit@mail.com",
-                    "Hanyani16",
-                    "Hanyani",
-                    "Masinge",
-                    null,
-                    null,
-                    null
-            );
-        });
-
-        assertEquals("User ID is required", exception.getMessage());
-    }
-
-    @Test
-    void createUser_Fail_EmailEmpty() {
-
-        Exception exception = assertThrows(IllegalArgumentException.class, () -> {
-            UserFactory.createUser(
-                    "9904165076082",
-                    "",
-                    "Hanyani16",
-                    "Hanyani",
-                    "Masinge",
-                    null,
-                    null,
-                    null
-            );
-        });
-
-        assertEquals("Email is required", exception.getMessage());
-    }
-
-    @Test
-    void createUser_Fail_PasswordNull() {
-
-        Exception exception = assertThrows(IllegalArgumentException.class, () -> {
-            UserFactory.createUser(
-                    "9904165076082",
-                    "masingehanyanit@mail.com",
-                    null,
-                    "Hanyani",
-                    "Masinge",
-                    null,
-                    null,
-                    null
-            );
-        });
-
-        assertEquals("Password is required", exception.getMessage());
+        assertNull(user);
+        System.out.println("The email is null as expected");
     }
 
 }

@@ -1,6 +1,5 @@
 package za.ac.cput.factory;
 
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import za.ac.cput.domain.Job;
 
@@ -10,32 +9,40 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 
 class JobFactoryTest {
-    private static Job job1,job2;
 
-    @BeforeEach
+    @Test
     void createJob() {
-      job1 = JobFactory.createJob("001","Software Developer","Build clean code using Java and Springboot",
-              List.of("2 years experience", "Spring Framework", "RESTful APIs: @RestController, HTTP methods, status codes"),
-              List.of("Participate in code refactoring sessions", "Update dependencies and security patches", "Review and update documentation"),
-              "Cape Town",false,"50 000 - 70 000","Permanent",
-              LocalDate.of(2026, 11, 25),"OPEN");
+        Job job = JobFactory.createJob(
+                "Software Developer",
+                "Build clean code using Java and Springboot",
+                List.of("2 years experience", "Spring Framework", "RESTful APIs"), //A job includes/compose a list of experiance
+                List.of("Participate in code refactoring", "Update dependencies"),
+                "Cape Town",
+                false,
+                "50 000 - 70 000",
+                "Permanent",
+                LocalDate.of(2026, 11, 25)
+        );
 
-        job2 = JobFactory.createJob("002","Software Developer","Build clean code using Python",
-                List.of("3 years experience", "Flask (Micro-framework)", "Django (Full-stack framework)"),
-                List.of(" Participate in code refactoring sessions", "Update dependencies and security patches", "Performance testing and optimization"),
-                "Cape Town",false,"70 000 - 75 000","Permanent",
-                LocalDate.of(2026, 11, 25),"OPEN");
+        assertNotNull(job);
+        System.out.println(job);
     }
 
     @Test
-    void a_testJob(){
-        assertNotNull(job1);
-        System.out.println(job1.toString());
-    }
+    void createJobFails() {
+        Job job = JobFactory.createJob(
+                "",
+                "Build clean code using Java",
+                List.of("2 years experience"),
+                List.of("Participate in code refactoring"),
+                "Cape Town",
+                false,
+                "50 000 - 70 000",
+                "Permanent",
+                LocalDate.of(2026, 11, 25)
+        );
 
-    @Test
-    void b_testJob(){
-        assertNotNull(job2);
-        System.out.println(job2.toString());
+        assertNull(job);
+        System.out.println("Failed as expected");
     }
 }
