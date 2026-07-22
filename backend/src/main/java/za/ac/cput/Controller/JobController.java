@@ -1,66 +1,84 @@
 package za.ac.cput.Controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import za.ac.cput.Service.IEducationService;
 import za.ac.cput.Service.IJobService;
 import za.ac.cput.domain.Job;
 
 import java.util.List;
 
 @RestController
-@RequestMapping("/Job")
+@RequestMapping("/api/jobs")
+@CrossOrigin(origins = "*")
 public class JobController {
 
-    private IJobService jobServiceRepo;
+    private final IJobService jobService;
 
     @Autowired
-    public JobController(IJobService jobServiceRepo) {
-        this.jobServiceRepo = jobServiceRepo;
+    public JobController(IJobService jobService) {
+        this.jobService = jobService;
     }
 
     @PostMapping("/create")
-    public Job create(@RequestBody Job job) {
-        return this.jobServiceRepo.create(job);
+    public ResponseEntity<Job> create(@RequestBody Job job) {
+        Job created = jobService.create(job);
+        if (created != null) {
+            return ResponseEntity.status(HttpStatus.CREATED).body(created);
+        }
+        return ResponseEntity.badRequest().build();
     }
 
-    @GetMapping("/read")
-    public Job read(@RequestParam String id) {
-        return this.jobServiceRepo.read(id);
+    @GetMapping("/read/{id}")
+    public ResponseEntity<Job> read(@PathVariable String id) {
+        Job job = jobService.read(id);
+        if (job != null) {
+            return ResponseEntity.ok(job);
+        }
+        return ResponseEntity.notFound().build();
     }
 
     @PutMapping("/update")
-    public Job update(@RequestBody Job job) {
-        return this.jobServiceRepo.update(job);
+    public ResponseEntity<Job> update(@RequestBody Job job) {
+        Job updated = jobService.update(job);
+        if (updated != null) {
+            return ResponseEntity.ok(updated);
+        }
+        return ResponseEntity.notFound().build();
     }
 
-    @DeleteMapping("/delete/{jobId}")
-    public boolean delete(@PathVariable("jobId") String id) {
-        return this.jobServiceRepo.delete(id);
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity<Boolean> delete(@PathVariable String id) {
+        boolean deleted = jobService.delete(id);
+        if (deleted) {
+            return ResponseEntity.ok(true);
+        }
+        return ResponseEntity.notFound().build();
     }
 
     @GetMapping("/getAll")
-    public List<Job> getAll() {
-        return this.jobServiceRepo.getAll();
+    public ResponseEntity<List<Job>> getAll() {
+        return ResponseEntity.ok(jobService.getAll());
     }
 
     @GetMapping("/findOpenPositions")
-    public List<Job> findOpenPositions() {
-        return this.jobServiceRepo.findOpenPositions();
+    public ResponseEntity<List<Job>> findOpenPositions() {
+        return ResponseEntity.ok(jobService.findOpenPositions());
     }
 
-    @GetMapping("/findJobsByLocation")
-    public List<Job> findJobsByLocation(@RequestParam String location) {
-        return this.jobServiceRepo.findJobsByLocation(location);
+    @GetMapping("/findByLocation")
+    public ResponseEntity<List<Job>> findJobsByLocation(@RequestParam String location) {
+        return ResponseEntity.ok(jobService.findJobsByLocation(location));
     }
 
-    @GetMapping("/findJobsByEmploymentType")
-    public List<Job> findJobsByEmploymentType(@RequestParam String employmentType) {
-        return this.jobServiceRepo.findJobsByEmploymentType(employmentType);
+    @GetMapping("/findByEmploymentType")
+    public ResponseEntity<List<Job>> findJobsByEmploymentType(@RequestParam String employmentType) {
+        return ResponseEntity.ok(jobService.findJobsByEmploymentType(employmentType));
     }
 
-    @GetMapping("/findJobsByRemoteOption")
-    public List<Job> findJobsByRemoteOption(@RequestParam Boolean remoteOption) {
-        return this.jobServiceRepo.findJobsByRemoteOption(remoteOption);
+    @GetMapping("/findByRemoteOption")
+    public ResponseEntity<List<Job>> findJobsByRemoteOption(@RequestParam Boolean remoteOption) {
+        return ResponseEntity.ok(jobService.findJobsByRemoteOption(remoteOption));
     }
 }

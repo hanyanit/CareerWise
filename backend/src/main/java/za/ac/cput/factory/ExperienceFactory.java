@@ -3,32 +3,28 @@ package za.ac.cput.factory;
 import za.ac.cput.domain.Experience;
 import za.ac.cput.util.Helper;
 
+import java.time.LocalDate;
+
 public class ExperienceFactory {
 
-    public static Experience createExperience(
-            String experienceID,
-            String jobTitle,
-            String company,
-            String location,
-            String description) {
+    public static Experience createExperience(String experienceId, String jobTitle, String company,
+                                              String location, LocalDate startDate, LocalDate endDate,
+                                              String description) {
 
-
-        if (Helper.isNullOrEmpty(experienceID) ||
+        if (Helper.isNullOrEmpty(experienceId) ||
                 Helper.isNullOrEmpty(jobTitle) ||
-                Helper.isNullOrEmpty(company) ||
-                Helper.isNullOrEmpty(location) ||
-                Helper.isNullOrEmpty(description)) {
-
+                Helper.isNullOrEmpty(company)) {
             return null;
         }
 
-
-        return new Experience.Builder()
-                .setExperienceID(experienceID)
-                .setJobTitle(jobTitle)
-                .setCompany(company)
-                .setLocation(location)
-                .setDescription(description)
+        return Experience.builder()
+                .experienceId(experienceId)
+                .jobTitle(jobTitle)
+                .company(company)
+                .location(location)
+                .startDate(startDate)
+                .endDate(endDate)
+                .description(description)
                 .build();
     }
 }

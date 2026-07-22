@@ -1,21 +1,20 @@
 package za.ac.cput.Service.impl;
 
-import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import za.ac.cput.Service.IEducationService;
 import za.ac.cput.domain.Education;
 import za.ac.cput.repository.IEducationRepository;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Service
 public class EducationServiceImpl implements IEducationService {
 
     private final IEducationRepository repository;
-    private List<Education> educationList;
 
-    public EducationServiceImpl(@Qualifier("IEducationRepository") IEducationRepository repository) {
+    @Autowired
+    public EducationServiceImpl(IEducationRepository repository) {
         this.repository = repository;
     }
 
@@ -31,13 +30,21 @@ public class EducationServiceImpl implements IEducationService {
 
     @Override
     public Education update(Education education) {
-        return repository.save(education);
+        // Check if education exists before updating
+        if (education.getEducationId() != null &&
+                repository.existsById(education.getEducationId())) {
+            return repository.save(education);
+        }
+        return null;
     }
 
     @Override
     public boolean delete(String id) {
-        repository.deleteById(id);
-        return true;
+        if (repository.existsById(id)) {
+            repository.deleteById(id);
+            return true;
+        }
+        return false;
     }
 
     @Override
@@ -47,23 +54,11 @@ public class EducationServiceImpl implements IEducationService {
 
     @Override
     public List<Education> findByInstitution(String institution) {
-        List<Education> result = new ArrayList<>();
-        for (Education education : educationList) {
-            if (education.getInstitution().equalsIgnoreCase(institution)) {
-                result.add(education);
-            }
-        }
-        return result;
+        return repository.findByInstitutionContainingIgnoreCase(institution);
     }
 
     @Override
     public List<Education> findByDegree(String degree) {
-        List<Education> result = new ArrayList<>();
-        for (Education education : educationList) {
-            if (education.getDegree().equalsIgnoreCase(degree)) {
-                result.add(education);
-            }
-        }
-        return result;
+        return repository.findByDegreeContainingIgnoreCase(degree);
     }
 }

@@ -1,5 +1,6 @@
 package za.ac.cput.Service.impl;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import za.ac.cput.Service.ISkillService;
 import za.ac.cput.domain.Skill;
@@ -10,36 +11,42 @@ import java.util.List;
 @Service
 public class SkillServiceImp implements ISkillService {
 
+    private final ISkillRepository skillRepository;
 
-    private final ISkillRepository ISkillRepository;
-
-    public SkillServiceImp(ISkillRepository ISkillRepository) {
-        this.ISkillRepository = ISkillRepository;
+    @Autowired
+    public SkillServiceImp(ISkillRepository skillRepository) {
+        this.skillRepository = skillRepository;
     }
 
     @Override
     public Skill create(Skill skill) {
-        return this.ISkillRepository.save(skill);
+        return skillRepository.save(skill);
     }
 
     @Override
     public Skill read(String skillId) {
-        return this.ISkillRepository.findById(skillId).orElse(null);
+        return skillRepository.findById(skillId).orElse(null);
     }
 
     @Override
     public Skill update(Skill skill) {
-        return this.ISkillRepository.save(skill);
+        if (skill.getSkillId() != null && skillRepository.existsById(skill.getSkillId())) {
+            return skillRepository.save(skill);
+        }
+        return null;
     }
 
     @Override
     public boolean delete(String skillId) {
-        this.ISkillRepository.deleteById(skillId);
-        return true;
+        if (skillRepository.existsById(skillId)) {
+            skillRepository.deleteById(skillId);
+            return true;
+        }
+        return false;
     }
 
     @Override
     public List<Skill> getAll() {
-        return ISkillRepository.findAll();
+        return skillRepository.findAll();
     }
 }

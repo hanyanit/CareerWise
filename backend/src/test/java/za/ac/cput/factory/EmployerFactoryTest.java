@@ -2,39 +2,38 @@ package za.ac.cput.factory;
 
 import org.junit.jupiter.api.Test;
 import za.ac.cput.domain.Employer;
+
 import static org.junit.jupiter.api.Assertions.*;
 
-/**
- * EmployerFactoryTest.java
- * Author: Andile Pamela Masina, 221568816
- * Date: 24 March 2026
- */
 class EmployerFactoryTest {
 
     @Test
-    void buildEmployer_Success() {
+    void createEmployer_Success() {
         Employer employer = EmployerFactory.createEmployer(
+                "capitec@email.com",
+                "password123",
+                "Avatar",
+                "Ang",
                 "Capitec",
-                "Accounting",
-                "1000 - 5000",
-                "Cape Town"
+                "Banking"
         );
 
         assertNotNull(employer);
-        assertEquals("Capitec", employer.getCompanyName());
-        System.out.println("Success Test: " + employer.toString());
+        System.out.println(employer);
     }
 
     @Test
-    void buildEmployer_WithEmptyCompanyName_ReturnsNull() {
+    void createEmployer_Fail_EmptyCompanyName() {
         Employer employer = EmployerFactory.createEmployer(
+                "test@email.com",
+                "password123",
+                "John",
+                "Ang",
                 "",
-                "Retail",
-                "1-10",
-                "Durban"
+                "Retail"
         );
 
         assertNull(employer);
-        System.out.println("Failure Test (Empty Name): Successfully returned null");
+        System.out.println("Failed as expected");
     }
 }

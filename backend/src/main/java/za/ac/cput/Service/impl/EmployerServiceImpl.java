@@ -11,45 +11,55 @@ import java.util.List;
 @Service
 public class EmployerServiceImpl implements IEmployerService {
 
-
-
-    public final IEmployerRepository employerRepository;
+    private final IEmployerRepository employerRepository;
 
     @Autowired
     public EmployerServiceImpl(IEmployerRepository employerRepository) {
         this.employerRepository = employerRepository;
     }
 
-
     @Override
     public Employer create(Employer employer) {
-        return this.employerRepository.save(employer);
+        // Fix: Check if employer exists before creating
+        if (employer.getUserId() != null &&
+                !employerRepository.existsById(employer.getUserId())) {
+            return employerRepository.save(employer);
+        }
+        return null;
     }
 
     @Override
-    public Employer read(Integer integer) {
-        return this.employerRepository.findById(integer).orElse(null);
+    public Employer read(String id) { // Fix: String not Integer
+        return employerRepository.findById(id).orElse(null);
     }
 
     @Override
     public Employer update(Employer employer) {
-        return this.employerRepository.save(employer);
+        if (employer.getUserId() != null &&
+                employerRepository.existsById(employer.getUserId())) {
+            return employerRepository.save(employer);
+        }
+        return null;
     }
 
     @Override
-    public boolean delete(Integer integer) {
-        this.employerRepository.deleteById(integer);
-        return true;
+    public boolean delete(String id) { // Fix: String not Integer
+        if (employerRepository.existsById(id)) {
+            employerRepository.deleteById(id);
+            return true;
+        }
+        return false;
     }
-
 
     @Override
     public List<Employer> findAll() {
-        return this.employerRepository.findAll();
+        return employerRepository.findAll();
     }
 
     @Override
     public List<Employer> findByName(String name) {
-        return List.of();
+        return employerRepository.findByCompanyName(name)
+                .map(List::of)
+                .orElse(List.of());
     }
 }

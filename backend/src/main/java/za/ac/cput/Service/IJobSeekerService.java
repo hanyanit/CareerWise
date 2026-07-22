@@ -4,9 +4,7 @@ import za.ac.cput.domain.JobSeeker;
 
 import java.util.List;
 
-public interface IJobSeekerService extends IService<JobSeeker, String>{
+public interface IJobSeekerService extends IService<JobSeeker, String> {
     List<JobSeeker> getAll();
-    boolean delete(String id);
     List<JobSeeker> getByEmail(String email);
-
 }
