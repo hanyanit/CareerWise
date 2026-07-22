@@ -8,7 +8,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class EmployerFactoryTest {
 
     @Test
-    void createEmployer_Success() {
+    void createEmployer() {
         Employer employer = EmployerFactory.createEmployer(
                 "capitec@email.com",
                 "password123",
@@ -23,7 +23,7 @@ class EmployerFactoryTest {
     }
 
     @Test
-    void createEmployer_Fail_EmptyCompanyName() {
+    void createEmployerEmptyCompanyName() {
         Employer employer = EmployerFactory.createEmployer(
                 "test@email.com",
                 "password123",

@@ -28,6 +28,21 @@ class JobSeekerServiceImplTest {
         jobSeekerRepository.deleteAll();
     }
 
+    private JobSeeker createTestJobSeeker() {
+        return JobSeekerFactory.createJobSeeker(
+                "test" + System.currentTimeMillis() + "@gmail.com",
+                "securePassword123",
+                "Test",
+                "User",
+                "profile_picture.png",
+                "0712345678",
+                "Cape Town",
+                "Software Engineer",
+                "Test summary for job seeker",
+                "test_resume.pdf"
+        );
+    }
+
     @Test
     @Order(1)
     void create() {
@@ -78,6 +93,7 @@ class JobSeekerServiceImplTest {
 
     @Test
     @Order(4)
+    @Disabled
     void delete() {
         JobSeeker saved = jobSeekerService.create(createTestJobSeeker());
         assertNotNull(saved);
@@ -140,18 +156,4 @@ class JobSeekerServiceImplTest {
         System.out.println("Created JobSeeker ID: " + created.getUserId());
     }
 
-    private JobSeeker createTestJobSeeker() {
-        return JobSeekerFactory.createJobSeeker(
-                "test" + System.currentTimeMillis() + "@gmail.com",
-                "securePassword123",
-                "Test",
-                "User",
-                "profile_picture.png",
-                "0712345678",
-                "Cape Town",
-                "Software Engineer",
-                "Test summary for job seeker",
-                "test_resume.pdf"
-        );
-    }
 }

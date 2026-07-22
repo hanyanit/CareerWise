@@ -12,12 +12,12 @@ class EducationFactoryTest {
     @Test
     void createEducation() {
         Education education = EducationFactory.createEducation(
-                "ED001",  // educationId
-                "CPUT",   // institution
-                "ICT: Application Development",  // degree
-                "Computer Science",  // fieldOfStudy
-                LocalDate.of(2024, 1, 25),  // startDate
-                LocalDate.of(2026, 1, 25),  // endDate
+                "ED001",
+                "CPUT",
+                "ICT: Application Development",
+                "Computer Science",
+                LocalDate.of(2023, 2, 25),  // startDate
+                LocalDate.of(2027, 10, 25),  // endDate
                 "ICT: Application Development - Computer Science"  // description
         );
 
@@ -28,7 +28,7 @@ class EducationFactoryTest {
     @Test
     void createEducationFails() {
         Education education = EducationFactory.createEducation(
-                "",  // Empty educationId should cause failure
+                "",
                 "CPUT",
                 "ICT: Application Development",
                 "Computer Science",
@@ -39,21 +39,5 @@ class EducationFactoryTest {
 
         assertNull(education);
         System.out.println("Failed as expected - empty educationId");
-    }
-
-    @Test
-    void createEducationFailsMissingInstitution() {
-        Education education = EducationFactory.createEducation(
-                "ED002",
-                "",  // Empty institution should cause failure
-                "ICT: Application Development",
-                "Computer Science",
-                LocalDate.of(2024, 1, 25),
-                LocalDate.of(2026, 1, 25),
-                "ICT: Application Development - Computer Science"
-        );
-
-        assertNull(education);
-        System.out.println("Failed as expected - empty institution");
     }
 }

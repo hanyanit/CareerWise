@@ -15,7 +15,7 @@ class JobFactoryTest {
         Job job = JobFactory.createJob(
                 "Software Developer",
                 "Build clean code using Java and Springboot",
-                List.of("2 years experience", "Spring Framework", "RESTful APIs"),
+                List.of("2 years experience", "Spring Framework", "RESTful APIs"), //A job includes/compose a list of experiance
                 List.of("Participate in code refactoring", "Update dependencies"),
                 "Cape Town",
                 false,

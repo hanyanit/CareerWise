@@ -61,7 +61,7 @@ public class Job {
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     @Builder.Default
-    private JobStatus status = JobStatus.OPEN;
+    private JobStatus status = JobStatus.OPEN; //cane be OPEN, CLOSED, FILLED, ARCHIVED
 
     @Column(name = "created_at", nullable = false, updatable = false)
     private LocalDateTime createdAt;
@@ -69,12 +69,16 @@ public class Job {
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
 
+    //    Executes: Before an entity is saved for the first time (INSERT)
+    //    Purpose: Set initial values like createdAt and updatedAt
     @PrePersist
     public void prePersist() {
         this.createdAt = LocalDateTime.now();
         this.updatedAt = LocalDateTime.now();
     }
 
+    //    Executes: Before an entity is updated (UPDATE)
+    //    Purpose: Update timestamp fields like updatedAt
     @PreUpdate
     public void preUpdate() {
         this.updatedAt = LocalDateTime.now();

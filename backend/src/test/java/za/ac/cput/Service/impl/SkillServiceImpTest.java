@@ -28,6 +28,10 @@ class SkillServiceImpTest {
         skillRepository.deleteAll();
     }
 
+    private Skill createTestSkill() {
+        return SkillFactory.createSkill("JavaScript", "Web", 3);
+    }
+
     @Test
     @Order(1)
     void create() {
@@ -79,9 +83,5 @@ class SkillServiceImpTest {
         boolean deleted = skillService.delete(saved.getSkillId());
         assertTrue(deleted);
         System.out.println("Delete passed");
-    }
-
-    private Skill createTestSkill() {
-        return SkillFactory.createSkill("JavaScript", "Web", 3);
     }
 }

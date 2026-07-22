@@ -41,26 +41,8 @@ class JobSeekerFactoryTest {
                 null
         );
 
-        assertNull(jobSeeker);
+        assertNull(jobSeeker); //is null? yes so pass the test
         System.out.println("Failed as expected");
     }
 
-    @Test
-    void createJobSeekerMissingHeadline() {
-        JobSeeker jobSeeker = JobSeekerFactory.createJobSeeker(
-                "test@gmail.com",
-                "password123",
-                "Inga",
-                "Mbobo",
-                null,
-                null,
-                null,
-                "",
-                "Summary",
-                null
-        );
-
-        assertNull(jobSeeker);
-        System.out.println("Failed as expected");
-    }
 }

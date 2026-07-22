@@ -14,7 +14,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class Message {
+public class Message { //A job seeker can leave a message in the frontend it will be cover letter cover letter
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
