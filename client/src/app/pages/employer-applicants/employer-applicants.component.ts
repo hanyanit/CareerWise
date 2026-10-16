@@ -30,6 +30,20 @@ import { Application, Job } from '../../models/models';
               <p class="text-xs text-stone-400 mt-1">Applied {{ app.dateApplied }}</p>
             </div>
             <div class="flex items-center gap-3 flex-shrink-0">
+              <div class="flex items-center gap-2">
+                <button (click)="setStatus(app, 'Interview')" [disabled]="app.status === 'Interview'"
+                  class="px-3 py-1.5 text-xs font-semibold rounded-lg border border-brand-200 text-brand-700 bg-brand-50 hover:bg-brand-100 disabled:opacity-40 disabled:cursor-not-allowed transition-all">
+                  Interview
+                </button>
+                <button (click)="setStatus(app, 'Offer')" [disabled]="app.status === 'Offer'"
+                  class="px-3 py-1.5 text-xs font-semibold rounded-lg border border-green-200 text-green-700 bg-green-50 hover:bg-green-100 disabled:opacity-40 disabled:cursor-not-allowed transition-all">
+                  Accept
+                </button>
+                <button (click)="setStatus(app, 'Rejected')" [disabled]="app.status === 'Rejected'"
+                  class="px-3 py-1.5 text-xs font-semibold rounded-lg border border-red-200 text-red-700 bg-red-50 hover:bg-red-100 disabled:opacity-40 disabled:cursor-not-allowed transition-all">
+                  Reject
+                </button>
+              </div>
               <span class="px-3 py-1 text-xs font-semibold rounded-md border"
                 [ngClass]="{
                   'bg-brand-50 text-brand-700 border-brand-200': app.status === 'Interview' || app.status === 'Offer',
@@ -79,6 +93,15 @@ export class EmployerApplicantsComponent implements OnInit {
     this.applicationService.getApplicationsByJob(jobId).subscribe(apps => {
       this.applicants.set(apps);
       this.loading.set(false);
+    });
+  }
+
+  setStatus(app: Application, status: string) {
+    this.applicationService.updateStatus(app.id, status).subscribe(updated => {
+      if (!updated) return;
+      this.applicants.update(list =>
+        list.map(a => a.id === app.id ? { ...a, status } : a)
+      );
     });
   }
 }

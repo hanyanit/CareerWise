@@ -80,6 +80,10 @@ export class JobService {
     );
   }
 
+  recordView(id: string): Observable<void> {
+    return this.http.post<void>(`${this.apiBaseUrl}/jobs/${id}/view`, {});
+  }
+
   getById(id: string): Observable<Job | null> {
     return this.http.get<BackendJob | null>(`${this.apiBaseUrl}/jobs/read/${id}`).pipe(
       map(job => job ? this.mapJob(job) : null)

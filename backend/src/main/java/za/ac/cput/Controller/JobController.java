@@ -9,7 +9,6 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/jobs")
-@CrossOrigin(origins = "*")
 public class JobController {
 
     private final IJobService jobService;
@@ -42,6 +41,11 @@ public class JobController {
     @GetMapping("/getAll")
     public List<Job> getAll() {
         return this.jobService.getAll();
+    }
+
+    @PostMapping("/{id}/view")
+    public Job recordView(@PathVariable String id) {
+        return this.jobService.recordView(id);
     }
 
     @GetMapping("/findOpenPositions")

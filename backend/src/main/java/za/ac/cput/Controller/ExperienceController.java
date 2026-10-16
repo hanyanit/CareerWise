@@ -9,7 +9,6 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/experiences")
-@CrossOrigin(origins = "*")
 public class ExperienceController {
 
     private final IExperienceService experienceService;

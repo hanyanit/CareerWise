@@ -20,6 +20,8 @@ public class Job {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private String jobId;
+    @Builder.Default
+    private int views = 0;
 
     @Column(nullable = false)
     private String title;

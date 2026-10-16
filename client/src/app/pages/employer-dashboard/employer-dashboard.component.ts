@@ -6,6 +6,7 @@ import { forkJoin } from 'rxjs';
 import { EmployerService, BackendEmployerFull } from '../../services/employer.service';
 import { JobService, BackendJob } from '../../services/job.service';
 import { ApplicationService } from '../../services/application.service';
+import { JobStatsService } from '../../services/job-stats.service';
 import { AuthService } from '../../services/auth.service';
 import { ToastService } from '../../services/toast.service';
 import { EmployerStat, EmployerPosting } from '../../models/models';
@@ -198,6 +199,7 @@ export class EmployerDashboardComponent implements OnInit {
   private employerService = inject(EmployerService);
   private jobService = inject(JobService);
   private applicationService = inject(ApplicationService);
+  private jobStatsService = inject(JobStatsService);
   private auth = inject(AuthService);
   private fb = inject(FormBuilder);
   private toast = inject(ToastService);
@@ -259,14 +261,20 @@ export class EmployerDashboardComponent implements OnInit {
       }
 
       const applicantRequests = jobs.map(j => this.applicationService.getApplicationsByJob(j.jobId!));
-      forkJoin(applicantRequests).subscribe(applicationsByJob => {
+      const statsRequests = jobs.map(j => this.jobStatsService.getStats(j.jobId!));
+      forkJoin({
+        applications: forkJoin(applicantRequests),
+        jobStats: forkJoin(statsRequests)
+      }).subscribe(({ applications: applicationsByJob, jobStats }) => {
         const totalApplicants = applicationsByJob.reduce((sum, apps) => sum + apps.length, 0);
+        const totalViews = jobStats.reduce((sum, s) => sum + s.views, 0);
+        const newToday = jobStats.reduce((sum, s) => sum + s.newApplicationsToday, 0);
 
         this.stats.set([
           { label: 'Active Jobs', value: jobs.filter(j => j.status === 'OPEN').length, icon: 'briefcase' },
           { label: 'Total Applicants', value: totalApplicants, icon: 'users' },
-          { label: 'Job Views', value: 0, icon: 'eye' },
-          { label: 'New Today', value: 0, icon: 'file' }
+          { label: 'Job Views', value: totalViews, icon: 'eye' },
+          { label: 'New Today', value: newToday, icon: 'file' }
         ]);
         this.loadingStats.set(false);
 

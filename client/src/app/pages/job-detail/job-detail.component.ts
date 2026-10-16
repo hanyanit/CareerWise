@@ -830,6 +830,9 @@ export class JobDetailComponent
     }
 
 
+    this.jobService.recordView(id).subscribe();
+
+
     forkJoin({
 
       job:

@@ -10,7 +10,6 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("/api/saved-jobs")
-@CrossOrigin(origins = "*")
 public class SavedJobsController {
 
     private final ISavedJobsService savedJobsService;

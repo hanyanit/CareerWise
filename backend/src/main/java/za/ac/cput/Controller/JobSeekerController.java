@@ -19,7 +19,6 @@ import java.util.List;
  */
 @RestController
 @RequestMapping("/api/jobseekers")
-@CrossOrigin(origins = "*")
 public class JobSeekerController {
 
     // The service layer that contains all business logic for JobSeeker operations

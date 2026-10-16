@@ -87,6 +87,19 @@ export class ApplicationService {
     );
   }
 
+  updateStatus(applicationId: string, status: string): Observable<Application | null> {
+    return this.http.put<BackendApplication>(`${this.apiBaseUrl}/applications/update-status`, {
+      applicationId,
+      status
+    }).pipe(
+      map(backendApp => this.mapApplication(backendApp)),
+      catchError(err => {
+        console.error('Failed to update application status', err);
+        return of(null);
+      })
+    );
+  }
+
   apply(jobId: string, notes: string = ''): Observable<Application | null> {
     const user = this.auth.currentUser();
     if (!user || user.role !== 'candidate') {

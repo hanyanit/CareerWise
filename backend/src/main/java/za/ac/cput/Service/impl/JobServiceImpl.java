@@ -2,6 +2,7 @@ package za.ac.cput.Service.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import za.ac.cput.Service.IJobService;
 import za.ac.cput.Service.INotificationService;
 import za.ac.cput.domain.Job;
@@ -116,6 +117,15 @@ public class JobServiceImpl implements IJobService {
     @Override
     public List<Job> getAll() {
         return repository.findAll();
+    }
+
+    @Override
+    @Transactional
+    public Job recordView(String id) {
+        return repository.findById(id).map(job -> {
+            job.setViews(job.getViews() + 1);
+            return repository.save(job);
+        }).orElse(null);
     }
 
     @Override
