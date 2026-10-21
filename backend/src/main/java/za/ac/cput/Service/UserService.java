@@ -1,6 +1,7 @@
 package za.ac.cput.Service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import za.ac.cput.domain.User;
 import za.ac.cput.repository.UserRepo;
@@ -8,16 +9,21 @@ import za.ac.cput.repository.UserRepo;
 @Service
 public class UserService {
 
-    @Autowired
-    private UserRepo userRepo;
+    private final UserRepo userRepo;
+    private final PasswordEncoder passwordEncoder;
 
-    public UserService(UserRepo userRepo) {
+    @Autowired
+    public UserService(UserRepo userRepo, PasswordEncoder passwordEncoder) {
         this.userRepo = userRepo;
+        this.passwordEncoder = passwordEncoder;
     }
 
     public User signUp(User user) throws Exception {
         if (userRepo.existsByEmail(user.getEmail())) {
             throw new Exception("email already exists");
+        }
+        if (user.getPassword() != null && !user.getPassword().isBlank()) {
+            user.setPassword(passwordEncoder.encode(user.getPassword()));
         }
         return userRepo.save(user);
     }
@@ -26,7 +32,7 @@ public class UserService {
         User user = userRepo.findByEmail(email)
                 .orElseThrow(() -> new Exception("User not found"));
 
-        if (!user.getPassword().equals(password)) {
+        if (!passwordEncoder.matches(password, user.getPassword())) {
             throw new Exception("Invalid password");
         }
 
@@ -37,11 +43,11 @@ public class UserService {
         User user = userRepo.findById(userId)
                 .orElseThrow(() -> new Exception("User not found"));
 
-        if (!user.getPassword().equals(oldPassword)) {
+        if (!passwordEncoder.matches(oldPassword, user.getPassword())) {
             throw new Exception("Current password does not match");
         }
 
-        user.setPassword(newPassword);
+        user.setPassword(passwordEncoder.encode(newPassword));
         userRepo.save(user);
         return true;
     }

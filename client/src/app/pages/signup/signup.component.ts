@@ -189,7 +189,7 @@ export class SignupComponent {
       this.isSubmitting.set(true);
       this.errorMessage.set(null);
       const v = this.signupForm.value;
-      this.auth.signup({
+      const signupPayload = {
         name: v.name!,
         email: v.email!,
         password: v.password!,
@@ -200,12 +200,19 @@ export class SignupComponent {
         companySize: v.companySize || undefined,
         industry: v.industry || undefined,
         companyRole: v.companyRole || undefined
-      }).subscribe({
-        next: () => {
+      };
+      console.log('Registration form submitted - payload:', {
+        ...signupPayload,
+        password: '[PROTECTED]'
+      });
+      this.auth.signup(signupPayload).subscribe({
+        next: (createdUser) => {
+          console.log('Registration success - User payload:', createdUser);
           this.isSubmitting.set(false);
           this.router.navigate([this.role() === 'employer' ? '/employer-home' : '/dashboard']);
         },
         error: (err: Error) => {
+          console.error('Registration failed - Error message:', err.message);
           this.isSubmitting.set(false);
           this.errorMessage.set(err.message);
         }

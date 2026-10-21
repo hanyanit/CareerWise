@@ -84,5 +84,14 @@ class UserServiceTest {
 
         User loggedIn = userService.login(savedUser.getEmail(), "newPass456");
         assertNotNull(loggedIn);
-}
+    }
+
+    @Test
+    @Order(6)
+    void passwordIsEncryptedInDatabase() throws Exception {
+        User savedUser = userService.signUp(testUser);
+        assertNotNull(savedUser.getPassword());
+        assertNotEquals("myPass123", savedUser.getPassword());
+        assertTrue(savedUser.getPassword().startsWith("$2a$") || savedUser.getPassword().startsWith("$2b$"));
+    }
 }

@@ -39,24 +39,30 @@ public class JobSeekerServiceImpl implements IJobSeekerService {
     private final ISkillRepository skillRepository;
     private final IEducationRepository educationRepository;
     private final IExperienceRepository experienceRepository;
+    private final org.springframework.security.crypto.password.PasswordEncoder passwordEncoder;
 
     @Autowired
     public JobSeekerServiceImpl(IJobSeekerRepository repository,
             INotificationService notificationService,
             ISkillRepository skillRepository,
             IEducationRepository educationRepository,
-            IExperienceRepository experienceRepository) {
+            IExperienceRepository experienceRepository,
+            org.springframework.security.crypto.password.PasswordEncoder passwordEncoder) {
         this.repository = repository;
         this.notificationService = notificationService;
         this.skillRepository = skillRepository;
         this.educationRepository = educationRepository;
         this.experienceRepository = experienceRepository;
+        this.passwordEncoder = passwordEncoder;
     }
 
     @Override
     public JobSeeker create(JobSeeker jobSeeker) {
         if (jobSeeker.getEmail() != null &&
                 !repository.existsByEmail(jobSeeker.getEmail())) {
+            if (jobSeeker.getPassword() != null && !jobSeeker.getPassword().isBlank()) {
+                jobSeeker.setPassword(passwordEncoder.encode(jobSeeker.getPassword()));
+            }
             return repository.save(jobSeeker);
         }
         return null;

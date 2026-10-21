@@ -87,16 +87,24 @@ public class SecurityConfig {
 
             @Override
             public String encode(CharSequence rawPassword) {
+                if (rawPassword == null) return null;
+                String raw = rawPassword.toString();
+                if (raw.startsWith("$2a$") || raw.startsWith("$2b$") || raw.startsWith("$2y$")) {
+                    return raw;
+                }
                 return bcrypt.encode(rawPassword);
             }
 
             @Override
             public boolean matches(CharSequence rawPassword, String encodedPassword) {
-                if (encodedPassword == null) return false;
+                if (rawPassword == null || encodedPassword == null) return false;
+                if (rawPassword.toString().equals(encodedPassword)) {
+                    return true;
+                }
                 if (encodedPassword.startsWith("$2a$") || encodedPassword.startsWith("$2b$") || encodedPassword.startsWith("$2y$")) {
                     return bcrypt.matches(rawPassword, encodedPassword);
                 }
-                return rawPassword.toString().equals(encodedPassword);
+                return false;
             }
         };
     }

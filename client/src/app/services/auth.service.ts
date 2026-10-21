@@ -1,6 +1,6 @@
 import { Injectable, computed, inject, signal } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable, catchError, map, of, switchMap, throwError } from 'rxjs';
+import { Observable, catchError, map, of, switchMap, tap, throwError } from 'rxjs';
 import { environment } from '../../environments/environment';
 
 export type UserRole = 'candidate' | 'employer';
@@ -10,6 +10,7 @@ export interface AuthUser {
   name: string;
   email: string;
   role: UserRole;
+  token?: string;
   // Candidate-specific
   location?: string;
   currentTitle?: string;
@@ -49,6 +50,8 @@ interface BackendUser {
   lastName?: string;
   phoneNumber?: string;
   location?: string;
+  token?: string;
+  message?: string;
 }
 
 interface BackendJobSeeker extends BackendUser {
@@ -103,7 +106,12 @@ export class AuthService {
         location: payload.location || undefined,
         headline: payload.currentTitle || undefined
       };
+      console.log('Registration request payload (candidate):', { ...body, password: '[PROTECTED]' });
       return this.http.post<BackendJobSeeker | null>(`${this.apiBaseUrl}/jobseekers/create`, body).pipe(
+        tap({
+          next: (created) => console.log('Registration success payload (candidate):', created),
+          error: (err) => console.error('Registration failed payload (candidate):', err)
+        }),
         switchMap(created => {
           if (!created) {
             return throwError(() => new Error('An account with this email already exists.'));
@@ -125,7 +133,12 @@ export class AuthService {
       companySize: payload.companySize || undefined,
       industry: payload.industry || undefined
     };
+    console.log('Registration request payload (employer):', { ...body, password: '[PROTECTED]' });
     return this.http.post<BackendEmployer | null>(`${this.apiBaseUrl}/employers/create`, body).pipe(
+      tap({
+        next: (created) => console.log('Registration success payload (employer):', created),
+        error: (err) => console.error('Registration failed payload (employer):', err)
+      }),
       switchMap(created => {
         if (!created) {
           return throwError(() => new Error('An account with this email already exists.'));
@@ -140,12 +153,22 @@ export class AuthService {
 
   login(email: string, password: string): Observable<AuthUser> {
     const body: LoginPayload = { email, password };
+    console.log('Login request payload:', { email, password: '[PROTECTED]' });
     return this.http.post<BackendUser | null>(`${this.apiBaseUrl}/users/login`, body).pipe(
+      tap({
+        next: (loggedInUser) => console.log('Login success payload:', loggedInUser),
+        error: (err) => console.error('Login failed payload/error:', err)
+      }),
       switchMap(loggedInUser => {
         if (!loggedInUser) {
           return throwError(() => new Error('Incorrect email or password.'));
         }
-        return this.resolveRole(loggedInUser);
+        return this.resolveRole(loggedInUser).pipe(
+          map(authUser => ({
+            ...authUser,
+            token: loggedInUser.token
+          }))
+        );
       }),
       map(user => {
         this.setUser(user);

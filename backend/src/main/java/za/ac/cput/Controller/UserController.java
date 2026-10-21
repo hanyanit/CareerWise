@@ -4,6 +4,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import za.ac.cput.Service.UserService;
 import za.ac.cput.domain.User;
+import za.ac.cput.dto.LoginRequest;
+import za.ac.cput.dto.LoginResponse;
 import za.ac.cput.security.JwtUtil;
 
 import java.util.Map;
@@ -19,19 +21,35 @@ public class UserController {
     private JwtUtil jwtUtil;
 
     @PostMapping("/signup")
-    public User signUp(@RequestBody User user) throws Exception {
+    public LoginResponse signUp(@RequestBody User user) throws Exception {
         User created = this.userService.signUp(user);
-        created.setToken(this.jwtUtil.generateToken(created.getEmail()));
-        return created;
+        String token = this.jwtUtil.generateToken(created.getEmail());
+        return LoginResponse.builder()
+                .userId(created.getUserId())
+                .email(created.getEmail())
+                .firstName(created.getFirstName())
+                .lastName(created.getLastName())
+                .phoneNumber(created.getPhoneNumber())
+                .location(created.getLocation())
+                .token(token)
+                .message("User registered successfully")
+                .build();
     }
 
     @PostMapping("/login")
-    public User login(@RequestBody Map<String, String> loginRequest) throws Exception {
-        String email = loginRequest.get("email");
-        String password = loginRequest.get("password");
-        User user = this.userService.login(email, password);
-        user.setToken(this.jwtUtil.generateToken(user.getEmail()));
-        return user;
+    public LoginResponse login(@RequestBody LoginRequest loginRequest) throws Exception {
+        User user = this.userService.login(loginRequest.getEmail(), loginRequest.getPassword());
+        String token = this.jwtUtil.generateToken(user.getEmail());
+        return LoginResponse.builder()
+                .userId(user.getUserId())
+                .email(user.getEmail())
+                .firstName(user.getFirstName())
+                .lastName(user.getLastName())
+                .phoneNumber(user.getPhoneNumber())
+                .location(user.getLocation())
+                .token(token)
+                .message("Login successful")
+                .build();
     }
 
     @PostMapping("/change-password")

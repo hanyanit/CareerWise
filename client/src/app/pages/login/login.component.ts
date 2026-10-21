@@ -63,13 +63,18 @@ export class LoginComponent {
     if (this.loginForm.valid) {
       this.isSubmitting.set(true);
       this.errorMessage.set(null);
-      this.auth.login(this.loginForm.value.email!, this.loginForm.value.password!).subscribe({
-        next: () => {
+      const email = this.loginForm.value.email!;
+      const password = this.loginForm.value.password!;
+      console.log('Login form submitted - payload:', { email, password: '[PROTECTED]' });
+      this.auth.login(email, password).subscribe({
+        next: (user) => {
+          console.log('Login success - User payload:', user);
           this.isSubmitting.set(false);
           const returnUrl = this.route.snapshot.queryParamMap.get('returnUrl');
           this.router.navigateByUrl(returnUrl ?? '/dashboard');
         },
         error: (err: Error) => {
+          console.error('Login failed - Error message:', err.message);
           this.isSubmitting.set(false);
           this.errorMessage.set(err.message);
         }

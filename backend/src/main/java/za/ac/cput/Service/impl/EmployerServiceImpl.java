@@ -12,16 +12,22 @@ import java.util.List;
 public class EmployerServiceImpl implements IEmployerService {
 
     private final IEmployerRepository employerRepository;
+    private final org.springframework.security.crypto.password.PasswordEncoder passwordEncoder;
 
     @Autowired
-    public EmployerServiceImpl(IEmployerRepository employerRepository) {
+    public EmployerServiceImpl(IEmployerRepository employerRepository,
+                               org.springframework.security.crypto.password.PasswordEncoder passwordEncoder) {
         this.employerRepository = employerRepository;
+        this.passwordEncoder = passwordEncoder;
     }
 
     @Override
     public Employer create(Employer employer) {
         if (employer.getEmail() != null &&
                 !employerRepository.existsByEmail(employer.getEmail())) {
+            if (employer.getPassword() != null && !employer.getPassword().isBlank()) {
+                employer.setPassword(passwordEncoder.encode(employer.getPassword()));
+            }
             return employerRepository.save(employer);
         }
         return null;
