@@ -1,4 +1,4 @@
-package za.ac.cput.dto;
+package za.ac.cput.DTO;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

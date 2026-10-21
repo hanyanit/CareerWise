@@ -2,10 +2,11 @@ package za.ac.cput.Controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
+import za.ac.cput.DTO.LoginRequest;
+import za.ac.cput.DTO.LoginResponse;
 import za.ac.cput.Service.UserService;
 import za.ac.cput.domain.User;
-import za.ac.cput.dto.LoginRequest;
-import za.ac.cput.dto.LoginResponse;
 import za.ac.cput.security.JwtUtil;
 
 import java.util.Map;
