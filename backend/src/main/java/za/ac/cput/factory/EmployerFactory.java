@@ -1,6 +1,7 @@
 package za.ac.cput.factory;
 
 import za.ac.cput.domain.Employer;
+import za.ac.cput.domain.Role;
 import za.ac.cput.util.Helper;
 
 import java.util.ArrayList;
@@ -29,6 +30,7 @@ public class EmployerFactory {
                 .lastName(lastName)
                 .companyName(companyName)
                 .industry(industry)
+                .role(Role.EMPLOYER)
                 .postedJobs(new ArrayList<>())
                 .build();
     }
@@ -68,6 +70,7 @@ public class EmployerFactory {
                 .industry(industry)
                 .companyDescription(companyDescription)
                 .companyHeadquarters(companyHeadquarters)
+                .role(Role.EMPLOYER)
                 .postedJobs(new ArrayList<>())
                 .build();
     }

@@ -1,6 +1,7 @@
 package za.ac.cput.Controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import za.ac.cput.Service.ISavedJobsService;
 import za.ac.cput.domain.SavedJobs;
@@ -10,6 +11,7 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("/api/saved-jobs")
+@PreAuthorize("hasAnyRole('JOBSEEKER', 'CANDIDATE')")
 public class SavedJobsController {
 
     private final ISavedJobsService savedJobsService;

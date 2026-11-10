@@ -1,6 +1,7 @@
 package za.ac.cput.Controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import za.ac.cput.Service.IExperienceService;
 import za.ac.cput.domain.Experience;
@@ -9,6 +10,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/experiences")
+@PreAuthorize("hasAnyRole('JOBSEEKER', 'CANDIDATE')")
 public class ExperienceController {
 
     private final IExperienceService experienceService;

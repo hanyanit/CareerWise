@@ -58,6 +58,23 @@ class JwtUtilTest {
     }
 
     @Test
+    void generateTokenWithRoleEnum() {
+        String seekerEmail = "seeker@careerwise.com";
+        String token = jwtUtil.generateToken(seekerEmail, za.ac.cput.domain.Role.JOBSEEKER);
+        assertNotNull(token);
+
+        assertEquals(seekerEmail, jwtUtil.extractUsername(token));
+        assertEquals("JOBSEEKER", jwtUtil.extractRole(token));
+
+        String employerEmail = "boss@corp.com";
+        String empToken = jwtUtil.generateToken(employerEmail, za.ac.cput.domain.Role.EMPLOYER);
+        assertNotNull(empToken);
+
+        assertEquals(employerEmail, jwtUtil.extractUsername(empToken));
+        assertEquals("EMPLOYER", jwtUtil.extractRole(empToken));
+    }
+
+    @Test
     void tokenExpiredReturnsTrueWhenExpired() {
         JwtUtil shortLivedJwt = new JwtUtil();
         ReflectionTestUtils.setField(

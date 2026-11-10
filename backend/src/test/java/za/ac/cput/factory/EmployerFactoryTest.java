@@ -19,7 +19,8 @@ class EmployerFactoryTest {
         );
 
         assertNotNull(employer);
-}
+        assertEquals(za.ac.cput.domain.Role.EMPLOYER, employer.getRole());
+    }
 
     @Test
     void createEmployerEmptyCompanyName() {

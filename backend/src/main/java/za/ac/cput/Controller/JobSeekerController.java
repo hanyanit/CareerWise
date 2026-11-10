@@ -4,6 +4,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
 import org.springframework.http.MediaType;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import za.ac.cput.Service.IJobSeekerService;
@@ -52,6 +53,7 @@ public class JobSeekerController {
      * Updates an existing JobSeeker profile using the full object in the request body.
      */
     @PutMapping("/update")
+    @PreAuthorize("hasAnyRole('JOBSEEKER', 'CANDIDATE')")
     public JobSeeker update(@RequestBody JobSeeker jobSeeker) {
         return this.service.updateProfile(jobSeeker);
     }
@@ -62,6 +64,7 @@ public class JobSeekerController {
      * Delegates to the same service method as /update.
      */
     @PutMapping("/profile")
+    @PreAuthorize("hasAnyRole('JOBSEEKER', 'CANDIDATE')")
     public JobSeeker updateProfile(@RequestBody JobSeeker jobSeeker) {
         return this.service.updateProfile(jobSeeker);
     }
@@ -91,6 +94,7 @@ public class JobSeekerController {
      * Returns the updated JobSeeker profile (which includes the resume filename/path).
      */
     @PostMapping(value = "/{userId}/resume", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    @PreAuthorize("hasAnyRole('JOBSEEKER', 'CANDIDATE')")
     public JobSeeker uploadResume(@PathVariable String userId, @RequestParam("file") MultipartFile file) throws IOException {
         return this.service.uploadResume(userId, file);
     }
@@ -146,6 +150,7 @@ public class JobSeekerController {
      * Returns true if the file was successfully deleted.
      */
     @DeleteMapping("/{userId}/resume")
+    @PreAuthorize("hasAnyRole('JOBSEEKER', 'CANDIDATE')")
     public boolean deleteResume(@PathVariable String userId) throws IOException {
         return this.service.deleteResume(userId);
     }

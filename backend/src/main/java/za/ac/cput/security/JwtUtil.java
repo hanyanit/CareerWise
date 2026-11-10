@@ -62,13 +62,37 @@ public class JwtUtil {
         }
     }
 
+    public String extractRole(String token) {
+        return extractClaim(token, claims -> (String) claims.get("role"));
+    }
+
     public String generateToken(String username) {
         Map<String, Object> claims = new HashMap<>();
         return createToken(claims, username);
     }
 
+    public String generateToken(String username, za.ac.cput.domain.Role role) {
+        Map<String, Object> claims = new HashMap<>();
+        if (role != null) {
+            claims.put("role", role.name());
+            claims.put("roles", java.util.List.of(role.getAuthority(), "ROLE_USER"));
+        }
+        return createToken(claims, username);
+    }
+
     public String generateToken(UserDetails userDetails) {
         Map<String, Object> claims = new HashMap<>();
+        if (userDetails != null && userDetails.getAuthorities() != null) {
+            java.util.List<String> auths = userDetails.getAuthorities().stream()
+                    .map(org.springframework.security.core.GrantedAuthority::getAuthority)
+                    .toList();
+            claims.put("authorities", auths);
+            userDetails.getAuthorities().stream()
+                    .map(org.springframework.security.core.GrantedAuthority::getAuthority)
+                    .filter(a -> a.startsWith("ROLE_") && !a.equals("ROLE_USER"))
+                    .findFirst()
+                    .ifPresent(r -> claims.put("role", r.substring(5)));
+        }
         return createToken(claims, userDetails.getUsername());
     }
 

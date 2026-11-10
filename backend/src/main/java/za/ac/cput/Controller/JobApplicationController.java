@@ -1,6 +1,7 @@
 package za.ac.cput.Controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import za.ac.cput.Service.IApplicationsService;
 import za.ac.cput.domain.JobApplication;
@@ -20,6 +21,7 @@ public class JobApplicationController {
     }
 
     @PostMapping("/apply")
+    @PreAuthorize("hasAnyRole('JOBSEEKER', 'CANDIDATE')")
     public JobApplication apply(@RequestBody Map<String, String> payload) {
         String jobSeekerId = payload.get("jobSeekerId");
         String jobId = payload.get("jobId");
@@ -28,12 +30,14 @@ public class JobApplicationController {
     }
 
     @GetMapping("/jobseeker/{jobSeekerId}")
+    @PreAuthorize("hasAnyRole('JOBSEEKER', 'CANDIDATE')")
     public List<JobApplication> getApplications(@PathVariable String jobSeekerId) {
         return this.applicationService.getApplications(jobSeekerId);
     }
 
 
     @GetMapping("/job/{jobId}")
+    @PreAuthorize("hasAnyRole('EMPLOYER', 'ADMIN')")
     public List<JobApplication> getJobApplications(@PathVariable String jobId) {
         return this.applicationService.getJobApplications(jobId);
     }
@@ -44,6 +48,7 @@ public class JobApplicationController {
     }
 
     @PutMapping("/update-status")
+    @PreAuthorize("hasAnyRole('EMPLOYER', 'ADMIN')")
     public JobApplication updateStatus(@RequestBody Map<String, String> payload) {
         String applicationId = payload.get("applicationId");
         String status = payload.get("status");

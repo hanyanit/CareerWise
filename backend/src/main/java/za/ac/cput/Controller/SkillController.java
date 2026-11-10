@@ -1,6 +1,7 @@
 package za.ac.cput.Controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import za.ac.cput.Service.ISkillService;
 import za.ac.cput.domain.Skill;
@@ -9,6 +10,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/skills")
+@PreAuthorize("hasAnyRole('JOBSEEKER', 'CANDIDATE')")
 public class SkillController {
     private final ISkillService service;
 

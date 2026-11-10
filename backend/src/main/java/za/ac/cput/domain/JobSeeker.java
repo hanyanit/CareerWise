@@ -38,4 +38,11 @@ public class JobSeeker extends User {
     @OneToMany(mappedBy = "jobSeeker", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
     @Builder.Default
     private List<Education> educations = new ArrayList<>();
+
+    @PrePersist
+    public void ensureRole() {
+        if (getRole() == null) {
+            setRole(Role.JOBSEEKER);
+        }
+    }
 }

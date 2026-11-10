@@ -25,6 +25,9 @@ public class EmployerServiceImpl implements IEmployerService {
     public Employer create(Employer employer) {
         if (employer.getEmail() != null &&
                 !employerRepository.existsByEmail(employer.getEmail())) {
+            if (employer.getRole() == null) {
+                employer.setRole(za.ac.cput.domain.Role.EMPLOYER);
+            }
             if (employer.getPassword() != null && !employer.getPassword().isBlank()) {
                 employer.setPassword(passwordEncoder.encode(employer.getPassword()));
             }

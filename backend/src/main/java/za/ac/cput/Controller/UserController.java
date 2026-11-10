@@ -24,7 +24,7 @@ public class UserController {
     @PostMapping("/signup")
     public LoginResponse signUp(@RequestBody User user) throws Exception {
         User created = this.userService.signUp(user);
-        String token = this.jwtUtil.generateToken(created.getEmail());
+        String token = this.jwtUtil.generateToken(created.getEmail(), created.getRole());
         return LoginResponse.builder()
                 .userId(created.getUserId())
                 .email(created.getEmail())
@@ -32,6 +32,7 @@ public class UserController {
                 .lastName(created.getLastName())
                 .phoneNumber(created.getPhoneNumber())
                 .location(created.getLocation())
+                .role(created.getRole())
                 .token(token)
                 .message("User registered successfully")
                 .build();
@@ -40,7 +41,7 @@ public class UserController {
     @PostMapping("/login")
     public LoginResponse login(@RequestBody LoginRequest loginRequest) throws Exception {
         User user = this.userService.login(loginRequest.getEmail(), loginRequest.getPassword());
-        String token = this.jwtUtil.generateToken(user.getEmail());
+        String token = this.jwtUtil.generateToken(user.getEmail(), user.getRole());
         return LoginResponse.builder()
                 .userId(user.getUserId())
                 .email(user.getEmail())
@@ -48,6 +49,7 @@ public class UserController {
                 .lastName(user.getLastName())
                 .phoneNumber(user.getPhoneNumber())
                 .location(user.getLocation())
+                .role(user.getRole())
                 .token(token)
                 .message("Login successful")
                 .build();

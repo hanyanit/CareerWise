@@ -1,6 +1,7 @@
 package za.ac.cput.Controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import za.ac.cput.Service.IJobService;
 import za.ac.cput.domain.Job;
@@ -19,6 +20,7 @@ public class JobController {
     }
 
     @PostMapping("/create")
+    @PreAuthorize("hasAnyRole('EMPLOYER', 'ADMIN')")
     public Job create(@RequestBody Job job) {
         return this.jobService.create(job);
     }
@@ -29,11 +31,13 @@ public class JobController {
     }
 
     @PutMapping("/update")
+    @PreAuthorize("hasAnyRole('EMPLOYER', 'ADMIN')")
     public Job update(@RequestBody Job job) {
         return this.jobService.update(job);
     }
 
     @DeleteMapping("/delete/{id}")
+    @PreAuthorize("hasAnyRole('EMPLOYER', 'ADMIN')")
     public boolean delete(@PathVariable String id) {
         return this.jobService.delete(id);
     }

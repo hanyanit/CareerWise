@@ -26,4 +26,11 @@ public class Employer extends User {
     @OneToMany(mappedBy = "employer", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     @Builder.Default
     private List<Job> postedJobs = new ArrayList<>();
+
+    @PrePersist
+    public void ensureRole() {
+        if (getRole() == null) {
+            setRole(Role.EMPLOYER);
+        }
+    }
 }

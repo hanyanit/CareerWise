@@ -1,6 +1,7 @@
 package za.ac.cput.Controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import za.ac.cput.domain.Employer;
 import za.ac.cput.Service.impl.EmployerServiceImpl;
@@ -34,11 +35,13 @@ public class EmployerController {
     }
 
     @PutMapping("/update")
+    @PreAuthorize("hasAnyRole('EMPLOYER', 'ADMIN')")
     public Employer updateEmployer(@RequestBody Employer employer) {
         return this.employerService.update(employer);
     }
 
     @DeleteMapping("/delete/{id}")
+    @PreAuthorize("hasAnyRole('EMPLOYER', 'ADMIN')")
     public boolean deleteEmployer(@PathVariable String id) {
         return this.employerService.delete(id);
     }

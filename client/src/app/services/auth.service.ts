@@ -50,6 +50,7 @@ interface BackendUser {
   lastName?: string;
   phoneNumber?: string;
   location?: string;
+  role?: string;
   token?: string;
   message?: string;
 }
@@ -104,7 +105,8 @@ export class AuthService {
         firstName,
         lastName,
         location: payload.location || undefined,
-        headline: payload.currentTitle || undefined
+        headline: payload.currentTitle || undefined,
+        role: 'JOBSEEKER'
       };
       console.log('Registration request payload (candidate):', { ...body, password: '[PROTECTED]' });
       return this.http.post<BackendJobSeeker | null>(`${this.apiBaseUrl}/jobseekers/create`, body).pipe(
@@ -131,7 +133,8 @@ export class AuthService {
       lastName,
       companyName: payload.companyName,
       companySize: payload.companySize || undefined,
-      industry: payload.industry || undefined
+      industry: payload.industry || undefined,
+      role: 'EMPLOYER'
     };
     console.log('Registration request payload (employer):', { ...body, password: '[PROTECTED]' });
     return this.http.post<BackendEmployer | null>(`${this.apiBaseUrl}/employers/create`, body).pipe(
@@ -183,12 +186,25 @@ export class AuthService {
     localStorage.removeItem(STORAGE_KEY);
   }
 
-  // The base /api/users/login response has no role field — role is implied
-  // by which JOINED-inheritance subclass table the account lives in. Probe
-  // both role-specific read endpoints to find which one has the account.
-  // Both probes return null (HTTP 200, empty body) when the id belongs to
-  // the other role, so a null result means keep probing.
+  // Resolve user role using the backend role attribute or by probing role-specific endpoints
   private resolveRole(user: BackendUser): Observable<AuthUser> {
+    const roleNormalized = user.role?.toUpperCase();
+
+    if (roleNormalized === 'EMPLOYER') {
+      return this.http.get<BackendEmployer | null>(`${this.apiBaseUrl}/employers/read/${user.userId}`).pipe(
+        catchError(() => of(null)),
+        map(employer => employer ? this.mapEmployer(employer) : this.mapEmployer(user))
+      );
+    }
+
+    if (roleNormalized === 'JOBSEEKER' || roleNormalized === 'CANDIDATE') {
+      return this.http.get<BackendJobSeeker | null>(`${this.apiBaseUrl}/jobseekers/read/${user.userId}`).pipe(
+        catchError(() => of(null)),
+        map(jobSeeker => jobSeeker ? this.mapJobSeeker(jobSeeker) : this.mapJobSeeker(user))
+      );
+    }
+
+    // Fallback: probe both role-specific read endpoints
     return this.http.get<BackendJobSeeker | null>(`${this.apiBaseUrl}/jobseekers/read/${user.userId}`).pipe(
       catchError(() => of(null)),
       switchMap(jobSeeker => {

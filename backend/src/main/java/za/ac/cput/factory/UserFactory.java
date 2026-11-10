@@ -1,5 +1,6 @@
 package za.ac.cput.factory;
 
+import za.ac.cput.domain.Role;
 import za.ac.cput.domain.User;
 import za.ac.cput.util.Helper;
 
@@ -17,6 +18,10 @@ public class UserFactory {
      * @return User instance
      */
     public static User createUser(String userId, String email, String password) {
+        return createUser(userId, email, password, Role.JOBSEEKER);
+    }
+
+    public static User createUser(String userId, String email, String password, Role role) {
         if (Helper.isNullOrEmpty(userId) ||
                 !Helper.isValidEmail(email) ||
                 Helper.isNullOrEmpty(password)) {
@@ -27,6 +32,7 @@ public class UserFactory {
                 .userId(userId)
                 .email(email)
                 .password(password)
+                .role(role != null ? role : Role.JOBSEEKER)
                 .build();
     }
 
@@ -36,6 +42,12 @@ public class UserFactory {
     public static User createUser(String userId, String email, String password,
                                   String firstName, String lastName, String phoneNumber,
                                   String location) {
+        return createUser(userId, email, password, firstName, lastName, phoneNumber, location, Role.JOBSEEKER);
+    }
+
+    public static User createUser(String userId, String email, String password,
+                                  String firstName, String lastName, String phoneNumber,
+                                  String location, Role role) {
         if (Helper.isNullOrEmpty(userId) || !Helper.isValidEmail(email)) {
             return null;
         }
@@ -48,6 +60,7 @@ public class UserFactory {
                 .lastName(lastName)
                 .phoneNumber(phoneNumber)
                 .location(location)
+                .role(role != null ? role : Role.JOBSEEKER)
                 .build();
     }
 }

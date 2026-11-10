@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import za.ac.cput.domain.Role;
 
 @Data
 @NoArgsConstructor
@@ -16,6 +17,7 @@ public class LoginResponse {
     private String lastName;
     private String phoneNumber;
     private String location;
+    private Role role;
     private String token;
     private String message;
 }

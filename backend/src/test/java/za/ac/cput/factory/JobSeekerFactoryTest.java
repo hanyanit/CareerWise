@@ -21,7 +21,8 @@ class JobSeekerFactoryTest {
         );
 
         assertNotNull(jobSeeker);
-}
+        assertEquals(za.ac.cput.domain.Role.JOBSEEKER, jobSeeker.getRole());
+    }
 
     @Test
     void createJobSeekerInvalidEmail() {

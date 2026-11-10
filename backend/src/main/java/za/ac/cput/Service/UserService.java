@@ -22,6 +22,13 @@ public class UserService {
         if (userRepo.existsByEmail(user.getEmail())) {
             throw new Exception("email already exists");
         }
+        if (user.getRole() == null) {
+            if (user instanceof za.ac.cput.domain.Employer) {
+                user.setRole(za.ac.cput.domain.Role.EMPLOYER);
+            } else {
+                user.setRole(za.ac.cput.domain.Role.JOBSEEKER);
+            }
+        }
         if (user.getPassword() != null && !user.getPassword().isBlank()) {
             user.setPassword(passwordEncoder.encode(user.getPassword()));
         }
