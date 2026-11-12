@@ -6,10 +6,13 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.boot.test.web.server.LocalServerPort;
 import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import za.ac.cput.domain.Employer;
+import za.ac.cput.domain.Role;
 import za.ac.cput.factory.EmployerFactory;
+import za.ac.cput.security.JwtUtil;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -23,9 +26,13 @@ class EmployerControllerTest {
     private String BASE_URL;
 
     private static Employer employer;
+    private static String employerToken;
 
     @Autowired
     private TestRestTemplate restTemplate;
+
+    @Autowired
+    private JwtUtil jwtUtil;
 
     @BeforeEach
     void setUp() {
@@ -48,7 +55,8 @@ class EmployerControllerTest {
         assertNotNull(response.getBody());
         employer = response.getBody();
         assertNotNull(employer.getUserId());
-}
+        employerToken = jwtUtil.generateToken(employer.getEmail(), Role.EMPLOYER);
+    }
 
     @Test
     @Order(2)
@@ -59,7 +67,7 @@ class EmployerControllerTest {
         ResponseEntity<Employer> response = restTemplate.getForEntity(url, Employer.class);
 
         assertNotNull(response.getBody());
-}
+    }
 
     @Test
     @Order(3)
@@ -76,8 +84,11 @@ class EmployerControllerTest {
                 .industry(employer.getIndustry())
                 .build();
 
+        HttpHeaders headers = new HttpHeaders();
+        headers.setBearerAuth(employerToken);
+
         String url = BASE_URL + "update";
-        HttpEntity<Employer> requestEntity = new HttpEntity<>(updatedEmployer);
+        HttpEntity<Employer> requestEntity = new HttpEntity<>(updatedEmployer, headers);
         ResponseEntity<Employer> response = restTemplate.exchange(
                 url,
                 HttpMethod.PUT,
@@ -87,7 +98,7 @@ class EmployerControllerTest {
 
         assertNotNull(response.getBody());
         employer = response.getBody();
-}
+    }
 
     @Test
     @Order(4)

@@ -6,6 +6,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.boot.test.web.server.LocalServerPort;
 import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -13,8 +14,10 @@ import za.ac.cput.Service.impl.EmployerServiceImpl;
 import za.ac.cput.domain.Employer;
 import za.ac.cput.domain.Job;
 import za.ac.cput.domain.JobStatus;
+import za.ac.cput.domain.Role;
 import za.ac.cput.factory.EmployerFactory;
 import za.ac.cput.factory.JobFactory;
+import za.ac.cput.security.JwtUtil;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -32,12 +35,16 @@ class JobControllerTest {
 
     private static Job testJob;
     private static Employer testEmployer;
+    private static String employerToken;
 
     @Autowired
     private TestRestTemplate restTemplate;
 
     @Autowired
     private EmployerServiceImpl employerService;
+
+    @Autowired
+    private JwtUtil jwtUtil;
 
     @BeforeEach
     void setUp() {
@@ -53,6 +60,7 @@ class JobControllerTest {
                 "CareerWise", "Information Technology"));
         assertNotNull(testEmployer);
         assertNotNull(testEmployer.getUserId());
+        employerToken = jwtUtil.generateToken(testEmployer.getEmail(), Role.EMPLOYER);
 
         testJob = JobFactory.createJob(
                 "Backend Developer",
@@ -68,8 +76,12 @@ class JobControllerTest {
         assertNotNull(testJob);
         testJob.setEmployer(testEmployer);
 
+        HttpHeaders headers = new HttpHeaders();
+        headers.setBearerAuth(employerToken);
+        HttpEntity<Job> createRequest = new HttpEntity<>(testJob, headers);
+
         String url = BASE_URL + "create";
-        ResponseEntity<Job> response = restTemplate.postForEntity(url, testJob, Job.class);
+        ResponseEntity<Job> response = restTemplate.postForEntity(url, createRequest, Job.class);
 
         assertNotNull(response);
         assertEquals(HttpStatus.OK, response.getStatusCode());
@@ -107,8 +119,11 @@ class JobControllerTest {
         testJob.setLocation("Durban");
         testJob.setStatus(JobStatus.CLOSED);
 
+        HttpHeaders headers = new HttpHeaders();
+        headers.setBearerAuth(employerToken);
+
         String url = BASE_URL + "update";
-        HttpEntity<Job> requestEntity = new HttpEntity<>(testJob);
+        HttpEntity<Job> requestEntity = new HttpEntity<>(testJob, headers);
         ResponseEntity<Job> response = restTemplate.exchange(
                 url,
                 HttpMethod.PUT,
@@ -213,8 +228,12 @@ class JobControllerTest {
         assertNotNull(testJob);
         assertNotNull(testJob.getJobId());
 
+        HttpHeaders headers = new HttpHeaders();
+        headers.setBearerAuth(employerToken);
+        HttpEntity<Void> requestEntity = new HttpEntity<>(headers);
+
         String url = BASE_URL + "delete/" + testJob.getJobId();
-        ResponseEntity<Boolean> response = restTemplate.exchange(url, HttpMethod.DELETE, null, Boolean.class);
+        ResponseEntity<Boolean> response = restTemplate.exchange(url, HttpMethod.DELETE, requestEntity, Boolean.class);
 
         assertNotNull(response);
         assertEquals(HttpStatus.OK, response.getStatusCode());

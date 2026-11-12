@@ -5,10 +5,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.boot.test.web.server.LocalServerPort;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import za.ac.cput.DTO.LoginRequest;
+import za.ac.cput.DTO.LoginResponse;
 import za.ac.cput.domain.JobSeeker;
-import za.ac.cput.domain.User;
 import za.ac.cput.factory.JobSeekerFactory;
 
 import java.util.Map;
@@ -24,7 +27,7 @@ class UserControllerTest {
 
     private String BASE_URL;
 
-    private static User testUser;
+    private static LoginResponse testLoginResponse;
 
     @Autowired
     private TestRestTemplate restTemplate;
@@ -49,50 +52,54 @@ class UserControllerTest {
         );
 
         String url = BASE_URL + "signup";
-        ResponseEntity<User> response = restTemplate.postForEntity(url, jobSeeker, User.class);
+        ResponseEntity<LoginResponse> response = restTemplate.postForEntity(url, jobSeeker, LoginResponse.class);
 
         assertNotNull(response);
         assertEquals(HttpStatus.OK, response.getStatusCode());
         assertNotNull(response.getBody());
-        
-        testUser = response.getBody();
-}
+        assertNotNull(response.getBody().getToken());
+
+        testLoginResponse = response.getBody();
+    }
 
     @Test
     @Order(2)
     void login() {
-        assertNotNull(testUser);
+        assertNotNull(testLoginResponse);
 
-        Map<String, String> payload = Map.of(
-                "email", "user.signup@gmail.com",
-                "password", "myPass123"
-        );
+        LoginRequest loginRequest = new LoginRequest("user.signup@gmail.com", "myPass123");
 
         String url = BASE_URL + "login";
-        ResponseEntity<User> response = restTemplate.postForEntity(url, payload, User.class);
+        ResponseEntity<LoginResponse> response = restTemplate.postForEntity(url, loginRequest, LoginResponse.class);
 
         assertNotNull(response);
         assertEquals(HttpStatus.OK, response.getStatusCode());
         assertNotNull(response.getBody());
         assertEquals("user.signup@gmail.com", response.getBody().getEmail());
-}
+        assertNotNull(response.getBody().getToken());
+    }
 
     @Test
     @Order(3)
     void changePassword() {
-        assertNotNull(testUser);
+        assertNotNull(testLoginResponse);
 
         Map<String, String> payload = Map.of(
-                "userId", testUser.getUserId(),
+                "userId", testLoginResponse.getUserId(),
                 "oldPassword", "myPass123",
                 "newPassword", "newPass456"
         );
 
         String url = BASE_URL + "change-password";
-        ResponseEntity<Boolean> response = restTemplate.postForEntity(url, payload, Boolean.class);
+        HttpHeaders headers = new HttpHeaders();
+        headers.setBearerAuth(testLoginResponse.getToken());
+        HttpEntity<Map<String, String>> requestEntity = new HttpEntity<>(payload, headers);
+
+        ResponseEntity<Boolean> response = restTemplate.postForEntity(url, requestEntity, Boolean.class);
 
         assertNotNull(response);
         assertEquals(HttpStatus.OK, response.getStatusCode());
+        assertNotNull(response.getBody());
         assertTrue(response.getBody());
-}
+    }
 }
