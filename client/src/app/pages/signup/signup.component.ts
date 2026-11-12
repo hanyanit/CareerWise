@@ -209,7 +209,7 @@ export class SignupComponent {
         next: (createdUser) => {
           console.log('Registration success - User payload:', createdUser);
           this.isSubmitting.set(false);
-          this.router.navigate([this.role() === 'employer' ? '/employer-home' : '/dashboard']);
+          this.router.navigate(['/login']);
         },
         error: (err: Error) => {
           console.error('Registration failed - Error message:', err.message);
