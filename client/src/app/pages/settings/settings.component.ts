@@ -2,6 +2,7 @@ import { Component, inject, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { AuthService } from '../../services/auth.service';
+import { ThemeService } from '../../services/theme.service';
 
 @Component({
   selector: 'app-settings',
@@ -16,7 +17,69 @@ import { AuthService } from '../../services/auth.service';
       </div>
 
       <div class="space-y-6">
-        
+
+        <!-- Appearance -->
+        <div class="bg-white rounded-2xl shadow-sm border border-stone-100 p-8">
+          <div class="mb-5">
+            <h2 class="text-base font-bold text-stone-900">Appearance</h2>
+            <p class="text-sm text-stone-500 mt-1">
+              Choose how CareerWise looks on your device.
+            </p>
+          </div>
+
+          <div class="grid grid-cols-2 gap-4">
+
+            <!-- Light Mode -->
+            <button
+              type="button"
+              (click)="themeService.setTheme('light')"
+              class="p-4 rounded-xl border-2 text-left transition-all"
+              [ngClass]="themeService.theme() === 'light'
+        ? 'border-brand-600 bg-brand-50'
+        : 'border-stone-200 hover:bg-stone-50'">
+
+              <div class="flex items-center gap-2 mb-3">
+                <span class="text-xl">☀️</span>
+                <span class="font-semibold text-sm text-stone-900">Light</span>
+              </div>
+
+              <div class="h-12 rounded-lg bg-white border border-stone-200 p-2">
+                <div class="h-2 w-1/2 rounded bg-stone-200 mb-2"></div>
+                <div class="h-2 w-3/4 rounded bg-stone-100"></div>
+              </div>
+
+              <p class="text-xs text-stone-500 mt-3">
+                Classic light appearance
+              </p>
+            </button>
+
+            <!-- Dark Mode -->
+            <button
+              type="button"
+              (click)="themeService.setTheme('dark')"
+              class="p-4 rounded-xl border-2 text-left transition-all"
+              [ngClass]="themeService.theme() === 'dark'
+        ? 'border-brand-600 bg-brand-50'
+        : 'border-stone-200 hover:bg-stone-50'">
+
+              <div class="flex items-center gap-2 mb-3">
+                <span class="text-xl">🌙</span>
+                <span class="font-semibold text-sm text-stone-900">Dark</span>
+              </div>
+
+              <div class="h-12 rounded-lg bg-stone-800 border border-stone-700 p-2">
+                <div class="h-2 w-1/2 rounded bg-stone-500 mb-2"></div>
+                <div class="h-2 w-3/4 rounded bg-stone-600"></div>
+              </div>
+
+              <p class="text-xs text-stone-500 mt-3">
+                Comfortable dark appearance
+              </p>
+            </button>
+
+          </div>
+        </div>
+
         <!-- Profile Visibility -->
         <div class="bg-white rounded-2xl shadow-sm border border-stone-100 p-8 flex justify-between items-center">
           <div>
@@ -36,17 +99,17 @@ import { AuthService } from '../../services/auth.service';
         <div class="bg-white rounded-2xl shadow-sm border border-stone-100 p-8">
           <h2 class="text-base font-bold text-stone-900 mb-2">Change password</h2>
           <p class="text-xs text-stone-500 mb-6">Ensure your new password is at least 8 characters long</p>
-          
+
           <form [formGroup]="passwordForm" (ngSubmit)="onUpdatePassword()" class="space-y-5 max-w-md">
             <div>
               <label class="block text-sm font-semibold text-stone-700 mb-2">Current password *</label>
-              <input type="password" formControlName="current" placeholder="Enter current password" 
+              <input type="password" formControlName="current" placeholder="Enter current password"
                 class="w-full px-4 py-2.5 rounded-xl border border-stone-200 outline-none focus:border-brand-500 focus:ring-1 focus:ring-brand-500 text-stone-900 text-sm">
               <p *ngIf="passwordForm.get('current')?.touched && passwordForm.get('current')?.invalid" class="text-xs text-red-600 mt-1.5">
                 Current password is required.
               </p>
             </div>
-            
+
             <div>
               <label class="block text-sm font-semibold text-stone-700 mb-2">New password *</label>
               <input type="password" formControlName="new" placeholder="Enter new password (min 8 chars)"
@@ -103,6 +166,7 @@ import { AuthService } from '../../services/auth.service';
 export class SettingsComponent {
   private fb = inject(FormBuilder);
   private auth = inject(AuthService);
+  protected themeService = inject(ThemeService);
 
   isVisible = false;
   isUpdating = false;

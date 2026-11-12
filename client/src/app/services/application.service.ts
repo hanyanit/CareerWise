@@ -128,7 +128,36 @@ export class ApplicationService {
       })
     );
   }
+  cancelApplication(applicationId: string): Observable<boolean> {
+    const user = this.auth.currentUser();
 
+    if (!user || user.role !== 'candidate') {
+      return of(false);
+    }
+
+    return this.http.delete<boolean>(
+      `${this.apiBaseUrl}/applications/cancel/${applicationId}`
+    ).pipe(
+      tap(success => {
+        if (success) {
+          this.applicationsSignal.update(apps =>
+            apps.filter(app => app.id !== applicationId)
+          );
+
+          const cancelledApp = this.applicationsSignal();
+          const appliedJobIds = new Set(
+            cancelledApp.map(app => app.jobId).filter(Boolean) as string[]
+          );
+
+          this.appliedJobIdsSignal.set(appliedJobIds);
+        }
+      }),
+      catchError(err => {
+        console.error('Failed to cancel application', err);
+        return of(false);
+      })
+    );
+  }
   private mapApplication(b: BackendApplication): Application {
     return {
       id: b.applicationId,

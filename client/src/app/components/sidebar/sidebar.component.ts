@@ -162,7 +162,7 @@ pr-3
 py-2.5
 rounded-r-lg
 text-stone-600
-hover:bg-stone-50
+hover:bg-stone-100
 hover:translate-x-0.5
 transition-all
 text-sm">
@@ -207,7 +207,7 @@ pr-3
 py-2.5
 rounded-r-lg
 text-stone-600
-hover:bg-stone-50
+hover:bg-stone-100
 hover:translate-x-0.5
 transition-all
 text-sm">
@@ -250,7 +250,7 @@ pr-3
 py-2.5
 rounded-r-lg
 text-stone-600
-hover:bg-stone-50
+hover:bg-stone-100
 hover:translate-x-0.5
 transition-all
 text-sm">
@@ -292,7 +292,7 @@ pr-3
 py-2.5
 rounded-r-lg
 text-stone-600
-hover:bg-stone-50
+hover:bg-stone-100
 hover:translate-x-0.5
 transition-all
 text-sm">
@@ -342,7 +342,7 @@ pr-3
 py-2.5
 rounded-r-lg
 text-stone-600
-hover:bg-stone-50
+hover:bg-stone-100
 hover:translate-x-0.5
 transition-all
 text-sm">
@@ -411,7 +411,7 @@ pr-3
 py-2.5
 rounded-r-lg
 text-stone-600
-hover:bg-stone-50
+hover:bg-stone-100
 hover:translate-x-0.5
 transition-all
 text-sm">
@@ -483,7 +483,7 @@ pr-3
 py-2.5
 rounded-r-lg
 text-stone-600
-hover:bg-stone-50
+hover:bg-stone-100
 hover:translate-x-0.5
 transition-all
 text-sm">
@@ -537,7 +537,7 @@ pr-3
 py-2.5
 rounded-r-lg
 text-stone-600
-hover:bg-stone-50
+hover:bg-stone-100
 hover:translate-x-0.5
 transition-all
 text-sm">
@@ -583,7 +583,7 @@ pr-3
 py-2.5
 rounded-r-lg
 text-stone-600
-hover:bg-stone-50
+hover:bg-stone-100
 hover:translate-x-0.5
 transition-all
 text-sm">
@@ -627,7 +627,7 @@ pr-3
 py-2.5
 rounded-r-lg
 text-stone-600
-hover:bg-stone-50
+hover:bg-stone-100
 hover:translate-x-0.5
 transition-all
 text-sm">
@@ -720,7 +720,7 @@ pr-3
 py-2.5
 rounded-r-lg
 text-stone-600
-hover:bg-stone-50
+hover:bg-stone-100
 hover:translate-x-0.5
 transition-all
 text-sm">
@@ -766,7 +766,7 @@ items-center
 gap-3
 p-3
 rounded-xl
-hover:bg-stone-50
+hover:bg-stone-100
 transition-colors
 border
 border-transparent
@@ -837,7 +837,7 @@ py-2.5
 mt-1
 rounded-xl
 text-stone-500
-hover:bg-stone-50
+hover:bg-stone-100
 hover:text-red-600
 transition-all
 text-sm">

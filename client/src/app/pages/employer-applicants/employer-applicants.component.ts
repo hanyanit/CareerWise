@@ -10,9 +10,14 @@ import { Application, Job } from '../../models/models';
   standalone: true,
   imports: [CommonModule, RouterLink],
   template: `
+
     <div class="p-8 max-w-4xl mx-auto pb-20">
-      <a routerLink="/employer-home" class="inline-flex items-center gap-1.5 text-sm font-semibold text-stone-500 hover:text-stone-700 transition-colors mb-6">
-        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>
+
+      <a routerLink="/employer-home"
+         class="inline-flex items-center gap-1.5 text-sm font-semibold text-stone-500 hover:text-stone-700 dark:hover:text-stone-200 transition-colors mb-6">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="m15 18-6-6 6-6"/>
+        </svg>
         Back to dashboard
       </a>
 
@@ -21,42 +26,56 @@ import { Application, Job } from '../../models/models';
         <p class="text-stone-500 mt-1">{{ applicants().length }} candidate{{ applicants().length === 1 ? '' : 's' }} applied</p>
       </div>
 
-      <div class="bg-white rounded-2xl shadow-sm border border-stone-100 overflow-hidden">
-        <div class="divide-y divide-stone-50">
-          <div *ngFor="let app of applicants()" class="p-6 flex items-center justify-between gap-4 hover:bg-stone-50/50 transition-colors">
+      <div class="bg-white dark:bg-[#222927] rounded-2xl shadow-sm border border-stone-100 dark:border-[#37413d] overflow-hidden">
+
+        <div class="divide-y divide-stone-50 dark:divide-[#37413d]">
+
+          <div *ngFor="let app of applicants()"
+               class="p-6 flex items-center justify-between gap-4 hover:bg-stone-50/50 dark:hover:bg-[#303a36] transition-colors">
+
             <div class="min-w-0 flex-1">
               <h3 class="font-bold text-stone-900 text-sm">{{ app.applicantName }}</h3>
               <p class="text-xs text-stone-500 mt-0.5 truncate">{{ app.applicantEmail }}</p>
               <p class="text-xs text-stone-400 mt-1">Applied {{ app.dateApplied }}</p>
             </div>
+
             <div class="flex items-center gap-3 flex-shrink-0">
+
               <div class="flex items-center gap-2">
+
                 <button (click)="setStatus(app, 'Interview')" [disabled]="app.status === 'Interview'"
-                  class="px-3 py-1.5 text-xs font-semibold rounded-lg border border-brand-200 text-brand-700 bg-brand-50 hover:bg-brand-100 disabled:opacity-40 disabled:cursor-not-allowed transition-all">
+                        class="px-3 py-1.5 text-xs font-semibold rounded-lg border border-brand-200 dark:border-brand-500 text-brand-700 dark:text-brand-300 bg-brand-50 dark:bg-brand-900/30 hover:bg-brand-100 dark:hover:bg-brand-900/50 disabled:opacity-40 disabled:cursor-not-allowed transition-all">
                   Interview
                 </button>
+
                 <button (click)="setStatus(app, 'Offer')" [disabled]="app.status === 'Offer'"
-                  class="px-3 py-1.5 text-xs font-semibold rounded-lg border border-green-200 text-green-700 bg-green-50 hover:bg-green-100 disabled:opacity-40 disabled:cursor-not-allowed transition-all">
+                        class="px-3 py-1.5 text-xs font-semibold rounded-lg border border-green-200 dark:border-green-700 text-green-700 dark:text-green-300 bg-green-50 dark:bg-green-900/30 hover:bg-green-100 dark:hover:bg-green-900/50 disabled:opacity-40 disabled:cursor-not-allowed transition-all">
                   Accept
                 </button>
+
                 <button (click)="setStatus(app, 'Rejected')" [disabled]="app.status === 'Rejected'"
-                  class="px-3 py-1.5 text-xs font-semibold rounded-lg border border-red-200 text-red-700 bg-red-50 hover:bg-red-100 disabled:opacity-40 disabled:cursor-not-allowed transition-all">
+                        class="px-3 py-1.5 text-xs font-semibold rounded-lg border border-red-200 dark:border-red-700 text-red-700 dark:text-red-300 bg-red-50 dark:bg-red-900/30 hover:bg-red-100 dark:hover:bg-red-900/50 disabled:opacity-40 disabled:cursor-not-allowed transition-all">
                   Reject
                 </button>
+
               </div>
+
               <span class="px-3 py-1 text-xs font-semibold rounded-md border"
-                [ngClass]="{
-                  'bg-brand-50 text-brand-700 border-brand-200': app.status === 'Interview' || app.status === 'Offer',
-                  'bg-purple-50 text-purple-700 border-purple-200': app.status === 'Under Review',
-                  'bg-stone-100 text-stone-700 border-stone-200': app.status === 'Applied',
-                  'bg-red-50 text-red-700 border-red-200': app.status === 'Rejected'
-                }">
-                {{ app.status }}
-              </span>
-              <a *ngIf="app.jobSeekerId" [routerLink]="['/employer-candidate', app.jobSeekerId]"
-                class="px-4 py-2 text-xs font-semibold bg-stone-900 hover:bg-stone-800 text-white rounded-lg transition-all whitespace-nowrap">
+                    [ngClass]="{
+              'bg-brand-50 text-brand-700 border-brand-200 dark:bg-brand-900/30 dark:text-brand-300 dark:border-brand-700': app.status === 'Interview' || app.status === 'Offer',
+              'bg-purple-50 text-purple-700 border-purple-200 dark:bg-purple-900/30 dark:text-purple-300 dark:border-purple-700': app.status === 'Under Review',
+              'bg-stone-100 text-stone-700 border-stone-200 dark:bg-[#303a36] dark:text-stone-200 dark:border-[#46514b]': app.status === 'Applied',
+              'bg-red-50 text-red-700 border-red-200 dark:bg-red-900/30 dark:text-red-300 dark:border-red-700': app.status === 'Rejected'
+            }">
+            {{ app.status }}
+          </span>
+
+              <a *ngIf="app.jobSeekerId"
+                 [routerLink]="['/employer-candidate', app.jobSeekerId]"
+                 class="px-4 py-2 text-xs font-semibold bg-stone-900 dark:bg-brand-700 hover:bg-stone-800 dark:hover:bg-brand-600 text-white rounded-lg transition-all whitespace-nowrap">
                 View Profile
               </a>
+
             </div>
           </div>
 
@@ -68,9 +87,11 @@ import { Application, Job } from '../../models/models';
             <p class="text-stone-900 font-semibold mb-1">No applicants yet</p>
             <p class="text-stone-500 text-sm">Candidates who apply to this role will show up here.</p>
           </div>
+
         </div>
       </div>
     </div>
+
   `
 })
 export class EmployerApplicantsComponent implements OnInit {

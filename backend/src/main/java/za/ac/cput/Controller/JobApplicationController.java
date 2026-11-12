@@ -5,7 +5,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import za.ac.cput.Service.IApplicationsService;
 import za.ac.cput.domain.JobApplication;
-
+import org.springframework.http.ResponseEntity;
 import java.util.List;
 import java.util.Map;
 
@@ -55,10 +55,25 @@ public class JobApplicationController {
         return this.applicationService.updateStatus(applicationId, status);
     }
 
-    @DeleteMapping("/delete/{id}")
-    public boolean delete(@PathVariable String id) {
-        return this.applicationService.delete(id);
+
+    @DeleteMapping("/cancel/{applicationId}")
+    @PreAuthorize("hasAnyRole('JOBSEEKER', 'CANDIDATE')")
+    public ResponseEntity<Boolean> cancelApplication(
+            @PathVariable String applicationId,
+            org.springframework.security.core.Authentication authentication) {
+
+        String email = authentication.getName();
+
+        boolean cancelled = applicationService.cancelApplication(
+                applicationId, email);
+
+        if (cancelled) {
+            return ResponseEntity.ok(true);
+        }
+
+        return ResponseEntity.status(403).body(false);
     }
+
 
     @GetMapping("/getAll")
     public List<JobApplication> getAll() {

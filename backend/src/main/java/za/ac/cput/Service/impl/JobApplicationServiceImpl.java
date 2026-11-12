@@ -39,6 +39,22 @@ public class JobApplicationServiceImpl implements IJobApplicationService {
     }
 
     @Override
+    @Transactional
+    public boolean cancelApplication(String applicationId, String jobSeekerId) {
+        Optional<JobApplication> application =
+                applicationRepository.findById(applicationId);
+
+        if (application.isPresent()
+                && application.get().getJobSeeker().getUserId().equals(jobSeekerId)) {
+
+            applicationRepository.delete(application.get());
+            return true;
+        }
+
+        return false;
+    }
+
+    @Override
     public JobApplication read(String id) {
         return applicationRepository.findById(id).orElse(null);
     }

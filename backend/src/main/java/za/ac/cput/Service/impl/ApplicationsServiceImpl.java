@@ -70,6 +70,26 @@ public class ApplicationsServiceImpl implements IApplicationsService {
     }
 
     @Override
+    @Transactional
+    public boolean cancelApplication(String applicationId, String jobSeekerEmail) {
+
+        Optional<JobApplication> application =
+                applicationRepository.findById(applicationId);
+
+        if (application.isPresent()
+                && application.get().getJobSeeker() != null
+                && application.get().getJobSeeker().getEmail()
+                .equalsIgnoreCase(jobSeekerEmail)) {
+
+            applicationRepository.delete(application.get());
+            return true;
+        }
+
+        return false;
+    }
+
+
+    @Override
     public List<JobApplication> getAll() {
         return applicationRepository.findAll();
     }

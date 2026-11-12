@@ -107,15 +107,21 @@ import { Application } from '../../models/models';
         <div class="bg-white rounded-2xl border border-stone-200 overflow-hidden shadow-sm">
           <table class="w-full text-left border-collapse">
             <thead>
-              <tr class="border-b border-stone-200 bg-stone-50/60 text-xs font-semibold uppercase tracking-wider text-stone-500">
-                <th class="py-4 px-6 font-medium">Position & Company</th>
-                <th class="py-4 px-6 font-medium hidden sm:table-cell">Location / Salary</th>
-                <th class="py-4 px-6 font-medium">Date Applied</th>
-                <th class="py-4 px-6 font-medium">Status</th>
-              </tr>
+            <tr class="border-b border-stone-200 bg-stone-50/60 text-xs font-semibold uppercase tracking-wider text-stone-500">
+              <th class="py-4 px-6 font-medium">Position & Company</th>
+              <th class="py-4 px-6 font-medium hidden sm:table-cell">Location / Salary</th>
+              <th class="py-4 px-6 font-medium">Date Applied</th>
+              <th class="py-4 px-6 font-medium">Status</th>
+              <th class="py-4 px-6 font-medium text-right">Action</th>
+            </tr>
             </thead>
             <tbody class="divide-y divide-stone-100 text-sm">
-              <tr *ngFor="let app of filteredApplications()" class="hover:bg-stone-50/50 transition-colors">
+            <tr
+                *ngFor="let app of filteredApplications()"
+                [routerLink]="app.jobId ? ['/jobs', app.jobId] : null"
+                [class.cursor-pointer]="!!app.jobId"
+                class="hover:bg-stone-50/50 dark:hover:bg-[#303a36] transition-colors"
+            >
                 <td class="py-4 px-6">
                   <div class="font-bold text-stone-900">{{ app.jobTitle }}</div>
                   <div class="text-stone-500 text-xs mt-0.5">{{ app.company }}</div>
@@ -144,8 +150,20 @@ import { Application } from '../../models/models';
                       }"></span>
                     {{ app.status }}
                   </span>
+
                 </td>
-              </tr>
+
+              <td class="py-4 px-6 text-right">
+                <button
+                    type="button"
+                    (click)="$event.stopPropagation(); cancelApplication(app.id)"
+                    class="px-4 py-2 text-sm font-semibold rounded-lg text-red-600 border border-red-200 hover:bg-red-50 transition-colors whitespace-nowrap"
+                >
+                  Cancel Application
+                </button>
+              </td>
+            </tr>
+
             </tbody>
           </table>
 
@@ -193,10 +211,83 @@ import { Application } from '../../models/models';
       </div>
 
     </div>
+
+    <!-- Cancel Application Confirmation Modal -->
+    <div
+        *ngIf="showCancelConfirmation()"
+        class="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4"
+        (click)="closeCancelConfirmation()"
+    >
+      <div
+          class="w-full max-w-md rounded-2xl bg-white dark:bg-[#202925] p-6 shadow-2xl"
+          (click)="$event.stopPropagation()"
+      >
+        <div class="mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-red-100 text-red-600">
+          <span class="text-2xl font-bold">!</span>
+        </div>
+
+        <h2 class="text-xl font-bold text-stone-900 dark:text-white">
+          Cancel Application?
+        </h2>
+
+        <p class="mt-2 text-sm leading-6 text-stone-600 dark:text-stone-300">
+          Are you sure you want to cancel this application? This action cannot be undone.
+        </p>
+
+        <div class="mt-6 flex justify-end gap-3">
+          <button
+              type="button"
+              (click)="closeCancelConfirmation()"
+              class="rounded-lg border border-stone-300 px-4 py-2 text-sm font-semibold text-stone-700 hover:bg-stone-100 dark:border-stone-600 dark:text-stone-200 dark:hover:bg-[#303a36]"
+          >
+            Keep Application
+          </button>
+
+          <button
+              type="button"
+              (click)="confirmCancellation()"
+              class="rounded-lg bg-red-600 px-4 py-2 text-sm font-semibold text-white hover:bg-red-700"
+          >
+            Yes, Cancel Application
+          </button>
+        </div>
+      </div>
+    </div>
+
   `
 })
 export class ApplicationsComponent implements OnInit {
   private applicationService = inject(ApplicationService);
+  selectedApplicationId = signal<string | null>(null);
+  showCancelConfirmation = signal(false);
+  cancelApplication(applicationId: string): void {
+
+    this.selectedApplicationId.set(applicationId);
+    this.showCancelConfirmation.set(true);
+  }
+
+  closeCancelConfirmation(): void {
+    this.showCancelConfirmation.set(false);
+    this.selectedApplicationId.set(null);
+  }
+
+  confirmCancellation(): void {
+    const applicationId = this.selectedApplicationId();
+
+    if (!applicationId) {
+      return;
+    }
+
+    this.applicationService.cancelApplication(applicationId).subscribe(success => {
+      if (success) {
+        this.showCancelConfirmation.set(false);
+        this.selectedApplicationId.set(null);
+      } else {
+        this.showCancelConfirmation.set(false);
+        this.selectedApplicationId.set(null);
+      }
+    });
+  }
   private savedJobService = inject(SavedJobService);
   private auth = inject(AuthService);
 

@@ -9,5 +9,6 @@ public interface IJobApplicationService extends IService<JobApplication, String>
     List<JobApplication> getApplicationsByJobSeeker(String jobSeekerId);
     List<JobApplication> getApplicationsByJob(String jobId);
     JobApplication updateStatus(String applicationId, String status);
+    boolean cancelApplication(String applicationId, String jobSeekerId);
     List<JobApplication> getAll();
 }

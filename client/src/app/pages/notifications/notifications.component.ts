@@ -151,36 +151,34 @@ function timeAgo(iso: string): string {
 
       <!-- NOTIFICATIONS -->
 
+
       <div
-        class="bg-white
-    rounded-2xl
-    shadow-sm
-    border
-    border-stone-100
-    overflow-hidden">
+        class="bg-white dark:bg-[#222927]
+  rounded-2xl
+  shadow-sm
+  border
+  border-stone-100 dark:border-[#37413d]
+  overflow-hidden">
 
         <div
           class="divide-y
-      divide-stone-50">
+    divide-stone-50 dark:divide-[#37413d]">
 
           <div
-
             *ngFor="let notif of notifications()"
-
             (click)="onNotificationClick(notif)"
-
             class="p-6
-        flex
-        items-start
-        gap-4
-        hover:bg-stone-50/50
-        transition-colors
-        cursor-pointer"
+      flex
+      items-start
+      gap-4
+      hover:bg-stone-100
+      dark:hover:bg-[#303a36]
+      transition-colors
+      cursor-pointer"
+            [class.bg-brand-50]="!notif.read"
+            [class.dark:bg-[#263a33]]="!notif.read">
 
-            [class.bg-brand-50]="!notif.read">
-
-
-            <!-- ICON -->
+          <!-- ICON -->
 
             <div
               class="w-10
